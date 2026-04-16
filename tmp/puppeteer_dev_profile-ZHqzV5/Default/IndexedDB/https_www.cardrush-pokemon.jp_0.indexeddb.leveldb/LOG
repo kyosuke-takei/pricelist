@@ -1,0 +1,20 @@
+2026/04/15-16:33:25.694 29f6 Creating DB /tmp/puppeteer_dev_profile-ZHqzV5/Default/IndexedDB/https_www.cardrush-pokemon.jp_0.indexeddb.leveldb since it was missing.
+2026/04/15-16:33:25.734 29f6 Reusing MANIFEST /tmp/puppeteer_dev_profile-ZHqzV5/Default/IndexedDB/https_www.cardrush-pokemon.jp_0.indexeddb.leveldb/MANIFEST-000001
+2026/04/15-16:33:25.827 29f6 Level-0 table #5: started
+2026/04/15-16:33:25.847 29f6 Level-0 table #5: 636 bytes OK
+2026/04/15-16:33:25.868 29f6 Delete type=0 #3
+2026/04/15-16:33:25.869 29f6 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/04/15-16:33:25.902 29f6 Level-0 table #7: started
+2026/04/15-16:33:25.916 29f6 Level-0 table #7: 762 bytes OK
+2026/04/15-16:33:25.936 29f6 Delete type=0 #4
+2026/04/15-16:33:25.937 29f6 Manual compaction at level-0 from '\x00\x03\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x04\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/04/15-16:33:31.080 29fd Level-0 table #9: started
+2026/04/15-16:33:31.094 29fd Level-0 table #9: 1609 bytes OK
+2026/04/15-16:33:31.115 29fd Delete type=0 #6
+2026/04/15-16:33:31.116 29f8 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x05\x00\x00\x05' @ 102 : 1
+2026/04/15-16:33:31.116 29f8 Compacting 1@0 + 1@1 files
+2026/04/15-16:33:31.129 29f8 Generated table #10@0: 44 keys, 1271 bytes
+2026/04/15-16:33:31.129 29f8 Compacted 1@0 + 1@1 files => 1271 bytes
+2026/04/15-16:33:31.147 29f8 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/15-16:33:31.147 29f8 Delete type=2 #9
+2026/04/15-16:33:31.148 29f8 Manual compaction at level-0 from '\x00\x05\x00\x00\x05' @ 102 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)

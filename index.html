@@ -33,6 +33,7 @@
   .card-name { font-size: 0.78rem; color: #ddd; line-height: 1.4; margin-bottom: 0.5rem; min-height: 2.5em; }
   .card-price { font-size: 1rem; font-weight: bold; color: #e8b84b; }
   .card-price-usd { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .card-stock { font-size: 0.72rem; color: #666; margin-top: 2px; }
   .price-change { font-size: 0.72rem; margin-top: 3px; }
   .price-up { color: #ff6060; }
   .price-down { color: #60ff90; }
@@ -47,8 +48,7 @@
   .badge-ma  { background: #1e5f5f; color: #60ffff; }
   .badge-ssr { background: #5f1e1e; color: #ff6060; }
 
-  /* モーダル */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: #1a1a2e; border-radius: 16px; border: 1px solid #333; padding: 2rem; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
   .modal-header { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
@@ -57,14 +57,37 @@
   .modal-info .jp-name { font-size: 0.8rem; color: #888; margin-bottom: 0.5rem; }
   .modal-price { font-size: 1.5rem; font-weight: bold; color: #e8b84b; }
   .modal-usd { font-size: 0.9rem; color: #888; }
+  .modal-stock { font-size: 0.85rem; color: #666; margin-top: 0.3rem; }
   .modal-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin: 1rem 0; }
   .stat-box { background: #0f0f1a; border-radius: 8px; padding: 0.75rem; text-align: center; }
   .stat-label { font-size: 0.7rem; color: #888; margin-bottom: 0.25rem; }
   .stat-value { font-size: 1rem; font-weight: bold; color: #fff; }
   .chart-wrap { position: relative; height: 200px; margin-top: 1rem; }
   .modal-close { float: right; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; margin-top: -0.5rem; }
-  .btn-store { display: inline-block; margin-top: 1rem; padding: 0.6rem 1.5rem; background: #e8b84b; color: #000; border-radius: 20px; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
+  .btn-add-cart { display: block; margin-top: 1rem; padding: 0.6rem 1.5rem; background: #e8b84b; color: #000; border-radius: 20px; font-weight: bold; font-size: 0.9rem; border: none; cursor: pointer; width: 100%; text-align: center; }
+  .btn-add-cart:disabled { opacity: 0.4; cursor: not-allowed; background: #555; color: #999; }
 
+  .cart-btn { position: fixed; bottom: 2rem; right: 2rem; background: #e8b84b; color: #000; border: none; border-radius: 50px; padding: 1rem 1.5rem; font-size: 1rem; font-weight: bold; cursor: pointer; z-index: 500; }
+  .cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
+  .cart-overlay.open { display: flex; }
+  .cart-modal { background: #1a1a2e; border-radius: 16px; border: 1px solid #333; padding: 2rem; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
+  .cart-modal h2 { color: #e8b84b; margin-bottom: 1.5rem; }
+  .cart-item { display: flex; gap: 1rem; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a4a; }
+  .cart-item img { width: 50px; border-radius: 6px; }
+  .cart-item-name { flex: 1; font-size: 0.85rem; color: #ddd; }
+  .cart-item-qty { display: flex; align-items: center; gap: 0.5rem; }
+  .qty-btn { background: #2a2a4a; border: none; color: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+  .cart-item-price { color: #e8b84b; font-weight: bold; font-size: 0.9rem; min-width: 80px; text-align: right; }
+  .cart-item-remove { background: none; border: none; color: #888; cursor: pointer; font-size: 1.2rem; }
+  .cart-total { text-align: right; margin: 1rem 0; font-size: 1.2rem; color: #e8b84b; font-weight: bold; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 0.3rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.9rem; }
+  .form-group textarea { height: 80px; resize: vertical; }
+  .btn-order { width: 100%; padding: 1rem; background: #e8b84b; color: #000; border: none; border-radius: 20px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 1rem; }
+  .btn-order:disabled { opacity: 0.5; cursor: not-allowed; }
+  .order-success { text-align: center; padding: 2rem; }
+  .order-success h3 { color: #60ff90; font-size: 1.5rem; margin-bottom: 1rem; }
   .empty { text-align: center; color: #555; padding: 4rem; grid-column: 1/-1; }
 </style>
 </head>
@@ -75,9 +98,7 @@
   <p>Live prices from Cardrush · Updated daily · Singles & Graded</p>
 </header>
 
-<div class="rate-bar" id="rate-bar">
-  Exchange rate: loading...
-</div>
+<div class="rate-bar" id="rate-bar">Exchange rate: loading...</div>
 
 <div class="controls">
   <div class="tabs">
@@ -97,6 +118,7 @@
 
 <div class="grid" id="grid"></div>
 
+<!-- カード詳細モーダル -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal" id="modal-content">
     <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">×</button>
@@ -107,6 +129,7 @@
         <div class="jp-name" id="m-jpname"></div>
         <div class="modal-price" id="m-price"></div>
         <div class="modal-usd" id="m-usd"></div>
+        <div class="modal-stock" id="m-stock"></div>
       </div>
     </div>
     <div class="modal-stats">
@@ -115,11 +138,38 @@
       <div class="stat-box"><div class="stat-label">7D Change</div><div class="stat-value" id="m-change">-</div></div>
     </div>
     <div class="chart-wrap"><canvas id="m-chart"></canvas></div>
-    <a class="btn-store" id="m-link" href="#" target="_blank">Buy on Cardrush →</a>
+    <button class="btn-add-cart" id="btn-add-cart" onclick="addToCart(window._currentModalIdx); document.getElementById('modal').classList.remove('open')">Add to Cart 🛒</button>
+  </div>
+</div>
+
+<!-- カートボタン -->
+<button class="cart-btn" onclick="openCart()">🛒 Cart <span id="cart-count">0</span></button>
+
+<!-- カートモーダル -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart(event)">
+  <div class="cart-modal">
+    <h2>🛒 Your Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total"></div>
+    <div id="order-form">
+      <div class="form-group"><label>Full Name *</label><input id="f-name" placeholder="John Smith"></div>
+      <div class="form-group"><label>Email *</label><input id="f-email" type="email" placeholder="john@example.com"></div>
+      <div class="form-group"><label>Country *</label><input id="f-country" placeholder="USA"></div>
+      <div class="form-group"><label>Address *</label><textarea id="f-address" placeholder="123 Main St, City, State, ZIP"></textarea></div>
+      <div class="form-group"><label>Notes</label><textarea id="f-notes" placeholder="Any special requests..."></textarea></div>
+      <button class="btn-order" id="btn-order" onclick="submitOrder()">Place Order</button>
+    </div>
+    <div id="order-success" class="order-success" style="display:none">
+      <h3>✅ Order Received!</h3>
+      <p style="color:#aaa">We'll contact you at <span id="s-email"></span> within 24 hours with payment details.</p>
+      <p style="color:#e8b84b; margin-top:1rem; font-weight:bold" id="s-ordernum"></p>
+    </div>
   </div>
 </div>
 
 <script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxArarkuZgUpRK6AHk_KWU1lap8z9W_yrAljq8IcMiKTF5K8cpojRfkTGpjkFj_MjzXKw/exec';
+let cart = [];
 let data = [];
 let history = {};
 let currentTab = 'all';
@@ -151,19 +201,15 @@ async function loadHistory() {
 }
 
 function getPriceHistory(link) {
-  const dates = Object.keys(history).sort();
-  return dates.map(d => ({
-    date: d,
-    price: history[d][link]?.price || null
+  return Object.keys(history).sort().map(d => ({
+    date: d, price: history[d][link]?.price || null
   })).filter(d => d.price);
 }
 
 function getBadge(name) {
   const types = ['MUR','SAR','SSR','CHR','MA','HR','UR','SR','AR'];
   for (const t of types) {
-    if (name.includes(`【${t}】`)) {
-      return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
-    }
+    if (name.includes(`【${t}】`)) return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
   }
   return '';
 }
@@ -171,9 +217,7 @@ function getBadge(name) {
 function getPriceChange(item) {
   const hist = getPriceHistory(item.link);
   if (hist.length < 2) return null;
-  const prev = hist[hist.length - 2].price;
-  const curr = hist[hist.length - 1].price;
-  return curr - prev;
+  return hist[hist.length-1].price - hist[hist.length-2].price;
 }
 
 function setTab(tab, el) {
@@ -186,88 +230,77 @@ function setTab(tab, el) {
 function render() {
   const query = document.getElementById('search').value.toLowerCase();
   const sortBy = document.getElementById('sort').value;
-
   let items = [];
-  if (currentTab === 'all') {
-    data.forEach(cat => items = items.concat(cat.items));
-  } else {
-    const cat = data.find(c => c.label === currentTab);
-    if (cat) items = cat.items;
-  }
-
+  if (currentTab === 'all') data.forEach(cat => items = items.concat(cat.items));
+  else { const cat = data.find(c => c.label === currentTab); if (cat) items = cat.items; }
   if (query) items = items.filter(i =>
-    (i.nameEn || i.name).toLowerCase().includes(query) ||
-    i.name.toLowerCase().includes(query)
+    (i.nameEn||i.name).toLowerCase().includes(query) || i.name.toLowerCase().includes(query)
   );
-
-  if (sortBy === 'price-desc') items.sort((a, b) => b._price - a._price);
-  else if (sortBy === 'price-asc') items.sort((a, b) => a._price - b._price);
-  else if (sortBy === 'name') items.sort((a, b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
-  else if (sortBy === 'change') items.sort((a, b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
-
+  if (sortBy === 'price-desc') items.sort((a,b) => b._price - a._price);
+  else if (sortBy === 'price-asc') items.sort((a,b) => a._price - b._price);
+  else if (sortBy === 'name') items.sort((a,b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
+  else if (sortBy === 'change') items.sort((a,b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
   document.getElementById('count').textContent = `${items.length} cards`;
-
   const grid = document.getElementById('grid');
   if (!items.length) { grid.innerHTML = '<div class="empty">No cards found</div>'; return; }
-
   grid.innerHTML = items.map((item, i) => {
     const change = getPriceChange(item);
-    const changeHtml = change
-      ? `<div class="price-change ${change > 0 ? 'price-up' : 'price-down'}">
-           ${change > 0 ? '▲' : '▼'} ¥${Math.abs(change).toLocaleString()}
-         </div>`
-      : '';
-    return `
-      <div class="card" onclick="openModal(${i})">
-        <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
-        <div class="card-info">
-          ${getBadge(item.name)}
-          <div class="card-name">${item.nameEn || item.name}</div>
-          <div class="card-price">¥${item._price.toLocaleString()}</div>
-          <div class="card-price-usd">≈ $${(item._price / usdRate).toFixed(2)} USD</div>
-          ${changeHtml}
-        </div>
-      </div>`;
+    const changeHtml = change ? `<div class="price-change ${change>0?'price-up':'price-down'}">${change>0?'▲':'▼'} ¥${Math.abs(change).toLocaleString()}</div>` : '';
+    const stockColor = item.stock <= 3 ? '#ff6060' : item.stock <= 10 ? '#ffaa60' : '#666';
+    return `<div class="card" onclick="openModal(${i})">
+      <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
+      <div class="card-info">
+        ${getBadge(item.name)}
+        <div class="card-name">${item.nameEn||item.name}</div>
+        <div class="card-price">¥${item._price.toLocaleString()}</div>
+        <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)} USD</div>
+        <div class="card-stock" style="color:${stockColor}">Stock: ${item.stock}</div>
+        ${changeHtml}
+      </div>
+    </div>`;
   }).join('');
-
   window._renderedItems = items;
 }
 
 function openModal(idx) {
+  window._currentModalIdx = idx;
   const item = window._renderedItems[idx];
   const hist = getPriceHistory(item.link);
+  const inCart = cart.find(c => c.link === item.link);
+  const cartQty = inCart ? inCart.qty : 0;
+  const remaining = (item.stock || 1) - cartQty;
 
   document.getElementById('m-img').src = item.img;
-  document.getElementById('m-name').textContent = item.nameEn || item.name;
+  document.getElementById('m-name').textContent = item.nameEn||item.name;
   document.getElementById('m-jpname').textContent = item.name;
   document.getElementById('m-price').textContent = `¥${item._price.toLocaleString()}`;
-  document.getElementById('m-usd').textContent = `≈ $${(item._price / usdRate).toFixed(2)} USD`;
-  document.getElementById('m-link').href = item.link;
+  document.getElementById('m-usd').textContent = `≈ $${(item._price/usdRate).toFixed(2)} USD`;
+  document.getElementById('m-stock').textContent = `Stock: ${item.stock} (${remaining} available)`;
+
+  const btn = document.getElementById('btn-add-cart');
+  if (remaining <= 0) {
+    btn.disabled = true;
+    btn.textContent = 'Out of Stock';
+  } else {
+    btn.disabled = false;
+    btn.textContent = 'Add to Cart 🛒';
+  }
 
   if (hist.length > 0) {
     const prices = hist.map(h => h.price);
-    const high = Math.max(...prices);
-    const low = Math.min(...prices);
+    const high = Math.max(...prices), low = Math.min(...prices);
     const change = hist.length > 1 ? prices[prices.length-1] - prices[0] : 0;
     document.getElementById('m-high').textContent = `¥${high.toLocaleString()}`;
     document.getElementById('m-low').textContent = `¥${low.toLocaleString()}`;
     const changeEl = document.getElementById('m-change');
-    changeEl.textContent = `${change >= 0 ? '+' : ''}¥${change.toLocaleString()}`;
-    changeEl.style.color = change > 0 ? '#ff6060' : change < 0 ? '#60ff90' : '#fff';
-
+    changeEl.textContent = `${change>=0?'+':''}¥${change.toLocaleString()}`;
+    changeEl.style.color = change>0?'#ff6060':change<0?'#60ff90':'#fff';
     if (chartInstance) chartInstance.destroy();
     chartInstance = new Chart(document.getElementById('m-chart'), {
       type: 'line',
       data: {
         labels: hist.map(h => h.date),
-        datasets: [{
-          data: hist.map(h => h.price),
-          borderColor: '#e8b84b',
-          backgroundColor: 'rgba(232,184,75,0.1)',
-          tension: 0.3,
-          fill: true,
-          pointBackgroundColor: '#e8b84b',
-        }]
+        datasets: [{ data: hist.map(h => h.price), borderColor: '#e8b84b', backgroundColor: 'rgba(232,184,75,0.1)', tension: 0.3, fill: true, pointBackgroundColor: '#e8b84b' }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
@@ -279,13 +312,121 @@ function openModal(idx) {
       }
     });
   }
-
   document.getElementById('modal').classList.add('open');
 }
 
 function closeModal(e) {
-  if (e.target === document.getElementById('modal')) {
-    document.getElementById('modal').classList.remove('open');
+  if (e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open');
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById('order-form').style.display = 'block';
+  document.getElementById('order-success').style.display = 'none';
+  document.getElementById('cart-overlay').classList.add('open');
+}
+
+function closeCart(e) {
+  if (e.target === document.getElementById('cart-overlay')) document.getElementById('cart-overlay').classList.remove('open');
+}
+
+function addToCart(idx) {
+  const item = window._renderedItems[idx];
+  const existing = cart.find(c => c.link === item.link);
+  const maxStock = item.stock || 1;
+  if (existing) {
+    if (existing.qty >= maxStock) {
+      alert(`Sorry, only ${maxStock} in stock!`);
+      return;
+    }
+    existing.qty++;
+  } else {
+    cart.push({ ...item, qty: 1 });
+  }
+  updateCartCount();
+}
+
+function changeQty(link, delta) {
+  const item = cart.find(c => c.link === link);
+  if (!item) return;
+  const newQty = item.qty + delta;
+  if (newQty <= 0) {
+    cart = cart.filter(c => c.link !== link);
+  } else if (newQty > item.stock) {
+    alert(`Sorry, only ${item.stock} in stock!`);
+    return;
+  } else {
+    item.qty = newQty;
+  }
+  updateCartCount();
+  renderCart();
+}
+
+function removeFromCart(link) {
+  cart = cart.filter(c => c.link !== link);
+  updateCartCount();
+  renderCart();
+}
+
+function updateCartCount() {
+  document.getElementById('cart-count').textContent = cart.reduce((s,c) => s+c.qty, 0);
+}
+
+function renderCart() {
+  const el = document.getElementById('cart-items');
+  if (!cart.length) {
+    el.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Your cart is empty</p>';
+    document.getElementById('cart-total').textContent = '';
+    return;
+  }
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img src="${item.img}" alt="${item.nameEn||item.name}">
+      <div class="cart-item-name">${item.nameEn||item.name}<br><small style="color:#555">Stock: ${item.stock}</small></div>
+      <div class="cart-item-qty">
+        <button class="qty-btn" onclick="changeQty('${item.link}', -1)">−</button>
+        <span>${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${item.link}', 1)">+</button>
+      </div>
+      <div class="cart-item-price">¥${(item._price*item.qty).toLocaleString()}</div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.link}')">×</button>
+    </div>`).join('');
+  const total = cart.reduce((s,c) => s+c._price*c.qty, 0);
+  document.getElementById('cart-total').innerHTML = `Total: ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
+}
+
+async function submitOrder() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const country = document.getElementById('f-country').value.trim();
+  const address = document.getElementById('f-address').value.trim();
+  if (!name||!email||!country||!address) { alert('Please fill in all required fields'); return; }
+  if (!cart.length) { alert('Your cart is empty'); return; }
+  const btn = document.getElementById('btn-order');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  try {
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        name, email, country, address,
+        notes: document.getElementById('f-notes').value,
+        items: cart.map(c => ({ name: c.name, nameEn: c.nameEn||c.name, price: c._price, qty: c.qty }))
+      })
+    });
+    const result = await res.json();
+    if (result.success) {
+      document.getElementById('order-form').style.display = 'none';
+      document.getElementById('order-success').style.display = 'block';
+      document.getElementById('s-email').textContent = email;
+      document.getElementById('s-ordernum').textContent = `Order #${result.orderNum}`;
+      cart = []; updateCartCount();
+    } else {
+      alert('Error: ' + result.error);
+      btn.disabled = false; btn.textContent = 'Place Order';
+    }
+  } catch(e) {
+    alert('Connection error. Please try again.');
+    btn.disabled = false; btn.textContent = 'Place Order';
   }
 }
 

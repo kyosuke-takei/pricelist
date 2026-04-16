@@ -24,12 +24,15 @@ async function scrapeAllPages(startUrl, label) {
         const price = el.querySelector('.sell_price, .item_price, .price')?.innerText?.trim();
         const img = el.querySelector('img')?.src;
         const link = el.querySelector('a.item_data_link')?.href;
-        if (name && price) results.push({ name, price, img, link });
+
+        // 在庫数を取得
+        const stockText = el.innerText.match(/在庫数\s*(\d+)\s*枚/);
+        const stock = stockText ? parseInt(stockText[1]) : 1;
+
+        if (name && price) results.push({ name, price, img, link, stock });
       });
 
       const hasNext = !!document.querySelector('a.to_next_page');
-
-      // 現在ページと総ページ数を取得
       const currentPage = parseInt(document.querySelector('.pager strong')?.innerText) || 1;
       const pageLinks = [...document.querySelectorAll('.pager a.pager_btn')];
       const totalPages = pageLinks.reduce((max, el) => {
