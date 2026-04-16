@@ -55,7 +55,8 @@ jobs:
           git add data.json history/
           git commit -m "Auto update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
           git push origin main
-          git checkout gh-pages
-          git merge main
+          git fetch origin gh-pages
+          git checkout -b gh-pages origin/gh-pages
+          git merge main --no-edit
           git push origin gh-pages
           git checkout main
