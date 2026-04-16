@@ -7555,14 +7555,6 @@
         "nameEn": "[Condition A-] Zekrom【CHR】{195/184}"
       },
       {
-        "name": "〔状態A-〕ピカチュウ【CHR】{073/071}",
-        "price": "6,280円(税込)",
-        "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f533130613037332d3037312e6a7067003136300000660023666666666666.jpg",
-        "link": "https://www.cardrush-pokemon.jp/product/35383",
-        "stock": 1,
-        "nameEn": "[Condition A-] Pikachu【CHR】{073/071}"
-      },
-      {
         "name": "〔状態B〕ピカチュウ【CHR】{073/071}",
         "price": "4,480円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f533130613037332d3037312e6a7067003136300000660023666666666666.jpg",
@@ -8263,7 +8255,7 @@
         "price": "260円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f6d326141525f382e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/74096",
-        "stock": 167,
+        "stock": 166,
         "nameEn": "[Condition A-] Team Rocket's Dugtrio【AR】{206/193}"
       },
       {
@@ -8287,7 +8279,7 @@
         "price": "260円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f6d326141525f32302e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/74084",
-        "stock": 84,
+        "stock": 83,
         "nameEn": "[Condition A-] Beautifly【AR】{194/193}"
       },
       {
@@ -8391,7 +8383,7 @@
         "price": "260円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f6d326141525f31392e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/74085",
-        "stock": 63,
+        "stock": 62,
         "nameEn": "[Condition A-] Dustox【AR】{195/193}"
       },
       {
@@ -8823,7 +8815,7 @@
         "price": "390円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31302e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/79949",
-        "stock": 81,
+        "stock": 80,
         "nameEn": "[Condition A-] Metang【AR】{092/083}"
       },
       {
@@ -8839,7 +8831,7 @@
         "price": "390円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31322e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/79951",
-        "stock": 39,
+        "stock": 38,
         "nameEn": "[Condition A-] Tauros【AR】{094/083}"
       },
       {
@@ -8855,7 +8847,7 @@
         "price": "420円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f362e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/79997",
-        "stock": 2,
+        "stock": 1,
         "nameEn": "〔状態B〕Ampharos【AR】{088/083}"
       },
       {
@@ -8863,16 +8855,8 @@
         "price": "280円(税込)",
         "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f382e6a7067003136300000660023666666666666.jpg",
         "link": "https://www.cardrush-pokemon.jp/product/79999",
-        "stock": 3,
+        "stock": 2,
         "nameEn": "〔状態B〕Claydol【AR】{090/083}"
-      },
-      {
-        "name": "〔状態B〕クロバット【AR】{091/083}",
-        "price": "280円(税込)",
-        "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f392e6a7067003136300000660023666666666666.jpg",
-        "link": "https://www.cardrush-pokemon.jp/product/80000",
-        "stock": 1,
-        "nameEn": "〔状態B〕Crobat【AR】{091/083}"
       },
       {
         "name": "〔状態B〕ヌメイル【AR】{093/083}",
