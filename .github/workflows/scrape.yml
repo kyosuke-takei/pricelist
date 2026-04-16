@@ -40,6 +40,11 @@ jobs:
         env:
           POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
 
+      - name: Run SNKRDUNK scraper
+        run: node scrape_snkrdunk.js
+        env:
+          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
+
       - name: Run translator
         run: node translate.js
         env:
@@ -48,10 +53,11 @@ jobs:
       - name: Save history
         run: node save_history.js
 
-      - name: Deploy to gh-pages
+      - name: Deploy
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          rm -rf tmp/
           git add data.json history/
           git commit -m "Auto update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
           git push origin main
