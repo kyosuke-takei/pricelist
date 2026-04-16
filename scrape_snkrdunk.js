@@ -40,7 +40,20 @@ async function scrapeSnkrdunk(articleUrl, label) {
       await new Promise(r => setTimeout(r, 2000));
 
       const detail = await page.evaluate(() => {
-        const nameEn = document.querySelector('h1')?.innerText?.trim();
+        // 商品名（h1）
+        const nameRaw = document.querySelector('h1')?.innerText?.trim() || '';
+
+        // スタイルコード（型番）を取得
+        let styleCode = '';
+        document.querySelectorAll('.product-detail-info-table tr').forEach(tr => {
+          const th = tr.querySelector('th')?.innerText?.trim();
+          const td = tr.querySelector('td')?.innerText?.trim();
+          if (th === 'スタイルコード' && td) styleCode = td;
+        });
+
+        // 型番をタイトルの先頭に付ける
+        const cleanCode = styleCode.replace(/^OPC-TCG-/, "").replace(/^OPC-/, "OP-"); const nameEn = cleanCode ? `${cleanCode} ${nameRaw}` : nameRaw;
+
         const nameJp = document.querySelector('p.product-name-jp')?.innerText?.trim();
         const priceRaw = document.querySelector('span.product-lowest-price')?.innerText?.trim();
         const price = priceRaw ? priceRaw.replace('~', '').trim() : null;
@@ -48,14 +61,16 @@ async function scrapeSnkrdunk(articleUrl, label) {
         const stockText = document.querySelector('.product-stock-label')?.innerText?.trim();
         const stockMatch = stockText?.match(/\d+/);
         const stock = stockMatch ? parseInt(stockMatch[0]) : 99;
-        return { nameEn, nameJp, price, img, stock };
+
+        return { nameEn, nameJp, price, img, stock, styleCode };
       });
 
       if (detail.price) {
         allItems.push({
-          name: item.name.replace(/\n/g, ' '),
+          name: detail.nameEn,
           nameEn: detail.nameEn,
           nameJp: detail.nameJp,
+          styleCode: detail.styleCode,
           price: detail.price,
           img: detail.img,
           stock: detail.stock,
