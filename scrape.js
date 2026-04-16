@@ -3,65 +3,60 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 puppeteer.use(StealthPlugin());
 
-async function scrapeAllPages(startUrl, label) {
+async function scrapeAllPages(baseUrl, label) {
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
-  const page = await browser.newPage();
-  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36');
 
   let allItems = [];
   let pageNum = 1;
+  let totalPages = 1;
 
-  await page.goto(startUrl, { waitUntil: 'networkidle2', timeout: 30000 });
-  await new Promise(r => setTimeout(r, 2000));
+  while (pageNum <= totalPages) {
+    const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36');
 
-  while (true) {
+    const url = pageNum === 1 ? baseUrl : `${baseUrl}&page=${pageNum}`;
     console.log(`取得中: ${label} - ${pageNum}ページ目`);
 
-    const { items, hasNext, totalPages, currentPage } = await page.evaluate(() => {
-      const results = [];
-      document.querySelectorAll('div.item_data').forEach(el => {
-        const name = el.querySelector('span.goods_name')?.innerText?.trim();
-        const price = el.querySelector('.sell_price, .item_price, .price')?.innerText?.trim();
-        const img = el.querySelector('img')?.src;
-        const link = el.querySelector('a.item_data_link')?.href;
+    try {
+      await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+      await new Promise(r => setTimeout(r, 3000));
 
-        // 在庫数を取得
-        const stockText = el.innerText.match(/在庫数\s*(\d+)\s*枚/);
-        const stock = stockText ? parseInt(stockText[1]) : 1;
+      const { items, detectedTotal } = await page.evaluate(() => {
+        const results = [];
+        document.querySelectorAll('div.item_data').forEach(el => {
+          const name = el.querySelector('span.goods_name')?.innerText?.trim();
+          const price = el.querySelector('.sell_price, .item_price, .price')?.innerText?.trim();
+          const img = el.querySelector('img')?.src;
+          const link = el.querySelector('a.item_data_link')?.href;
+          const stockText = el.innerText.match(/在庫数\s*(\d+)\s*枚/);
+          const stock = stockText ? parseInt(stockText[1]) : 1;
+          if (name && price) results.push({ name, price, img, link, stock });
+        });
 
-        if (name && price) results.push({ name, price, img, link, stock });
+        const currentPage = parseInt(document.querySelector('.pager strong')?.innerText) || 1;
+        const pageLinks = [...document.querySelectorAll('.pager a.pager_btn')];
+        const detectedTotal = pageLinks.reduce((max, el) => {
+          const n = parseInt(el.innerText);
+          return n > max ? n : max;
+        }, currentPage);
+
+        return { items: results, detectedTotal };
       });
 
-      const hasNext = !!document.querySelector('a.to_next_page');
-      const currentPage = parseInt(document.querySelector('.pager strong')?.innerText) || 1;
-      const pageLinks = [...document.querySelectorAll('.pager a.pager_btn')];
-      const totalPages = pageLinks.reduce((max, el) => {
-        const n = parseInt(el.innerText);
-        return n > max ? n : max;
-      }, currentPage);
+      if (pageNum === 1) totalPages = detectedTotal;
+      allItems = allItems.concat(items);
+      console.log(`  → ${items.length}件取得（累計: ${allItems.length}件）[${pageNum}/${totalPages}ページ]`);
 
-      return { items: results, hasNext, totalPages, currentPage };
-    });
+    } catch (e) {
+      console.log(`  → エラー: ${e.message} - スキップ`);
+    }
 
-    allItems = allItems.concat(items);
-    console.log(`  → ${items.length}件取得（累計: ${allItems.length}件）[${currentPage}/${totalPages}ページ]`);
-
-    if (!hasNext) break;
-
-    const nextPage = currentPage + 1;
-    await Promise.all([
-      page.click('a.to_next_page'),
-      page.waitForFunction(
-        (np) => location.href.includes(`page=${np}`),
-        { timeout: 15000 },
-        nextPage
-      )
-    ]);
-    await new Promise(r => setTimeout(r, 2000));
+    await page.close();
     pageNum++;
+    if (pageNum <= totalPages) await new Promise(r => setTimeout(r, 2000));
   }
 
   await browser.close();
