@@ -1,0 +1,57 @@
+name: Daily Scrape
+
+on:
+  schedule:
+    - cron: '0 0,6,12,18 * * *'  # 6時間ごと (UTC 0,6,12,18時 = JST 9,15,21,3時)
+  workflow_dispatch:  # 手動実行も可能
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 \
+            libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
+            libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
+
+      - name: Run scraper
+        run: node scrape.js
+        env:
+          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
+
+      - name: Run translator
+        run: node translate.js
+        env:
+          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
+
+      - name: Save history
+        run: node save_history.js
+
+      - name: Deploy to gh-pages
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data.json history/
+          git commit -m "Auto update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
+          git push origin main
+          git checkout gh-pages
+          git merge main
+          git push origin gh-pages
+          git checkout main
