@@ -13,10 +13,16 @@
   header h1 { font-size: 2rem; color: #e8b84b; letter-spacing: 2px; }
   header p { color: #aaa; margin-top: 0.5rem; font-size: 0.9rem; }
 
+  .notice-bar { background: #e8a000; color: #000; padding: 1rem 2rem; }
+  .notice-title { font-size: 1rem; font-weight: bold; text-align: center; margin-bottom: 0.75rem; }
+  .notice-list { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+  .notice-list li { font-weight: bold; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .notice-how { border-top: 2px solid #000; padding-top: 0.5rem; font-size: 0.9rem; }
+
   .rate-bar { background: #111; padding: 0.4rem 2rem; font-size: 0.75rem; color: #666; }
 
   .controls { padding: 1rem 2rem; background: #16213e; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
-  .tabs { display: flex; gap: 0.5rem; }
+  .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1px solid #e8b84b; background: transparent; color: #e8b84b; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
   .tab.active { background: #e8b84b; color: #000; font-weight: bold; }
   .search { flex: 1; min-width: 200px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.9rem; }
@@ -26,14 +32,19 @@
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
 
-  .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a4a; transition: transform 0.2s, border-color 0.2s; cursor: pointer; }
+  .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a4a; transition: transform 0.2s, border-color 0.2s; cursor: pointer; position: relative; }
   .card:hover { transform: translateY(-4px); border-color: #e8b84b; }
+  .card.sold-out { opacity: 0.5; cursor: default; }
+  .card.sold-out:hover { transform: none; border-color: #2a2a4a; }
+  .sold-out-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .sold-out-label { background: #ff3333; color: #fff; font-weight: bold; font-size: 1rem; padding: 0.4rem 1.2rem; border-radius: 4px; letter-spacing: 2px; transform: rotate(-15deg); }
   .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #111; }
   .card-info { padding: 0.75rem; }
   .card-name { font-size: 0.78rem; color: #ddd; line-height: 1.4; margin-bottom: 0.5rem; min-height: 2.5em; }
   .card-price { font-size: 1rem; font-weight: bold; color: #e8b84b; }
+  .card-price.soldout { color: #ff3333; font-size: 0.9rem; }
   .card-price-usd { font-size: 0.75rem; color: #888; margin-top: 2px; }
-  .card-stock { font-size: 0.72rem; color: #666; margin-top: 2px; }
+  .card-stock { font-size: 0.72rem; margin-top: 2px; }
   .price-change { font-size: 0.72rem; margin-top: 3px; }
   .price-up { color: #ff6060; }
   .price-down { color: #60ff90; }
@@ -47,6 +58,8 @@
   .badge-mur { background: #5f5f1e; color: #ffff60; }
   .badge-ma  { background: #1e5f5f; color: #60ffff; }
   .badge-ssr { background: #5f1e1e; color: #ff6060; }
+  .badge-box { background: #1e3a1e; color: #60ff60; }
+  .badge-op  { background: #1e3a5f; color: #60ddff; }
 
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
@@ -71,7 +84,8 @@
   .cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
   .cart-overlay.open { display: flex; }
   .cart-modal { background: #1a1a2e; border-radius: 16px; border: 1px solid #333; padding: 2rem; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
-  .cart-modal h2 { color: #e8b84b; margin-bottom: 1.5rem; }
+  .cart-modal h2 { color: #e8b84b; margin-bottom: 0.5rem; }
+  .cart-modal .cart-note { font-size: 0.8rem; color: #ff9060; margin-bottom: 1.5rem; padding: 0.5rem 1rem; border: 1px solid #ff9060; border-radius: 8px; }
   .cart-item { display: flex; gap: 1rem; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #2a2a4a; }
   .cart-item img { width: 50px; border-radius: 6px; }
   .cart-item-name { flex: 1; font-size: 0.85rem; color: #ddd; }
@@ -88,6 +102,7 @@
   .btn-order:disabled { opacity: 0.5; cursor: not-allowed; }
   .order-success { text-align: center; padding: 2rem; }
   .order-success h3 { color: #60ff90; font-size: 1.5rem; margin-bottom: 1rem; }
+  .order-success .success-note { color: #ff9060; font-size: 0.85rem; margin-top: 1rem; padding: 0.75rem; border: 1px solid #ff9060; border-radius: 8px; }
   .empty { text-align: center; color: #555; padding: 4rem; grid-column: 1/-1; }
 </style>
 </head>
@@ -95,8 +110,21 @@
 
 <header>
   <h1>🎴 Japanese Pokemon Card Price List</h1>
-  <p>Live prices from Cardrush · Updated daily · Singles & Graded</p>
+  <p>Live prices · Singles, Sealed BOX & One Piece</p>
 </header>
+
+<div class="notice-bar">
+  <div class="notice-title">⭐ Important Reminders ⭐</div>
+  <ol class="notice-list">
+    <li>There are only a limited amount of boxes available for the prices listed. Boxes are sold on a first come first serve basis.</li>
+    <li>Amount and prices are guaranteed only upon payment.</li>
+    <li>Due to the recent volatility in the market, if payment cannot be confirmed within 3 hours of the invoice being issued, we will re-quote.</li>
+  </ol>
+  <div class="notice-how">
+    <strong>How to buy↓</strong><br>
+    Once you let us know the quantity you'd like, we will send an invoice via PayPal and then ship the items via FedEx or DHL.
+  </div>
+</div>
 
 <div class="rate-bar" id="rate-bar">Exchange rate: loading...</div>
 
@@ -105,8 +133,10 @@
     <button class="tab active" onclick="setTab('all', this)">All</button>
     <button class="tab" onclick="setTab('AR/CHR', this)">AR / CHR</button>
     <button class="tab" onclick="setTab('SR/SSR/HR/UR/SAR/MUR/MA', this)">SR / SAR / UR+</button>
+    <button class="tab" onclick="setTab('ポケカ未開封BOX', this)">Pokémon Sealed</button>
+    <button class="tab" onclick="setTab('ワンピース未開封BOX', this)">One Piece Sealed</button>
   </div>
-  <input class="search" type="text" id="search" placeholder="Search cards..." oninput="render()">
+  <input class="search" type="text" id="search" placeholder="Search..." oninput="render()">
   <select class="sort" id="sort" onchange="render()">
     <option value="price-desc">Price: High to Low</option>
     <option value="price-asc">Price: Low to High</option>
@@ -138,17 +168,20 @@
       <div class="stat-box"><div class="stat-label">7D Change</div><div class="stat-value" id="m-change">-</div></div>
     </div>
     <div class="chart-wrap"><canvas id="m-chart"></canvas></div>
-    <button class="btn-add-cart" id="btn-add-cart" onclick="addToCart(window._currentModalIdx); document.getElementById('modal').classList.remove('open')">Add to Cart 🛒</button>
+    <button class="btn-add-cart" id="btn-add-cart" onclick="addToCart(window._currentModalIdx); document.getElementById('modal').classList.remove('open')">Add to Request List 📋</button>
   </div>
 </div>
 
 <!-- カートボタン -->
-<button class="cart-btn" onclick="openCart()">🛒 Cart <span id="cart-count">0</span></button>
+<button class="cart-btn" onclick="openCart()">📋 Request <span id="cart-count">0</span></button>
 
 <!-- カートモーダル -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart(event)">
   <div class="cart-modal">
-    <h2>🛒 Your Cart</h2>
+    <h2>📋 Order Request</h2>
+    <div class="cart-note">
+      ⚠️ This is a request form only — not a confirmed order. We will contact you within 24 hours to confirm availability and send a payment invoice.
+    </div>
     <div id="cart-items"></div>
     <div class="cart-total" id="cart-total"></div>
     <div id="order-form">
@@ -157,12 +190,15 @@
       <div class="form-group"><label>Country *</label><input id="f-country" placeholder="USA"></div>
       <div class="form-group"><label>Address *</label><textarea id="f-address" placeholder="123 Main St, City, State, ZIP"></textarea></div>
       <div class="form-group"><label>Notes</label><textarea id="f-notes" placeholder="Any special requests..."></textarea></div>
-      <button class="btn-order" id="btn-order" onclick="submitOrder()">Place Order</button>
+      <button class="btn-order" id="btn-order" onclick="submitOrder()">Send Request</button>
     </div>
     <div id="order-success" class="order-success" style="display:none">
-      <h3>✅ Order Received!</h3>
-      <p style="color:#aaa">We'll contact you at <span id="s-email"></span> within 24 hours with payment details.</p>
+      <h3>✅ Request Received!</h3>
+      <p style="color:#aaa">We'll contact you at <span id="s-email"></span> within 24 hours to confirm availability and send a payment invoice.</p>
       <p style="color:#e8b84b; margin-top:1rem; font-weight:bold" id="s-ordernum"></p>
+      <div class="success-note">
+        ⚠️ Please note: This is not a confirmed order. Stock and prices are subject to change until payment is received.
+      </div>
     </div>
   </div>
 </div>
@@ -206,10 +242,12 @@ function getPriceHistory(link) {
   })).filter(d => d.price);
 }
 
-function getBadge(name) {
+function getBadge(item) {
+  if (item.category === 'ワンピース未開封BOX') return '<span class="badge badge-op">ONE PIECE</span>';
+  if (item.category === 'ポケカ未開封BOX') return '<span class="badge badge-box">SEALED</span>';
   const types = ['MUR','SAR','SSR','CHR','MA','HR','UR','SR','AR'];
   for (const t of types) {
-    if (name.includes(`【${t}】`)) return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
+    if (item.name.includes(`【${t}】`)) return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
   }
   return '';
 }
@@ -231,8 +269,14 @@ function render() {
   const query = document.getElementById('search').value.toLowerCase();
   const sortBy = document.getElementById('sort').value;
   let items = [];
-  if (currentTab === 'all') data.forEach(cat => items = items.concat(cat.items));
-  else { const cat = data.find(c => c.label === currentTab); if (cat) items = cat.items; }
+  if (currentTab === 'all') {
+    data.forEach(cat => cat.items.forEach(item => {
+      items.push({ ...item, category: cat.label });
+    }));
+  } else {
+    const cat = data.find(c => c.label === currentTab);
+    if (cat) items = cat.items.map(item => ({ ...item, category: cat.label }));
+  }
   if (query) items = items.filter(i =>
     (i.nameEn||i.name).toLowerCase().includes(query) || i.name.toLowerCase().includes(query)
   );
@@ -240,21 +284,28 @@ function render() {
   else if (sortBy === 'price-asc') items.sort((a,b) => a._price - b._price);
   else if (sortBy === 'name') items.sort((a,b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
   else if (sortBy === 'change') items.sort((a,b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
-  document.getElementById('count').textContent = `${items.length} cards`;
+  document.getElementById('count').textContent = `${items.length} items`;
   const grid = document.getElementById('grid');
-  if (!items.length) { grid.innerHTML = '<div class="empty">No cards found</div>'; return; }
+  if (!items.length) { grid.innerHTML = '<div class="empty">No items found</div>'; return; }
   grid.innerHTML = items.map((item, i) => {
     const change = getPriceChange(item);
     const changeHtml = change ? `<div class="price-change ${change>0?'price-up':'price-down'}">${change>0?'▲':'▼'} ¥${Math.abs(change).toLocaleString()}</div>` : '';
-    const stockColor = item.stock <= 3 ? '#ff6060' : item.stock <= 10 ? '#ffaa60' : '#666';
-    return `<div class="card" onclick="openModal(${i})">
+    const stockNum = typeof item.stock === 'number' ? item.stock : 99;
+    const isSoldOut = stockNum === 0 || !item._price || isNaN(item._price);
+    const stockColor = stockNum <= 3 && !isSoldOut ? '#ff6060' : stockNum <= 10 && !isSoldOut ? '#ffaa60' : '#666';
+
+    return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${i})`}">
+      ${isSoldOut ? '<div class="sold-out-overlay"><div class="sold-out-label">SOLD OUT</div></div>' : ''}
       <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
       <div class="card-info">
-        ${getBadge(item.name)}
+        ${getBadge(item)}
         <div class="card-name">${item.nameEn||item.name}</div>
-        <div class="card-price">¥${item._price.toLocaleString()}</div>
-        <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)} USD</div>
-        <div class="card-stock" style="color:${stockColor}">Stock: ${item.stock}</div>
+        ${isSoldOut
+          ? '<div class="card-price soldout">SOLD OUT</div>'
+          : `<div class="card-price">¥${item._price.toLocaleString()}</div>
+             <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)} USD</div>`
+        }
+        <div class="card-stock" style="color:${stockColor}">Stock: ${stockNum}</div>
         ${changeHtml}
       </div>
     </div>`;
@@ -265,17 +316,20 @@ function render() {
 function openModal(idx) {
   window._currentModalIdx = idx;
   const item = window._renderedItems[idx];
+  const stockNum = typeof item.stock === 'number' ? item.stock : 99;
+  if (stockNum === 0) return;
+
   const hist = getPriceHistory(item.link);
   const inCart = cart.find(c => c.link === item.link);
   const cartQty = inCart ? inCart.qty : 0;
-  const remaining = (item.stock || 1) - cartQty;
+  const remaining = stockNum - cartQty;
 
   document.getElementById('m-img').src = item.img;
   document.getElementById('m-name').textContent = item.nameEn||item.name;
-  document.getElementById('m-jpname').textContent = item.name;
+  document.getElementById('m-jpname').textContent = item.nameJp || item.name;
   document.getElementById('m-price').textContent = `¥${item._price.toLocaleString()}`;
   document.getElementById('m-usd').textContent = `≈ $${(item._price/usdRate).toFixed(2)} USD`;
-  document.getElementById('m-stock').textContent = `Stock: ${item.stock} (${remaining} available)`;
+  document.getElementById('m-stock').textContent = `Stock: ${stockNum} (${remaining} available)`;
 
   const btn = document.getElementById('btn-add-cart');
   if (remaining <= 0) {
@@ -283,7 +337,7 @@ function openModal(idx) {
     btn.textContent = 'Out of Stock';
   } else {
     btn.disabled = false;
-    btn.textContent = 'Add to Cart 🛒';
+    btn.textContent = 'Add to Request List 📋';
   }
 
   if (hist.length > 0) {
@@ -333,7 +387,7 @@ function closeCart(e) {
 function addToCart(idx) {
   const item = window._renderedItems[idx];
   const existing = cart.find(c => c.link === item.link);
-  const maxStock = item.stock || 1;
+  const maxStock = typeof item.stock === 'number' ? item.stock : 99;
   if (existing) {
     if (existing.qty >= maxStock) {
       alert(`Sorry, only ${maxStock} in stock!`);
@@ -350,10 +404,11 @@ function changeQty(link, delta) {
   const item = cart.find(c => c.link === link);
   if (!item) return;
   const newQty = item.qty + delta;
+  const maxStock = typeof item.stock === 'number' ? item.stock : 99;
   if (newQty <= 0) {
     cart = cart.filter(c => c.link !== link);
-  } else if (newQty > item.stock) {
-    alert(`Sorry, only ${item.stock} in stock!`);
+  } else if (newQty > maxStock) {
+    alert(`Sorry, only ${maxStock} in stock!`);
     return;
   } else {
     item.qty = newQty;
@@ -375,7 +430,7 @@ function updateCartCount() {
 function renderCart() {
   const el = document.getElementById('cart-items');
   if (!cart.length) {
-    el.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Your cart is empty</p>';
+    el.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Your request list is empty</p>';
     document.getElementById('cart-total').textContent = '';
     return;
   }
@@ -392,7 +447,7 @@ function renderCart() {
       <button class="cart-item-remove" onclick="removeFromCart('${item.link}')">×</button>
     </div>`).join('');
   const total = cart.reduce((s,c) => s+c._price*c.qty, 0);
-  document.getElementById('cart-total').innerHTML = `Total: ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
+  document.getElementById('cart-total').innerHTML = `Est. Total: ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
 }
 
 async function submitOrder() {
@@ -401,7 +456,7 @@ async function submitOrder() {
   const country = document.getElementById('f-country').value.trim();
   const address = document.getElementById('f-address').value.trim();
   if (!name||!email||!country||!address) { alert('Please fill in all required fields'); return; }
-  if (!cart.length) { alert('Your cart is empty'); return; }
+  if (!cart.length) { alert('Your request list is empty'); return; }
   const btn = document.getElementById('btn-order');
   btn.disabled = true; btn.textContent = 'Sending...';
   try {
@@ -418,15 +473,15 @@ async function submitOrder() {
       document.getElementById('order-form').style.display = 'none';
       document.getElementById('order-success').style.display = 'block';
       document.getElementById('s-email').textContent = email;
-      document.getElementById('s-ordernum').textContent = `Order #${result.orderNum}`;
+      document.getElementById('s-ordernum').textContent = `Request #${result.orderNum}`;
       cart = []; updateCartCount();
     } else {
       alert('Error: ' + result.error);
-      btn.disabled = false; btn.textContent = 'Place Order';
+      btn.disabled = false; btn.textContent = 'Send Request';
     }
   } catch(e) {
     alert('Connection error. Please try again.');
-    btn.disabled = false; btn.textContent = 'Place Order';
+    btn.disabled = false; btn.textContent = 'Send Request';
   }
 }
 
@@ -436,7 +491,7 @@ async function init() {
   const res = await fetch('data.json');
   data = await res.json();
   data.forEach(cat => cat.items.forEach(item => {
-    item._price = parseInt(item.price.replace(/[^\d]/g, ''));
+    item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * 1.05);
   }));
   render();
 }
