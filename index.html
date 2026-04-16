@@ -4,20 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Japanese Pokemon Card Price List</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #fff; }
 
-  header { background: linear-gradient(135deg, #1a1a2e, #16213e); padding: 2rem; text-align: center; border-bottom: 2px solid #e8b84b; }
+  header { background: #16213e; padding: 2rem; text-align: center; border-bottom: 2px solid #e8b84b; }
   header h1 { font-size: 2rem; color: #e8b84b; letter-spacing: 2px; }
-  header p { color: #aaa; margin-top: 0.5rem; }
+  header p { color: #aaa; margin-top: 0.5rem; font-size: 0.9rem; }
 
-  .controls { padding: 1.5rem 2rem; background: #16213e; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+  .rate-bar { background: #111; padding: 0.4rem 2rem; font-size: 0.75rem; color: #666; }
+
+  .controls { padding: 1rem 2rem; background: #16213e; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
   .tabs { display: flex; gap: 0.5rem; }
   .tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1px solid #e8b84b; background: transparent; color: #e8b84b; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
   .tab.active { background: #e8b84b; color: #000; font-weight: bold; }
   .search { flex: 1; min-width: 200px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.9rem; }
   .search:focus { outline: none; border-color: #e8b84b; }
+  .sort { padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.85rem; cursor: pointer; }
   .count { color: #aaa; font-size: 0.85rem; margin-left: auto; }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
@@ -29,6 +33,9 @@
   .card-name { font-size: 0.78rem; color: #ddd; line-height: 1.4; margin-bottom: 0.5rem; min-height: 2.5em; }
   .card-price { font-size: 1rem; font-weight: bold; color: #e8b84b; }
   .card-price-usd { font-size: 0.75rem; color: #888; margin-top: 2px; }
+  .price-change { font-size: 0.72rem; margin-top: 3px; }
+  .price-up { color: #ff6060; }
+  .price-down { color: #60ff90; }
   .badge { display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; font-weight: bold; }
   .badge-ar  { background: #1e3a5f; color: #60aaff; }
   .badge-chr { background: #3a1e5f; color: #c060ff; }
@@ -40,52 +47,119 @@
   .badge-ma  { background: #1e5f5f; color: #60ffff; }
   .badge-ssr { background: #5f1e1e; color: #ff6060; }
 
-  .empty { text-align: center; color: #555; padding: 4rem; font-size: 1.2rem; grid-column: 1/-1; }
+  /* モーダル */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #1a1a2e; border-radius: 16px; border: 1px solid #333; padding: 2rem; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; }
+  .modal-header { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+  .modal-img { width: 120px; border-radius: 8px; object-fit: cover; }
+  .modal-info h2 { font-size: 1rem; color: #e8b84b; margin-bottom: 0.5rem; }
+  .modal-info .jp-name { font-size: 0.8rem; color: #888; margin-bottom: 0.5rem; }
+  .modal-price { font-size: 1.5rem; font-weight: bold; color: #e8b84b; }
+  .modal-usd { font-size: 0.9rem; color: #888; }
+  .modal-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin: 1rem 0; }
+  .stat-box { background: #0f0f1a; border-radius: 8px; padding: 0.75rem; text-align: center; }
+  .stat-label { font-size: 0.7rem; color: #888; margin-bottom: 0.25rem; }
+  .stat-value { font-size: 1rem; font-weight: bold; color: #fff; }
+  .chart-wrap { position: relative; height: 200px; margin-top: 1rem; }
+  .modal-close { float: right; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer; margin-top: -0.5rem; }
+  .btn-store { display: inline-block; margin-top: 1rem; padding: 0.6rem 1.5rem; background: #e8b84b; color: #000; border-radius: 20px; font-weight: bold; text-decoration: none; font-size: 0.9rem; }
 
-  .rate-bar { background: #111; padding: 0.4rem 2rem; font-size: 0.75rem; color: #666; border-bottom: 1px solid #222; }
+  .empty { text-align: center; color: #555; padding: 4rem; grid-column: 1/-1; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🎴 Japanese Card Price List</h1>
-  <p>Live prices from Cardrush · Pokemon TCG · Sealed & Singles</p>
+  <h1>🎴 Japanese Pokemon Card Price List</h1>
+  <p>Live prices from Cardrush · Updated daily · Singles & Graded</p>
 </header>
 
-<div class="rate-bar">
-  Exchange rate: 1 USD = <span id="rate">loading...</span> JPY &nbsp;|&nbsp; Prices include Japanese tax (10%)
+<div class="rate-bar" id="rate-bar">
+  Exchange rate: loading...
 </div>
 
 <div class="controls">
   <div class="tabs">
-    <button class="tab active" onclick="setTab('all')">All</button>
-    <button class="tab" onclick="setTab('AR/CHR')">AR / CHR</button>
-    <button class="tab" onclick="setTab('SR/SSR/HR/UR/SAR/MUR/MA')">SR / SAR / UR+</button>
+    <button class="tab active" onclick="setTab('all', this)">All</button>
+    <button class="tab" onclick="setTab('AR/CHR', this)">AR / CHR</button>
+    <button class="tab" onclick="setTab('SR/SSR/HR/UR/SAR/MUR/MA', this)">SR / SAR / UR+</button>
   </div>
   <input class="search" type="text" id="search" placeholder="Search cards..." oninput="render()">
+  <select class="sort" id="sort" onchange="render()">
+    <option value="price-desc">Price: High to Low</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="name">Name A-Z</option>
+    <option value="change">Biggest Price Drop</option>
+  </select>
   <span class="count" id="count"></span>
 </div>
 
 <div class="grid" id="grid"></div>
 
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">×</button>
+    <div class="modal-header">
+      <img class="modal-img" id="m-img" src="">
+      <div class="modal-info">
+        <h2 id="m-name"></h2>
+        <div class="jp-name" id="m-jpname"></div>
+        <div class="modal-price" id="m-price"></div>
+        <div class="modal-usd" id="m-usd"></div>
+      </div>
+    </div>
+    <div class="modal-stats">
+      <div class="stat-box"><div class="stat-label">7D High</div><div class="stat-value" id="m-high">-</div></div>
+      <div class="stat-box"><div class="stat-label">7D Low</div><div class="stat-value" id="m-low">-</div></div>
+      <div class="stat-box"><div class="stat-label">7D Change</div><div class="stat-value" id="m-change">-</div></div>
+    </div>
+    <div class="chart-wrap"><canvas id="m-chart"></canvas></div>
+    <a class="btn-store" id="m-link" href="#" target="_blank">Buy on Cardrush →</a>
+  </div>
+</div>
+
 <script>
 let data = [];
+let history = {};
 let currentTab = 'all';
 let usdRate = 150;
+let chartInstance = null;
 
 async function loadRate() {
   try {
     const r = await fetch('https://open.er-api.com/v6/latest/USD');
     const j = await r.json();
     usdRate = j.rates.JPY;
-    document.getElementById('rate').textContent = usdRate.toFixed(0);
+    document.getElementById('rate-bar').textContent =
+      `Exchange rate: 1 USD = ¥${usdRate.toFixed(0)} · Prices include Japanese tax (10%)`;
   } catch {
-    document.getElementById('rate').textContent = '~150 (fallback)';
+    document.getElementById('rate-bar').textContent = 'Exchange rate: ~¥150 (fallback)';
   }
 }
 
+async function loadHistory() {
+  try {
+    const files = await fetch('history/').then(r => r.text());
+    const dates = [...files.matchAll(/(\d{4}-\d{2}-\d{2})\.json/g)]
+      .map(m => m[1]).sort().slice(-7);
+    for (const date of dates) {
+      const snap = await fetch(`history/${date}.json`).then(r => r.json());
+      history[date] = snap;
+    }
+  } catch {}
+}
+
+function getPriceHistory(link) {
+  const dates = Object.keys(history).sort();
+  return dates.map(d => ({
+    date: d,
+    price: history[d][link]?.price || null
+  })).filter(d => d.price);
+}
+
 function getBadge(name) {
-  const types = ['MUR','SAR','SSR','CHR','MAR','MA','HR','UR','SR','AR'];
+  const types = ['MUR','SAR','SSR','CHR','MA','HR','UR','SR','AR'];
   for (const t of types) {
     if (name.includes(`【${t}】`)) {
       return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
@@ -94,26 +168,26 @@ function getBadge(name) {
   return '';
 }
 
-function parsePrice(priceStr) {
-  const n = parseInt(priceStr.replace(/[^\d]/g, ''));
-  return isNaN(n) ? 0 : n;
+function getPriceChange(item) {
+  const hist = getPriceHistory(item.link);
+  if (hist.length < 2) return null;
+  const prev = hist[hist.length - 2].price;
+  const curr = hist[hist.length - 1].price;
+  return curr - prev;
 }
 
-function toUSD(jpy) {
-  return (jpy / usdRate).toFixed(2);
-}
-
-function setTab(tab) {
+function setTab(tab, el) {
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+  el.classList.add('active');
   render();
 }
 
 function render() {
   const query = document.getElementById('search').value.toLowerCase();
-  let items = [];
+  const sortBy = document.getElementById('sort').value;
 
+  let items = [];
   if (currentTab === 'all') {
     data.forEach(cat => items = items.concat(cat.items));
   } else {
@@ -121,36 +195,108 @@ function render() {
     if (cat) items = cat.items;
   }
 
-  if (query) items = items.filter(i => i.name.toLowerCase().includes(query));
+  if (query) items = items.filter(i =>
+    (i.nameEn || i.name).toLowerCase().includes(query) ||
+    i.name.toLowerCase().includes(query)
+  );
+
+  if (sortBy === 'price-desc') items.sort((a, b) => b._price - a._price);
+  else if (sortBy === 'price-asc') items.sort((a, b) => a._price - b._price);
+  else if (sortBy === 'name') items.sort((a, b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
+  else if (sortBy === 'change') items.sort((a, b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
 
   document.getElementById('count').textContent = `${items.length} cards`;
 
   const grid = document.getElementById('grid');
-  if (items.length === 0) {
-    grid.innerHTML = '<div class="empty">No cards found</div>';
-    return;
-  }
+  if (!items.length) { grid.innerHTML = '<div class="empty">No cards found</div>'; return; }
 
-  grid.innerHTML = items.map(item => {
-    const jpy = parsePrice(item.price);
-    const usd = toUSD(jpy);
+  grid.innerHTML = items.map((item, i) => {
+    const change = getPriceChange(item);
+    const changeHtml = change
+      ? `<div class="price-change ${change > 0 ? 'price-up' : 'price-down'}">
+           ${change > 0 ? '▲' : '▼'} ¥${Math.abs(change).toLocaleString()}
+         </div>`
+      : '';
     return `
-      <div class="card" onclick="window.open('${item.link}','_blank')">
-        <img src="${item.img}" alt="${item.name}" loading="lazy">
+      <div class="card" onclick="openModal(${i})">
+        <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
         <div class="card-info">
           ${getBadge(item.name)}
-          <div class="card-name">${item.name}</div>
-          <div class="card-price">¥${jpy.toLocaleString()}</div>
-          <div class="card-price-usd">≈ $${usd} USD</div>
+          <div class="card-name">${item.nameEn || item.name}</div>
+          <div class="card-price">¥${item._price.toLocaleString()}</div>
+          <div class="card-price-usd">≈ $${(item._price / usdRate).toFixed(2)} USD</div>
+          ${changeHtml}
         </div>
       </div>`;
   }).join('');
+
+  window._renderedItems = items;
+}
+
+function openModal(idx) {
+  const item = window._renderedItems[idx];
+  const hist = getPriceHistory(item.link);
+
+  document.getElementById('m-img').src = item.img;
+  document.getElementById('m-name').textContent = item.nameEn || item.name;
+  document.getElementById('m-jpname').textContent = item.name;
+  document.getElementById('m-price').textContent = `¥${item._price.toLocaleString()}`;
+  document.getElementById('m-usd').textContent = `≈ $${(item._price / usdRate).toFixed(2)} USD`;
+  document.getElementById('m-link').href = item.link;
+
+  if (hist.length > 0) {
+    const prices = hist.map(h => h.price);
+    const high = Math.max(...prices);
+    const low = Math.min(...prices);
+    const change = hist.length > 1 ? prices[prices.length-1] - prices[0] : 0;
+    document.getElementById('m-high').textContent = `¥${high.toLocaleString()}`;
+    document.getElementById('m-low').textContent = `¥${low.toLocaleString()}`;
+    const changeEl = document.getElementById('m-change');
+    changeEl.textContent = `${change >= 0 ? '+' : ''}¥${change.toLocaleString()}`;
+    changeEl.style.color = change > 0 ? '#ff6060' : change < 0 ? '#60ff90' : '#fff';
+
+    if (chartInstance) chartInstance.destroy();
+    chartInstance = new Chart(document.getElementById('m-chart'), {
+      type: 'line',
+      data: {
+        labels: hist.map(h => h.date),
+        datasets: [{
+          data: hist.map(h => h.price),
+          borderColor: '#e8b84b',
+          backgroundColor: 'rgba(232,184,75,0.1)',
+          tension: 0.3,
+          fill: true,
+          pointBackgroundColor: '#e8b84b',
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#888', font: { size: 10 } }, grid: { color: '#222' } },
+          y: { ticks: { color: '#888', callback: v => `¥${v.toLocaleString()}` }, grid: { color: '#222' } }
+        }
+      }
+    });
+  }
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
 }
 
 async function init() {
   await loadRate();
+  await loadHistory();
   const res = await fetch('data.json');
   data = await res.json();
+  data.forEach(cat => cat.items.forEach(item => {
+    item._price = parseInt(item.price.replace(/[^\d]/g, ''));
+  }));
   render();
 }
 

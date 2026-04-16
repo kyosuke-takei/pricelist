@@ -22,6 +22,9 @@ const trainerMap = {
   'ビートの': "Bede's ",
   'ソニアの': "Sonia's ",
   'メガ': 'Mega ',
+  'カウンターゲイン': 'Counter Gain',
+  '力の砂時計': 'Strength Charm',
+  '〔状態A-〕': '[Condition A-] ',
 };
 
 function translateCardName(japName, nameMap) {
