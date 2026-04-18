@@ -490,9 +490,13 @@ async function init() {
   await loadHistory();
   const res = await fetch('data.json');
   data = await res.json();
-  data.forEach(cat => cat.items.forEach(item => {
-    item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * 1.05);
-  }));
+  data.forEach(cat => {
+    const isSealed = cat.label === 'ポケカ未開封BOX' || cat.label === 'ワンピース未開封BOX';
+    cat.items.forEach(item => {
+      const multiplier = isSealed ? 0.97 : 1.05;
+      item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
+    });
+  });
   render();
 }
 
