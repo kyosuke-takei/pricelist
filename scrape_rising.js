@@ -16,34 +16,46 @@ async function scrapeRising() {
     const results = [];
     document.querySelectorAll('.cp_card.hover_big').forEach((el, i) => {
       const allText = el.innerText ? el.innerText.trim() : '';
-      const img = el.querySelector('img') ? el.querySelector('img').src : null;
+      const imgEl = el.querySelector('img');
+      const img = imgEl ? (imgEl.dataset.src || imgEl.getAttribute('data-lazy-src') || imgEl.src) : null;
       const link = el.querySelector('a') ? el.querySelector('a').href : null;
       const priceMatch = allText.match(/直近価格[\s\S]*?：([\d,]+)円/);
       const changeMatch = allText.match(/価格変動[\s\S]*?：([+\-][\d,]+)円/);
-      const rateMatch = allText.match(/騰落率[\s\S]*?：([+\-][\d.]+%)/);
-      results.push({
-        rank: i + 1,
-        price: priceMatch ? priceMatch[1] : null,
-        change: changeMatch ? changeMatch[1] : null,
-        rate: rateMatch ? rateMatch[1] : null,
-        img: img,
-        link: link
-      });
+      const rateMatch = allText.match(/騰落率[\s\S]*?：([+\-][\d.]+)%/);
+      const rate = rateMatch ? parseFloat(rateMatch[1]) : 0;
+      if (rate >= 5) {
+        results.push({
+          rank: i + 1,
+          price: priceMatch ? priceMatch[1] : null,
+          change: changeMatch ? changeMatch[1] : null,
+          rate: rateMatch ? rateMatch[1] + '%' : null,
+          img: img,
+          link: link
+        });
+      }
     });
-    return results.slice(0, 10);
+    return results;
   });
+
+  console.error('5%以上: ' + items.length + '件');
 
   const detailed = [];
   for (const item of items) {
     try {
       await page.goto(item.link, { waitUntil: 'networkidle2', timeout: 30000 });
       await new Promise(r => setTimeout(r, 2000));
-      const name = await page.evaluate(() => {
+      const result = await page.evaluate(() => {
         const h1 = document.querySelector('h1');
-        return h1 ? h1.innerText.trim() : '';
+        const name = h1 ? h1.innerText.trim() : '';
+        const imgEl = document.querySelector('.photo img, .wp-post-image, article img');
+        const img = imgEl ? (imgEl.dataset.src || imgEl.getAttribute('data-lazy-src') || imgEl.src) : null;
+        return { name, img };
       });
-      detailed.push(Object.assign({}, item, { name: name }));
-      console.log(item.rank + '位: ' + name + ' ' + item.rate);
+      detailed.push(Object.assign({}, item, {
+        name: result.name,
+        img: result.img || item.img
+      }));
+      console.error(item.rank + '位: ' + result.name + ' ' + item.rate);
     } catch(e) {
       detailed.push(Object.assign({}, item, { name: 'Card #' + item.rank }));
     }
@@ -55,8 +67,12 @@ async function scrapeRising() {
 }
 
 scrapeRising().then(function(data) {
-  console.log('\n=== TOP 10 RISING CARDS ===');
-  data.forEach(function(d) {
-    console.log(d.rank + '位: ' + d.name + ' | ' + d.price + '円 | ' + d.change + '円 | ' + d.rate);
-  });
+  if (process.argv.includes('--json')) {
+    process.stdout.write(JSON.stringify(data));
+  } else {
+    console.log('\n=== TOP 10 RISING CARDS ===');
+    data.forEach(function(d) {
+      console.log(d.rank + '位: ' + d.name + ' | ' + d.price + '円 | ' + d.change + '円 | ' + d.rate);
+    });
+  }
 }).catch(console.error);
