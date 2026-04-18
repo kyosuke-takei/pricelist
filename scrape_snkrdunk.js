@@ -19,11 +19,11 @@ async function scrapeSnkrdunk(articleUrl, label) {
     document.querySelectorAll('table tbody tr').forEach(tr => {
       const tds = tr.querySelectorAll('td');
       if (tds.length < 1) return;
-      // tds[0]またはtds[1]のどちらからでもリンクを取得
       const link = tds[0].querySelector('a') || (tds[1] && tds[1].querySelector('a'));
       const name = link?.innerText?.trim();
       const href = link?.href;
-      if (name && href && !href.includes('#')) {
+      // snkrdunk.com/apparels のみ取得
+      if (name && href && href.includes('snkrdunk.com/apparels')) {
         results.push({ name, baseUrl: href.split('?')[0] });
       }
     });
