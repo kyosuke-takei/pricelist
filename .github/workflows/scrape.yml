@@ -61,13 +61,18 @@ jobs:
       - name: Generate reel video
         run: node generate_video.js
 
-      - name: Upload reel artifacts
+      - name: Upload reel image
         uses: actions/upload-artifact@v4
         with:
-          name: reel-${{ github.run_number }}
-          path: |
-            reel_output/reel_*.png
-            reel_output/video_*.mp4
+          name: Reel-Image-PNG
+          path: reel_output/reel_*.png
+          retention-days: 30
+
+      - name: Upload reel video
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reel-Video-MP4
+          path: reel_output/video_*.mp4
           retention-days: 30
 
       - name: Notify Rising Cards
