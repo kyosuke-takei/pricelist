@@ -18,8 +18,9 @@ async function scrapeSnkrdunk(articleUrl, label) {
     const results = [];
     document.querySelectorAll('table tbody tr').forEach(tr => {
       const tds = tr.querySelectorAll('td');
-      if (tds.length < 2) return;
-      const link = tds[1].querySelector('a');
+      if (tds.length < 1) return;
+      // tds[0]またはtds[1]のどちらからでもリンクを取得
+      const link = tds[0].querySelector('a') || (tds[1] && tds[1].querySelector('a'));
       const name = link?.innerText?.trim();
       const href = link?.href;
       if (name && href && !href.includes('#')) {
@@ -40,10 +41,8 @@ async function scrapeSnkrdunk(articleUrl, label) {
       await new Promise(r => setTimeout(r, 2000));
 
       const detail = await page.evaluate(() => {
-        // 商品名（h1）
         const nameRaw = document.querySelector('h1')?.innerText?.trim() || '';
 
-        // スタイルコード（型番）を取得
         let styleCode = '';
         document.querySelectorAll('.product-detail-info-table tr').forEach(tr => {
           const th = tr.querySelector('th')?.innerText?.trim();
@@ -51,8 +50,8 @@ async function scrapeSnkrdunk(articleUrl, label) {
           if (th === 'スタイルコード' && td) styleCode = td;
         });
 
-        // 型番をタイトルの先頭に付ける
-        const cleanCode = styleCode.replace(/^OPC-TCG-/, "").replace(/^OPC-/, "OP-"); const nameEn = cleanCode ? `${cleanCode} ${nameRaw}` : nameRaw;
+        const cleanCode = styleCode.replace(/^OPC-TCG-/, "").replace(/^OPC-/, "OP-");
+        const nameEn = cleanCode ? `${cleanCode} ${nameRaw}` : nameRaw;
 
         const nameJp = document.querySelector('p.product-name-jp')?.innerText?.trim();
         const priceRaw = document.querySelector('span.product-lowest-price')?.innerText?.trim();
