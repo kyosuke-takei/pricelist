@@ -61,19 +61,15 @@ jobs:
       - name: Generate reel video
         run: node generate_video.js
 
-      - name: Upload reel image
-        uses: actions/upload-artifact@v4
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
         with:
-          name: Reel-Image-PNG
-          path: reel_output/reel_*.png
-          retention-days: 30
-
-      - name: Upload reel video
-        uses: actions/upload-artifact@v4
-        with:
-          name: Reel-Video-MP4
-          path: reel_output/video_*.mp4
-          retention-days: 30
+          tag_name: reel-${{ github.run_number }}
+          name: "Reel ${{ github.run_number }}"
+          files: |
+            reel_output/reel_*.png
+            reel_output/video_*.mp4
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify Rising Cards
         env:
