@@ -29,6 +29,8 @@ async function scrapeShinsoku() {
   console.log(`総ページ数: ${totalPages}`);
 
   const allItems = [];
+  let emptyCount = 0;
+  const MAX_EMPTY = 3; // 3ページ連続0件で終了
 
   for (let p = 1; p <= totalPages; p++) {
     const url = p === 1 ? BASE_URL : `https://cardshop-shinsoku.jp/product-list/5/0/photo?page=${p}`;
@@ -62,6 +64,16 @@ async function scrapeShinsoku() {
 
       allItems.push(...items);
       console.log(`  → ${items.length}件取得 (累計: ${allItems.length}件)`);
+
+      if (items.length === 0) {
+        emptyCount++;
+        if (emptyCount >= MAX_EMPTY) {
+          console.log(`${MAX_EMPTY}ページ連続0件のため終了`);
+          break;
+        }
+      } else {
+        emptyCount = 0;
+      }
     } catch(e) {
       console.log(`  → ページ${p}エラー: ${e.message}`);
     }
