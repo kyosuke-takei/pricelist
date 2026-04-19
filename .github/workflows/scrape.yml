@@ -37,6 +37,8 @@ jobs:
         run: node scrape_snkrdunk.js
         env:
           POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
+      - name: Run Shinsoku scraper
+        run: node scrape_shinsoku.js
       - name: Run translator
         run: node translate.js
         env:

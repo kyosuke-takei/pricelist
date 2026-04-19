@@ -135,6 +135,7 @@
     <button class="tab" onclick="setTab('SR/SSR/HR/UR/SAR/MUR/MA', this)">SR / SAR / UR+</button>
     <button class="tab" onclick="setTab('ポケカ未開封BOX', this)">Pokémon Sealed</button>
     <button class="tab" onclick="setTab('ワンピース未開封BOX', this)">One Piece Sealed</button>
+    <button class="tab" onclick="setTab('PSA鑑定済', this)">PSA Graded</button>
   </div>
   <input class="search" type="text" id="search" placeholder="Search..." oninput="render()">
   <select class="sort" id="sort" onchange="render()">
@@ -142,6 +143,8 @@
     <option value="price-asc">Price: Low to High</option>
     <option value="name">Name A-Z</option>
     <option value="change">Biggest Price Drop</option>
+    <option value="grade-desc">Grade: High to Low</option>
+    <option value="grade-asc">Grade: Low to High</option>
   </select>
   <span class="count" id="count"></span>
 </div>
@@ -258,6 +261,11 @@ function getPriceChange(item) {
   return hist[hist.length-1].price - hist[hist.length-2].price;
 }
 
+function extractGrade(item) {
+  const name = item.name || '';
+  const m = name.match(/PSA(\d+)/);
+  return m ? parseInt(m[1]) : 0;
+}
 function setTab(tab, el) {
   currentTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -284,6 +292,8 @@ function render() {
   else if (sortBy === 'price-asc') items.sort((a,b) => a._price - b._price);
   else if (sortBy === 'name') items.sort((a,b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
   else if (sortBy === 'change') items.sort((a,b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
+  else if (sortBy === 'grade-desc') items.sort((a,b) => extractGrade(b) - extractGrade(a));
+  else if (sortBy === 'grade-asc') items.sort((a,b) => extractGrade(a) - extractGrade(b));
   document.getElementById('count').textContent = `${items.length} items`;
   const grid = document.getElementById('grid');
   if (!items.length) { grid.innerHTML = '<div class="empty">No items found</div>'; return; }
