@@ -146,6 +146,7 @@
     <option value="grade-desc">Grade: High to Low</option>
     <option value="grade-asc">Grade: Low to High</option>
   </select>
+  <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> In Stock Only</label>
   <span class="count" id="count"></span>
 </div>
 
@@ -285,6 +286,7 @@ function render() {
     const cat = data.find(c => c.label === currentTab);
     if (cat) items = cat.items.map(item => ({ ...item, category: cat.label }));
   }
+  if (document.getElementById("in-stock-only")?.checked) items = items.filter(i => (typeof i.stock === "number" ? i.stock : 99) > 0);
   if (query) items = items.filter(i =>
     (i.nameEn||i.name).toLowerCase().includes(query) || i.name.toLowerCase().includes(query)
   );
