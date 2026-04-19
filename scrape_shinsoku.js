@@ -53,7 +53,7 @@ async function scrapeShinsoku() {
           const stockMatch = stockText?.match(/\d+/);
           const stock = stockMatch ? parseInt(stockMatch[0]) : 0;
 
-          if (name && price) {
+          if (name && price && stock > 0) {
             results.push({ name, modelNum, price, img, stock });
           }
         });
