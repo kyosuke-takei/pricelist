@@ -213,6 +213,8 @@ let cart = [];
 let data = [];
 let history = {};
 let currentTab = 'all';
+let currentPage = 1;
+const PAGE_SIZE = 100;
 let usdRate = 150;
 let chartInstance = null;
 
@@ -267,8 +269,14 @@ function extractGrade(item) {
   const m = name.match(/PSA(\d+)/);
   return m ? parseInt(m[1]) : 0;
 }
+function goPage(p) {
+  currentPage = p;
+  render();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
 function setTab(tab, el) {
   currentTab = tab;
+  currentPage = 1;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   render();
@@ -296,17 +304,24 @@ function render() {
   else if (sortBy === 'change') items.sort((a,b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
   else if (sortBy === 'grade-desc') items.sort((a,b) => extractGrade(b) - extractGrade(a));
   else if (sortBy === 'grade-asc') items.sort((a,b) => extractGrade(a) - extractGrade(b));
-  document.getElementById('count').textContent = `${items.length} items`;
+  const totalItems = items.length;
+  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+  if (currentPage > totalPages) currentPage = 1;
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = items.slice(start, start + PAGE_SIZE);
+  document.getElementById('count').textContent = `${totalItems} items`;
   const grid = document.getElementById('grid');
-  if (!items.length) { grid.innerHTML = '<div class="empty">No items found</div>'; return; }
-  grid.innerHTML = items.map((item, i) => {
+  if (!pageItems.length) { grid.innerHTML = '<div class="empty">No items found</div>'; return; }
+  window._renderedItems = items;
+  grid.innerHTML = pageItems.map((item, i) => {
     const change = getPriceChange(item);
     const changeHtml = change ? `<div class="price-change ${change>0?'price-up':'price-down'}">${change>0?'▲':'▼'} ¥${Math.abs(change).toLocaleString()}</div>` : '';
     const stockNum = typeof item.stock === 'number' ? item.stock : 99;
     const isSoldOut = stockNum === 0 || !item._price || isNaN(item._price);
     const stockColor = stockNum <= 3 && !isSoldOut ? '#ff6060' : stockNum <= 10 && !isSoldOut ? '#ffaa60' : '#666';
 
-    return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${i})`}">
+    const globalIdx = start + i;
+    return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${globalIdx})`}">
       ${isSoldOut ? '<div class="sold-out-overlay"><div class="sold-out-label">SOLD OUT</div></div>' : ''}
       <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
       <div class="card-info">
@@ -322,7 +337,18 @@ function render() {
       </div>
     </div>`;
   }).join('');
-  window._renderedItems = items;
+  // pagination controls
+  let pagerHtml = '';
+  if (totalPages > 1) {
+    pagerHtml = `<div style="grid-column:1/-1;display:flex;justify-content:center;gap:0.5rem;padding:1rem;flex-wrap:wrap;">`;
+    if (currentPage > 1) pagerHtml += `<button onclick="goPage(${currentPage-1})" style="padding:0.4rem 1rem;border-radius:20px;border:1px solid #e8b84b;background:transparent;color:#e8b84b;cursor:pointer;">← Prev</button>`;
+    for (let p = Math.max(1,currentPage-2); p <= Math.min(totalPages,currentPage+2); p++) {
+      pagerHtml += `<button onclick="goPage(${p})" style="padding:0.4rem 1rem;border-radius:20px;border:1px solid #e8b84b;background:${p===currentPage?'#e8b84b':'transparent'};color:${p===currentPage?'#000':'#e8b84b'};cursor:pointer;">${p}</button>`;
+    }
+    if (currentPage < totalPages) pagerHtml += `<button onclick="goPage(${currentPage+1})" style="padding:0.4rem 1rem;border-radius:20px;border:1px solid #e8b84b;background:transparent;color:#e8b84b;cursor:pointer;">Next →</button>`;
+    pagerHtml += '</div>';
+  }
+  grid.innerHTML += pagerHtml;
 }
 
 function openModal(idx) {
