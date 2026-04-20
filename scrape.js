@@ -67,11 +67,11 @@ async function scrapeAllPages(baseUrl, label) {
 (async () => {
   const results = [];
   results.push(await scrapeAllPages(
-    'https://www.cardrush-pokemon.jp/product-group/447/0/photo?num=100&img=160&available=1&sort=',
+    'https://www.cardrush-pokemon.jp/product-group/447/0/photo?num=100&img=480&available=1&sort=',
     'AR/CHR'
   ));
   results.push(await scrapeAllPages(
-    'https://www.cardrush-pokemon.jp/product-group/22/0/photo?num=100&img=160&available=1&sort=',
+    'https://www.cardrush-pokemon.jp/product-group/22/0/photo?num=100&img=480&available=1&sort=',
     'SR/SSR/HR/UR/SAR/MUR/MA'
   ));
   fs.writeFileSync('data.json', JSON.stringify(results, null, 2));
