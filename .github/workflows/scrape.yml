@@ -51,6 +51,8 @@ jobs:
         run: node generate_reel.js
       - name: Generate reel video
         run: node generate_video.js
+      - name: Generate deals video
+        run: node generate_deals_video.js
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
