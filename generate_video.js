@@ -20,7 +20,7 @@ body { background:#1a1a1a; font-family:'Noto Sans JP','Arial Black',Arial,sans-s
 </style>
 </head>
 <body>
-  <div style="text-align:center;padding:40px 0 30px;">
+  <div style="text-align:center;padding:15px 0 10px;">
     <div style="font-size:22px;color:#C9A84C;letter-spacing:6px;margin-bottom:10px;">JAPANESE POKEMON MARKET</div>
     <div style="font-size:30px;color:#666;letter-spacing:4px;">7-DAY PRICE SURGE RANKING</div>
   </div>
@@ -30,8 +30,8 @@ body { background:#1a1a1a; font-family:'Noto Sans JP','Arial Black',Arial,sans-s
       <div style="font-size:40px;font-weight:900;color:#fff;background:rgba(0,0,0,0.5);padding:6px 20px;border-radius:10px;">#${card.rank}</div>
       <div style="font-size:48px;font-weight:900;color:#FF2244;">&#9650; ${card.rate}</div>
     </div>
-    <div style="background:#000;width:100%;height:700px;display:flex;align-items:center;justify-content:center;">
-      <img src="${card.img}" style="max-width:100%;max-height:700px;object-fit:contain;display:block;"/>
+    <div style="background:#000;width:100%;height:580px;display:flex;align-items:center;justify-content:center;">
+      <img src="${card.img}" style="max-width:100%;max-height:580px;object-fit:contain;display:block;"/>
     </div>
     <div style="padding:24px;background:#111;text-align:center;">
       <div style="font-size:28px;font-weight:900;color:#FFD700;line-height:1.3;">${card.name}</div>
@@ -39,7 +39,7 @@ body { background:#1a1a1a; font-family:'Noto Sans JP','Arial Black',Arial,sans-s
     </div>
   </div>
 
-  <div style="text-align:center;padding:40px 0 20px;">
+  <div style="text-align:center;padding:15px 0 10px;">
     <div style="font-size:22px;color:#C9A84C;letter-spacing:3px;">${index + 1} / 9</div>
   </div>
 
