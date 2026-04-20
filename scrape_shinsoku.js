@@ -1,9 +1,27 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
+const https = require('https');
+const http = require('http');
+const path = require('path');
 puppeteer.use(StealthPlugin());
 
 const BASE_URL = 'https://cardshop-shinsoku.jp/product-list/5/0/photo';
+const IMG_DIR = 'images/psa';
+
+if (!fs.existsSync(IMG_DIR)) fs.mkdirSync(IMG_DIR, { recursive: true });
+
+function downloadImage(url, filepath) {
+  return new Promise((resolve) => {
+    if (fs.existsSync(filepath)) return resolve(true);
+    const proto = url.startsWith('https') ? https : http;
+    const file = fs.createWriteStream(filepath);
+    proto.get(url, res => {
+      res.pipe(file);
+      file.on('finish', () => resolve(true));
+    }).on('error', () => resolve(false));
+  });
+}
 
 async function scrapeShinsoku() {
   const browser = await puppeteer.launch({
@@ -30,7 +48,7 @@ async function scrapeShinsoku() {
 
   const allItems = [];
   let emptyCount = 0;
-  const MAX_EMPTY = 3; // 3ページ連続0件で終了
+  const MAX_EMPTY = 3;
 
   for (let p = 1; p <= totalPages; p++) {
     const url = p === 1 ? BASE_URL : `https://cardshop-shinsoku.jp/product-list/5/0/photo?page=${p}`;
@@ -46,7 +64,7 @@ async function scrapeShinsoku() {
           const dataEl = photoEl.nextElementSibling;
           if (!dataEl || !dataEl.classList.contains('list_item_data')) return;
 
-          const img = photoEl.querySelector('img')?.src || photoEl.querySelector('[data-src]')?.getAttribute('data-src');
+          const imgUrl = photoEl.querySelector('img')?.src || photoEl.querySelector('[data-src]')?.getAttribute('data-src');
           const name = dataEl.querySelector('.goods_name')?.innerText?.trim();
           const modelNum = dataEl.querySelector('.model_number_value')?.innerText?.trim();
           const priceRaw = dataEl.querySelector('.figure')?.innerText?.trim();
@@ -56,11 +74,22 @@ async function scrapeShinsoku() {
           const stock = stockMatch ? parseInt(stockMatch[0]) : 0;
 
           if (name && price && stock > 0) {
-            results.push({ name, modelNum, price, img, stock });
+            results.push({ name, modelNum, price, imgUrl, stock });
           }
         });
         return results;
       });
+
+      // 画像ダウンロード
+      for (const item of items) {
+        if (item.imgUrl && item.modelNum) {
+          const ext = path.extname(item.imgUrl.split('?')[0]) || '.jpg';
+          const filepath = `${IMG_DIR}/${item.modelNum}${ext}`;
+          await downloadImage(item.imgUrl, filepath);
+          item.img = filepath;
+        }
+        delete item.imgUrl;
+      }
 
       allItems.push(...items);
       console.log(`  → ${items.length}件取得 (累計: ${allItems.length}件)`);
