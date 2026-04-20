@@ -348,7 +348,7 @@ function render() {
     if (currentPage < totalPages) pagerHtml += `<button onclick="goPage(${currentPage+1})" style="padding:0.4rem 1rem;border-radius:20px;border:1px solid #e8b84b;background:transparent;color:#e8b84b;cursor:pointer;">Next →</button>`;
     pagerHtml += '</div>';
   }
-  grid.innerHTML += pagerHtml;
+  grid.innerHTML = pagerHtml + grid.innerHTML + pagerHtml;
 }
 
 function openModal(idx) {
