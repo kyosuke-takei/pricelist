@@ -232,12 +232,18 @@ async function loadRate() {
 
 async function loadHistory() {
   try {
-    const files = await fetch('history/').then(r => r.text());
-    const dates = [...files.matchAll(/(\d{4}-\d{2}-\d{2})\.json/g)]
-      .map(m => m[1]).sort().slice(-7);
+    const today = new Date();
+    const dates = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      dates.push(d.toISOString().slice(0, 10));
+    }
     for (const date of dates) {
-      const snap = await fetch(`history/${date}.json`).then(r => r.json());
-      history[date] = snap;
+      try {
+        const snap = await fetch(`history/${date}.json`).then(r => { if (!r.ok) throw new Error(); return r.json(); });
+        history[date] = snap;
+      } catch {}
     }
   } catch {}
 }
