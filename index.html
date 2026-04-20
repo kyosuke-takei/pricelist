@@ -255,11 +255,13 @@ function getPriceHistory(link) {
 }
 
 function getBadge(item) {
-  if (item.category === 'ワンピース未開封BOX') return '<span class="badge badge-op">ONE PIECE</span>';
-  if (item.category === 'ポケカ未開封BOX') return '<span class="badge badge-box">SEALED</span>';
+  const isTrending = (window._trending||[]).find(t => t.url === item.link);
+  const hotBadge = isTrending ? '<span class="badge" style="background:#ff2244;color:#fff;">🔥 HOT</span>' : '';
+  if (item.category === 'ワンピース未開封BOX') return hotBadge + '<span class="badge badge-op">ONE PIECE</span>';
+  if (item.category === 'ポケカ未開封BOX') return hotBadge + '<span class="badge badge-box">SEALED</span>';
   const types = ['MUR','SAR','SSR','CHR','MA','HR','UR','SR','AR'];
   for (const t of types) {
-    if (item.name.includes(`【${t}】`)) return `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
+    if (item.name.includes(`【${t}】`)) return hotBadge + `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
   }
   return '';
 }
@@ -534,6 +536,10 @@ async function init() {
   await loadHistory();
   const res = await fetch('data.json');
   data = await res.json();
+  try {
+    const trendRes = await fetch('trending_cache.json');
+    window._trending = await trendRes.json();
+  } catch { window._trending = []; }
   data.forEach(cat => {
     const isSealed = cat.label === 'ポケカ未開封BOX' || cat.label === 'ワンピース未開封BOX';
     cat.items.forEach(item => {

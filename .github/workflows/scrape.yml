@@ -47,6 +47,8 @@ jobs:
         run: node save_history.js
       - name: Generate rising cache
         run: node scrape_rising.js --json > rising_cache.json
+      - name: Generate trending cache
+        run: node scrape_trending.js
       - name: Generate reel image
         run: node generate_reel.js
       - name: Generate reel video
