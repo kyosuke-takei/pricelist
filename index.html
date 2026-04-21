@@ -690,6 +690,7 @@ function calcShipping() {
   const fuelRate = window._fuelRate || 0.48;
   const fuelCharge = Math.ceil(baseRate * fuelRate);
   const total = baseRate + fuelCharge;
+  const totalWithMarkup = Math.ceil(total * 1.05);
 
   shippingDiv.innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
