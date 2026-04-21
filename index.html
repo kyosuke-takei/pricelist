@@ -564,6 +564,7 @@ function renderCart() {
     </div>`).join('');
   const total = cart.reduce((s,c) => s+c._price*c.qty, 0);
   document.getElementById('cart-total').innerHTML = `Est. Total: ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
+  calcShipping();
 }
 
 // DHL料金表（輸出）非書類
