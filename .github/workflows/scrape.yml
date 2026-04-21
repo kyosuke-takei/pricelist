@@ -49,6 +49,8 @@ jobs:
         run: node scrape_rising.js --json > rising_cache.json
       - name: Generate trending cache
         run: node scrape_trending.js
+      - name: Scrape fuel surcharge
+        run: node scrape_fuel.js
       - name: Generate reel image
         run: node generate_reel.js
       - name: Generate reel video
