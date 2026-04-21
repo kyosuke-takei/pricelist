@@ -695,7 +695,7 @@ function calcShipping() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
       <div style="color:#888;">Base Rate</div><div style="color:#fff;">¥${baseRate.toLocaleString()}</div>
       <div style="color:#888;">Fuel Surcharge (${Math.round(fuelRate*100)}%)</div><div style="color:#fff;">¥${fuelCharge.toLocaleString()}</div>
-      <div style="color:#e8b84b;font-weight:bold;">Est. Shipping</div><div style="color:#e8b84b;font-weight:bold;">¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)}</span></div>
+      <div style="color:#e8b84b;font-weight:bold;">Est. Shipping</div><div style="color:#e8b84b;font-weight:bold;">¥${totalWithMarkup.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(totalWithMarkup/usdRate).toFixed(2)}</span></div>
     </div>
     <div style="color:#ff9060;font-size:0.75rem;margin-top:0.5rem;">⚠️ Estimate only. Actual shipping may vary. Excludes customs duties &amp; taxes.</div>
   `;
