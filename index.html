@@ -31,6 +31,7 @@
   .count { color: #aaa; font-size: 0.85rem; margin-left: auto; }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
+  @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; padding: 0.75rem; } }
 
   .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a4a; transition: transform 0.2s, border-color 0.2s; cursor: pointer; position: relative; }
   .card:hover { transform: translateY(-4px); border-color: #e8b84b; }
