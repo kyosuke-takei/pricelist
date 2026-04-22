@@ -725,7 +725,7 @@ function calcShipping(){
       </div>
       <div style="background:#0f0f1a;border-radius:6px;padding:0.6rem;border:1px solid ${cheap==='fedex'?'#60ff90':'#2a2a4a'};">
         <div style="font-size:0.7rem;color:#aaa;margin-bottom:0.2rem;">✈️ FedEx</div>
-        ${fxTotal!==null?`<div style="font-size:1rem;font-weight:bold;color:${cheap==='fedex'?'#60ff90':'#aaa'};">¥${fxTotal.toLocaleString()}</div><div style="font-size:0.65rem;color:#888;">≈ $${(fxTotal/usdRate).toFixed(2)}</div><div style="font-size:0.65rem;color:#aaa;margin-top:0.25rem;">${fxService}</div>${cheap==='fedex'?'<div style="font-size:0.65rem;color:#60ff90;font-weight:bold;margin-top:0.2rem;">✓ Best Price</div>':'`}'<div style="color:#888;font-size:0.8rem;">N/A</div>'}
+        ${fxTotal!==null?`<div style="font-size:1rem;font-weight:bold;color:${cheap==='fedex'?'#60ff90':'#aaa'};">¥${fxTotal.toLocaleString()}</div><div style="font-size:0.65rem;color:#888;">≈ $${(fxTotal/usdRate).toFixed(2)}</div><div style="font-size:0.65rem;color:#aaa;margin-top:0.25rem;">${fxService}</div>${cheap==='fedex'?'<div style="font-size:0.65rem;color:#60ff90;font-weight:bold;margin-top:0.2rem;">✓ Best Price</div>':''}`:'<div style="color:#888;font-size:0.8rem;">N/A</div>'}
       </div>
     </div>
     <div style="color:#ff9060;font-size:0.72rem;">⚠️ Estimate only. Excludes customs duties & taxes.</div>
