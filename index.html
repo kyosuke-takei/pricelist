@@ -775,9 +775,6 @@ async function submitOrder() {
       })
     });
     const result = await res.json();
-      })
-    });
-    const result = await res.json();
     if (result.success) {
       document.getElementById('order-form').style.display = 'none';
       document.getElementById('order-success').style.display = 'block';
