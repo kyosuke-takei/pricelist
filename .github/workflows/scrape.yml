@@ -51,6 +51,8 @@ jobs:
         run: node scrape_trending.js
       - name: Scrape fuel surcharge
         run: node scrape_fuel.js
+      - name: Scrape FedEx fuel surcharge
+        run: node scrape_fedex_fuel.js
       - name: Generate reel image
         run: node generate_reel.js
       - name: Generate reel video
