@@ -712,7 +712,7 @@ function calcShipping(){
   const fxIPE = calcFedExFromTable(FEDEX_IPE,FEDEX_IPE_EXTRA,fxZone,wK);
   const fxIP  = calcFedExFromTable(FEDEX_IP, FEDEX_IP_EXTRA, fxZone,wK);
   const fxFICP= calcFedExFromTable(FEDEX_FICP,FEDEX_FICP_EXTRA,fxZone,wK);
-  const toTotal = r => r ? Math.ceil((r + Math.ceil(r * fxFuel)) * 1.05) : null;
+  const toTotal = r => r ? Math.ceil((r + Math.ceil(r * fxFuel)) * 1.10) : null;
   const tIPE=toTotal(fxIPE), tIP=toTotal(fxIP), tFICP=toTotal(fxFICP);
   const fxBest = Math.min(...[tIPE,tIP,tFICP].filter(x=>x!==null));
   const cheapest = (fxBest < dhlTotal) ? 'fedex' : 'dhl';
@@ -733,9 +733,9 @@ function calcShipping(){
       </div>
       <div style="background:#0f0f1a;border-radius:6px;padding:0.6rem;border:1px solid ${cheapest==='fedex'?'#60ff90':'#2a2a4a'};">
         <div style="font-size:0.7rem;color:#aaa;margin-bottom:0.3rem;">✈️ FedEx ${cheapest==='fedex'?'<span style="color:#60ff90;font-weight:bold;">✓ Best Price</span>':''}</div>
-        ${fxRow(tIPE,'IPE (Priority Express)')}
-        ${fxRow(tIP,'IP (Priority)')}
-        ${fxRow(tFICP,'FICP (Connect Plus)')}
+        ${fxRow(tIPE,'IPE (Priority Express) · 1-2 days')}
+        ${fxRow(tIP,'IP (Priority) · 2-3 days')}
+        ${fxRow(tFICP,'FICP (Connect Plus) · 4-7 days')}
       </div>
     </div>
     <div style="color:#ff9060;font-size:0.72rem;">⚠️ Estimate only. Excludes customs duties & taxes.</div>
