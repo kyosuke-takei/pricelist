@@ -772,12 +772,6 @@ async function submitOrder() {
         notes: document.getElementById('f-notes').value,
         items: cart.map(c => ({ name: c.name, nameEn: c.nameEn||c.name, price: c._price, qty: c.qty })),
         shipping
-      })
-    });
-        shipping
-      })
-    });
-    const result = await res.json();
     if (result.success) {
       document.getElementById('order-form').style.display = 'none';
       document.getElementById('order-success').style.display = 'block';
