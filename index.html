@@ -774,18 +774,6 @@ async function submitOrder() {
         shipping
       })
     });
-    const fxFuel=(window._fedexFuelRate||45.5)/100;
-    const fxIPE=calcFedExFromTable(FEDEX_IPE,FEDEX_IPE_EXTRA,fxZone,wK);
-    const fxIP=calcFedExFromTable(FEDEX_IP,FEDEX_IP_EXTRA,fxZone,wK);
-    const fxFICP=calcFedExFromTable(FEDEX_FICP,FEDEX_FICP_EXTRA,fxZone,wK);
-    const toT=r=>r?Math.ceil((r+Math.ceil(r*fxFuel))*1.10):null;
-    const shipping={weightKg:wK,dhl:{total:dhlTotal,isBtoC},fedex:{IPE:toT(fxIPE),IP:toT(fxIP),FICP:toT(fxFICP)}};
-    const res = await fetch(GAS_URL, {
-      method: 'POST',
-      body: JSON.stringify({
-        name, email, country, address,
-        notes: document.getElementById('f-notes').value,
-        items: cart.map(c => ({ name: c.name, nameEn: c.nameEn||c.name, price: c._price, qty: c.qty })),
         shipping
       })
     });
