@@ -1196,13 +1196,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f32382e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68056": {
-    "name": "〔状態A-〕マッギョ【AR】{115/086}",
-    "nameEn": "[Condition A-] Stunfisk【AR】{115/086}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f32392e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68057": {
     "name": "〔状態A-〕コロモリ【AR】{116/086}",
     "nameEn": "[Condition A-] Woobat【AR】{116/086}",
@@ -1222,13 +1215,6 @@
     "nameEn": "[Condition A-] Sigilyph【AR】{118/086}",
     "price": 390,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f33322e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68060": {
-    "name": "〔状態A-〕デスマス【AR】{119/086}",
-    "nameEn": "[Condition A-] Yamask【AR】{119/086}",
-    "price": 530,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f33332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/68061": {
@@ -1378,13 +1364,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f35362e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68084": {
-    "name": "〔状態A-〕ジヘッド【AR】{143/086}",
-    "nameEn": "[Condition A-] Zweilous【AR】{143/086}",
-    "price": 530,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f35372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68085": {
     "name": "〔状態A-〕テッシード【AR】{144/086}",
     "nameEn": "[Condition A-] Ferroseed【AR】{144/086}",
@@ -1476,13 +1455,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f38372e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68301": {
-    "name": "〔状態B〕ヤナッキー【AR】{090/086}",
-    "nameEn": "〔状態B〕Simisage【AR】{090/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f38362e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68302": {
     "name": "〔状態B〕チュリネ【AR】{091/086}",
     "nameEn": "〔状態B〕Petilil【AR】{091/086}",
@@ -1518,46 +1490,11 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f37322e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68317": {
-    "name": "〔状態B〕ヒヤッキー【AR】{106/086}",
-    "nameEn": "〔状態B〕Simipour【AR】{106/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f37302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68319": {
-    "name": "〔状態B〕ガマガル【AR】{108/086}",
-    "nameEn": "〔状態B〕Palpitoad【AR】{108/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f36382e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68322": {
-    "name": "〔状態B〕アバゴーラ【AR】{111/086}",
-    "nameEn": "〔状態B〕Carracosta【AR】{111/086}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f36352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68324": {
     "name": "〔状態B〕クマシュン【AR】{113/086}",
     "nameEn": "〔状態B〕Cubchoo【AR】{113/086}",
     "price": 780,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f36332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68331": {
-    "name": "〔状態B〕ボルトロス【AR】{120/086}",
-    "nameEn": "〔状態B〕Thundurus【AR】{120/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f35352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68337": {
-    "name": "〔状態B〕リグレー【AR】{126/086}",
-    "nameEn": "〔状態B〕Elgyem【AR】{126/086}",
-    "price": 420,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f34392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/68338": {
@@ -1588,20 +1525,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f33382e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68349": {
-    "name": "〔状態B〕フシデ【AR】{138/086}",
-    "nameEn": "〔状態B〕Venipede【AR】{138/086}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f33372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68350": {
-    "name": "〔状態B〕ホイーガ【AR】{139/086}",
-    "nameEn": "〔状態B〕Whirlipede【AR】{139/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f33362e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68354": {
     "name": "〔状態B〕ワルビアル【AR】{143/086}",
     "nameEn": "〔状態B〕Krookodile【AR】{143/086}",
@@ -1614,13 +1537,6 @@
     "nameEn": "〔状態B〕Vullaby【AR】{144/086}",
     "price": 580,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f33312e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68357": {
-    "name": "〔状態B〕シュバルゴ【AR】{146/086}",
-    "nameEn": "〔状態B〕Escavalier【AR】{146/086}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356313142415253525f32392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/68358": {
@@ -1707,13 +1623,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f32322e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/68560": {
-    "name": "〔状態B〕バニリッチ【AR】{109/086}",
-    "nameEn": "〔状態B〕Vanillish【AR】{109/086}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f32332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/68563": {
     "name": "〔状態B〕ゼブライカ【AR】{112/086}",
     "nameEn": "〔状態B〕Zebstrika【AR】{112/086}",
@@ -1726,13 +1635,6 @@
     "nameEn": "〔状態B〕Woobat【AR】{116/086}",
     "price": 580,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f33302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68568": {
-    "name": "〔状態B〕ココロモリ【AR】{117/086}",
-    "nameEn": "〔状態B〕Swoobat【AR】{117/086}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f33312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/68571": {
@@ -1775,13 +1677,6 @@
     "nameEn": "〔状態B〕Rufflet【AR】{156/086}",
     "price": 580,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f37302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/68608": {
-    "name": "〔状態B〕ウォーグル【AR】{157/086}",
-    "nameEn": "〔状態B〕Braviary【AR】{157/086}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f737631317741525f37312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/68609": {
@@ -1903,13 +1798,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/65327": {
-    "name": "〔状態A-〕ロケット団のワナイダー【AR】{099/098}",
-    "nameEn": "[Condition A-] Team Rocket's Spidops【AR】{099/098}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f33342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/65328": {
     "name": "〔状態A-〕ロケット団のヘルガー【AR】{100/098}",
     "nameEn": "[Condition A-] Team Rocket's Houndoom【AR】{100/098}",
@@ -1931,20 +1819,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f33312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/65333": {
-    "name": "〔状態A-〕ロケット団のマタドガス【AR】{105/098}",
-    "nameEn": "[Condition A-] Team Rocket's Weezing【AR】{105/098}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32382e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/65334": {
-    "name": "〔状態A-〕ロケット団のヤミカラス【AR】{106/098}",
-    "nameEn": "[Condition A-] Team Rocket's Murkrow【AR】{106/098}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/65335": {
     "name": "〔状態A-〕ザマゼンタ【AR】{107/098}",
     "nameEn": "[Condition A-] Zamazenta【AR】{107/098}",
@@ -1952,25 +1826,11 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32362e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/65336": {
-    "name": "〔状態A-〕ロケット団のラッタ【AR】{108/098}",
-    "nameEn": "[Condition A-] Team Rocket's Raticate【AR】{108/098}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/65337": {
     "name": "〔状態A-〕ロケット団のニャース【AR】{109/098}",
     "nameEn": "[Condition A-] Team Rocket's Meowth【AR】{109/098}",
     "price": 1590,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/65338": {
-    "name": "〔状態A-〕ガルーラ【AR】{110/098}",
-    "nameEn": "[Condition A-] Kangaskhan【AR】{110/098}",
-    "price": 490,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376313061725f32332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/64614": {
@@ -3072,13 +2932,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535636615f332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/57493": {
-    "name": "〔状態B〕タッツー【AR】{067/064}",
-    "nameEn": "〔状態B〕Horsea【AR】{067/064}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535636615f332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/53274": {
     "name": "ユキハミ【AR】{073/071}",
     "nameEn": "Snom【AR】{073/071}",
@@ -3219,24 +3072,10 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f38342e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/38839": {
-    "name": "〔状態B〕マナフィ【AR】{178/172}",
-    "nameEn": "〔状態B〕Manaphy【AR】{178/172}",
-    "price": 580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f38342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/38626": {
     "name": "〔状態A-〕ケルディオ【AR】{179/172}",
     "nameEn": "[Condition A-] Keldeo【AR】{179/172}",
     "price": 730,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f38332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/38840": {
-    "name": "〔状態B〕ケルディオ【AR】{179/172}",
-    "nameEn": "〔状態B〕Keldeo【AR】{179/172}",
-    "price": 580,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f38332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -3321,13 +3160,6 @@
     "name": "〔状態A-〕ウェルカモ【AR】{082/073}",
     "nameEn": "[Condition A-] Quaxwell【AR】{082/073}",
     "price": 530,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535631615f41525f342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/40685": {
-    "name": "〔状態B〕ウェルカモ【AR】{082/073}",
-    "nameEn": "〔状態B〕Quaxwell【AR】{082/073}",
-    "price": 420,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535631615f41525f342e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -3716,13 +3548,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f38312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/39888": {
-    "name": "〔状態B〕パチリス【AR】{084/078}",
-    "nameEn": "〔状態B〕パChiliス【AR】{084/078}",
-    "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535631565f41525f362e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/39536": {
     "name": "パーモット【AR】{085/078}",
     "nameEn": "Pawmot【AR】{085/078}",
@@ -3839,13 +3664,6 @@
     "name": "〔状態A-〕ハバタクカミ【AR】{076/071}",
     "nameEn": "[Condition A-] Flutter Mane【AR】{076/071}",
     "price": 380,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/53582": {
-    "name": "〔状態B〕ハバタクカミ【AR】{076/071}",
-    "nameEn": "〔状態B〕Flutter Mane【AR】{076/071}",
-    "price": 280,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f352e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -4388,13 +4206,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f37342e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/38635": {
-    "name": "〔状態A-〕ガラルサンダー【AR】{188/172}",
-    "nameEn": "[Condition A-] ガラルZapdos【AR】{188/172}",
-    "price": 390,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525f533132615f37342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/38369": {
     "name": "ソルロック【AR】{189/172}",
     "nameEn": "Solrock【AR】{189/172}",
@@ -4504,13 +4315,6 @@
     "name": "〔状態A-〕コジョンド【AR】{072/066}",
     "nameEn": "[Condition A-] Mienshao【AR】{072/066}",
     "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376346b5f362e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/49856": {
-    "name": "〔状態B〕コジョンド【AR】{072/066}",
-    "nameEn": "〔状態B〕Mienshao【AR】{072/066}",
-    "price": 320,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f7376346b5f362e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -5760,13 +5564,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5339613036393036372e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/33879": {
-    "name": "〔状態B〕シャンデラ【CHR】{069/067}",
-    "nameEn": "〔状態B〕Chandelure【CHR】{069/067}",
-    "price": 320,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5339613036393036372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/33004": {
     "name": "〔状態A-〕リザードン【CHR】{187/184}",
     "nameEn": "[Condition A-] Charizard【CHR】{187/184}",
@@ -5830,13 +5627,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383432322e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/33008": {
-    "name": "〔状態A-〕オクタン【CHR】{191/184}",
-    "nameEn": "[Condition A-] Octillery【CHR】{191/184}",
-    "price": 380,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383432322e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/22971": {
     "name": "モスノウ【CHR】{192/184}",
     "nameEn": "Frosmoth【CHR】{192/184}",
@@ -5890,13 +5680,6 @@
     "name": "ピカチュウ【CHR】{073/071}",
     "nameEn": "Pikachu【CHR】{073/071}",
     "price": 9980,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f533130613037332d3037312e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/35383": {
-    "name": "〔状態A-〕ピカチュウ【CHR】{073/071}",
-    "nameEn": "[Condition A-] Pikachu【CHR】{073/071}",
-    "price": 6980,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f533130613037332d3037312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -5963,13 +5746,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433302e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/33015": {
-    "name": "〔状態A-〕ヨノワール【CHR】{198/184}",
-    "nameEn": "[Condition A-] Dusknoir【CHR】{198/184}",
-    "price": 260,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/22978": {
     "name": "カラマネロ【CHR】{199/184}",
     "nameEn": "Malamar【CHR】{199/184}",
@@ -6002,13 +5778,6 @@
     "name": "マホイップ【CHR】{201/184}",
     "nameEn": "Alcremie【CHR】{201/184}",
     "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/33018": {
-    "name": "〔状態A-〕マホイップ【CHR】{201/184}",
-    "nameEn": "[Condition A-] Alcremie【CHR】{201/184}",
-    "price": 380,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -6054,24 +5823,10 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433342e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/63541": {
-    "name": "〔状態B〕イワンコ【CHR】{202/184}",
-    "nameEn": "〔状態B〕Rockruff【CHR】{202/184}",
-    "price": 320,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433342e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/22982": {
     "name": "ナゲツケサル【CHR】{203/184}",
     "nameEn": "Passimian【CHR】{203/184}",
     "price": 480,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/33020": {
-    "name": "〔状態A-〕ナゲツケサル【CHR】{203/184}",
-    "nameEn": "[Condition A-] Passimian【CHR】{203/184}",
-    "price": 380,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383433352e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
@@ -6145,25 +5900,11 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383434302e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/33024": {
-    "name": "〔状態A-〕ガラルタチフサグマ【CHR】{207/184}",
-    "nameEn": "[Condition A-] ガラルObstagoon【CHR】{207/184}",
-    "price": 380,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535f5f36383234383434302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/33696": {
     "name": "グラエナ【CHR】{072/067}",
     "nameEn": "Mightyena【CHR】{072/067}",
     "price": 580,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f32303232303232355f6566633239392e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/33789": {
-    "name": "〔状態A-〕グラエナ【CHR】{072/067}",
-    "nameEn": "[Condition A-] Mightyena【CHR】{072/067}",
-    "price": 330,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f32303232303232365f3465653339352e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/35355": {
@@ -6248,13 +5989,6 @@
     "nameEn": "Hoothoot【CHR】{073/067}",
     "price": 480,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f32303232303232355f3839653638632e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/33790": {
-    "name": "〔状態A-〕ホーホー【CHR】{073/067}",
-    "nameEn": "[Condition A-] Hoothoot【CHR】{073/067}",
-    "price": 380,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f32303232303232365f3338346138382e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/35387": {
@@ -6649,13 +6383,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f6d4341525f392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/76304": {
-    "name": "〔状態A-〕イーブイ(AR仕様)【-】{755/742}",
-    "nameEn": "[Condition A-] Eevee(AR仕様)【-】{755/742}",
-    "price": 70800,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f6d4341525f31332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/76700": {
     "name": "〔状態B〕クチート(AR仕様)【-】{754/742}",
     "nameEn": "〔状態B〕Mawile(AR仕様)【-】{754/742}",
@@ -6817,13 +6544,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/78841": {
-    "name": "〔状態B〕アマルルガ【AR】{084/080}",
-    "nameEn": "〔状態B〕Aurorus【AR】{084/080}",
-    "price": 220,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f31372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/76695": {
     "name": "〔状態B〕ジュペッタ(AR仕様)【-】{749/742}",
     "nameEn": "〔状態B〕Banette(AR仕様)【-】{749/742}",
@@ -6915,20 +6635,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31332e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/79994": {
-    "name": "〔状態B〕フォッコ【AR】{085/083}",
-    "nameEn": "〔状態B〕Fennekin【AR】{085/083}",
-    "price": 320,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/79996": {
-    "name": "〔状態B〕ゲコガシラ【AR】{087/083}",
-    "nameEn": "〔状態B〕Frogadier【AR】{087/083}",
-    "price": 420,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f352e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/79997": {
     "name": "〔状態B〕デンリュウ【AR】{088/083}",
     "nameEn": "〔状態B〕Ampharos【AR】{088/083}",
@@ -6957,25 +6663,11 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/80001": {
-    "name": "〔状態B〕メタング【AR】{092/083}",
-    "nameEn": "〔状態B〕Metang【AR】{092/083}",
-    "price": 280,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/80002": {
     "name": "〔状態B〕ヌメイル【AR】{093/083}",
     "nameEn": "〔状態B〕Sliggoo【AR】{093/083}",
     "price": 280,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31312e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/80003": {
-    "name": "〔状態B〕ケンタロス【AR】{094/083}",
-    "nameEn": "〔状態B〕Tauros【AR】{094/083}",
-    "price": 280,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31322e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/80004": {
@@ -7417,13 +7109,6 @@
     "nameEn": "[Condition A-] シロナのGarchomp ex【SR】{080/063}",
     "price": 2630,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639615f31332e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/64631": {
-    "name": "〔状態A-〕ペパーのマフィティフex【SR】{081/063}",
-    "nameEn": "[Condition A-] ペパーのMabosstiff ex【SR】{081/063}",
-    "price": 260,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639615f31322e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
   "https://www.cardrush-pokemon.jp/product/64635": {
@@ -7921,13 +7606,6 @@
     "nameEn": "[Condition A-] ブラックKyurem ex【SR】{077/064}",
     "price": 790,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535637615f31382e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/59635": {
-    "name": "〔状態A-〕ラティアスex【SR】{078/064}",
-    "nameEn": "[Condition A-] Latias ex【SR】{078/064}",
-    "price": 2780,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535637615f31372e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
   "https://www.cardrush-pokemon.jp/product/59636": {
@@ -8441,32 +8119,11 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356362d31322e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/55786": {
-    "name": "〔状態A-〕オーガポンみどりのめんex【SAR】{125/101}",
-    "nameEn": "[Condition A-] Ogerponみどりのめんex【SAR】{125/101}",
-    "price": 2780,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356362d392e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/55787": {
-    "name": "〔状態A-〕オーガポンかまどのめんex【SAR】{126/101}",
-    "nameEn": "[Condition A-] Ogerponかまどのめんex【SAR】{126/101}",
-    "price": 1230,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356362d382e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/55788": {
     "name": "〔状態A-〕オーガポンいどのめんex【SAR】{127/101}",
     "nameEn": "[Condition A-] Ogerponいどのめんex【SAR】{127/101}",
     "price": 2180,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356362d372e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/55789": {
-    "name": "〔状態A-〕オーガポンいしずえのめんex【SAR】{128/101}",
-    "nameEn": "[Condition A-] Ogerponいしずえのめんex【SAR】{128/101}",
-    "price": 1190,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f5356362d362e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
   "https://www.cardrush-pokemon.jp/product/55792": {
@@ -8917,20 +8574,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f31352e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/53557": {
-    "name": "〔状態B〕ウミトリオex【SR】{087/071}",
-    "nameEn": "〔状態B〕Wugtrio ex【SR】{087/071}",
-    "price": 280,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f31362e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/53561": {
-    "name": "〔状態B〕ガオガエンex【SR】{085/071}",
-    "nameEn": "〔状態B〕Incineroar ex【SR】{085/071}",
-    "price": 230,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354d5f31342e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/53563": {
     "name": "〔状態B〕テツノイワオex【SR】{087/071}",
     "nameEn": "〔状態B〕Iron Boulder ex【SR】{087/071}",
@@ -9232,13 +8875,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f352e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/78798": {
-    "name": "〔状態A-〕メガジガルデex【SR】{097/080}",
-    "nameEn": "[Condition A-] Mega Zygarde ex【SR】{097/080}",
-    "price": 630,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f342e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/78799": {
     "name": "〔状態A-〕イベルタルex【SR】{098/080}",
     "nameEn": "[Condition A-] Yveltal ex【SR】{098/080}",
@@ -9309,13 +8945,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f332e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/79971": {
-    "name": "〔状態A-〕メガゲッコウガex【SAR】{114/083}",
-    "nameEn": "[Condition A-] Mega Greninja ex【SAR】{114/083}",
-    "price": 44800,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f33312e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/79972": {
     "name": "〔状態A-〕メガフラエッテex【SAR】{115/083}",
     "nameEn": "[Condition A-] Mega Floette ex【SAR】{115/083}",
@@ -9328,13 +8957,6 @@
     "nameEn": "[Condition A-] Mega Dragalge ex【SAR】{116/083}",
     "price": 2430,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f33332e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
-  "https://www.cardrush-pokemon.jp/product/79953": {
-    "name": "〔状態A-〕スピアーex【SR】{096/083}",
-    "nameEn": "[Condition A-] Beedrill ex【SR】{096/083}",
-    "price": 530,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d345f31342e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
   "https://www.cardrush-pokemon.jp/product/79955": {
@@ -9445,28 +9067,28 @@
   "https://snkrdunk.com/apparels/762693": {
     "name": "pkmn-tcg-M4 Pokemon Card Game MEGA Expansion Pack \"Ninja Spinner\" Box",
     "nameEn": "pkmn-tcg-M4 Pokemon Card Game MEGA Expansion Pack \"Ninja Spinner\" Box",
-    "price": 13999,
+    "price": 14342,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/244b2a87-ebe1-41bb-a812-6daa8aaddc80.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/743533": {
     "name": "pkmn-tcg-M3 Pokemon Card Game MEGA Expansion Pack \"Munikis / Nihil Zero\" Box",
     "nameEn": "pkmn-tcg-M3 Pokemon Card Game MEGA Expansion Pack \"Munikis / Nihil Zero\" Box",
-    "price": 9300,
+    "price": 9290,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20260126035830-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/724998": {
     "name": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
     "nameEn": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
-    "price": 4000,
+    "price": 4400,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251223071721-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/721913": {
     "name": "pkmn-tcg-M2a Pokemon Card Game MEGA High Class Pack \"MEGA Dream ex\" Box",
     "nameEn": "pkmn-tcg-M2a Pokemon Card Game MEGA High Class Pack \"MEGA Dream ex\" Box",
-    "price": 19500,
+    "price": 18999,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251128091038-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9480,14 +9102,14 @@
   "https://snkrdunk.com/apparels/628146": {
     "name": "pkmn-tcg-M1L Pokemon Card Game MEGA Expansion Pack \"Mega Brave\" Box",
     "nameEn": "pkmn-tcg-M1L Pokemon Card Game MEGA Expansion Pack \"Mega Brave\" Box",
-    "price": 14899,
+    "price": 14700,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250805020822-2.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/628148": {
     "name": "pkmn-tcg-M1S Pokemon Card Game MEGA Expansion Pack \"Mega Symphonia\" Box",
     "nameEn": "pkmn-tcg-M1S Pokemon Card Game MEGA Expansion Pack \"Mega Symphonia\" Box",
-    "price": 12200,
+    "price": 12100,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250805020822-5.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9508,14 +9130,14 @@
   "https://snkrdunk.com/apparels/550896": {
     "name": "pkmn-tcg-SV10 Pokemon Card Game Scarlet & Violet Expansion Pack \"Glory of Team Rocket\" Box",
     "nameEn": "pkmn-tcg-SV10 Pokemon Card Game Scarlet & Violet Expansion Pack \"Glory of Team Rocket\" Box",
-    "price": 34200,
+    "price": 34400,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074548-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/518728": {
     "name": "pkmn-tcg-SV9a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"Hot Wind Arena (Heat Wave Arena)\" Box",
     "nameEn": "pkmn-tcg-SV9a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"Hot Wind Arena (Heat Wave Arena)\" Box",
-    "price": 25200,
+    "price": 25100,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080309-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9536,14 +9158,14 @@
   "https://snkrdunk.com/apparels/484952": {
     "name": "pkmn-tcg-SV9 Pokemon Card Game Scarlet & Violet Expansion Pack \"Battle Partners\" Box",
     "nameEn": "pkmn-tcg-SV9 Pokemon Card Game Scarlet & Violet Expansion Pack \"Battle Partners\" Box",
-    "price": 11100,
+    "price": 11090,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022075717-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/424297": {
     "name": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
     "nameEn": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
-    "price": 25199,
+    "price": 25198,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250813062440-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9557,7 +9179,7 @@
   "https://snkrdunk.com/apparels/395189": {
     "name": "pkmn-tcg-SV8 Pokemon Card Game Scarlet & Violet Expansion Pack \"Supercharged Breaker / Super Electric Breaker\" Box",
     "nameEn": "pkmn-tcg-SV8 Pokemon Card Game Scarlet & Violet Expansion Pack \"Supercharged Breaker / Super Electric Breaker\" Box",
-    "price": 44000,
+    "price": 43800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073625-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9585,7 +9207,7 @@
   "https://snkrdunk.com/apparels/283206": {
     "name": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
     "nameEn": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
-    "price": 11200,
+    "price": 11111,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080114-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9606,14 +9228,14 @@
   "https://snkrdunk.com/apparels/224649": {
     "name": "pkmn-tcg-SV6 Pokemon Card Game Scarlet & Violet Expansion Pack \"Mask of Change\" Box",
     "nameEn": "pkmn-tcg-SV6 Pokemon Card Game Scarlet & Violet Expansion Pack \"Mask of Change\" Box",
-    "price": 14500,
+    "price": 14000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251023022714-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/204134": {
     "name": "pkmn-tcg-SV5a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"Crimson Haze\" Box",
     "nameEn": "pkmn-tcg-SV5a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"Crimson Haze\" Box",
-    "price": 16000,
+    "price": 16100,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074403-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9627,14 +9249,14 @@
   "https://snkrdunk.com/apparels/171884": {
     "name": "pkmn-tcg-SV5M Pokemon Card Game Scarlet & Violet Expansion Pack \"Cyber Judge\" Box",
     "nameEn": "pkmn-tcg-SV5M Pokemon Card Game Scarlet & Violet Expansion Pack \"Cyber Judge\" Box",
-    "price": 12998,
+    "price": 12000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073745-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/171882": {
     "name": "pkmn-tcg-SV5K Pokemon Card Game Scarlet & Violet Expansion Pack \"Wild Force\" Box",
     "nameEn": "pkmn-tcg-SV5K Pokemon Card Game Scarlet & Violet Expansion Pack \"Wild Force\" Box",
-    "price": 13887,
+    "price": 13800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022081228-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9655,7 +9277,7 @@
   "https://snkrdunk.com/apparels/151755": {
     "name": "pkmn-tcg-SV4a Pokemon Card Game Scarlet & Violet High Class Pack \"Shiny Treasure ex\" Box",
     "nameEn": "pkmn-tcg-SV4a Pokemon Card Game Scarlet & Violet High Class Pack \"Shiny Treasure ex\" Box",
-    "price": 21700,
+    "price": 21000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074908-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9683,21 +9305,21 @@
   "https://snkrdunk.com/apparels/127743": {
     "name": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
     "nameEn": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
-    "price": 24499,
+    "price": 24500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080406-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/118914": {
     "name": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
     "nameEn": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
-    "price": 70499,
+    "price": 71000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073446-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/116901": {
     "name": "pkmn-tcg-SV2D Pokemon Card Game Scarlet & Violet Expansion Pack \"Clay burst\" Box (Snow hazard & Clay burst)",
     "nameEn": "pkmn-tcg-SV2D Pokemon Card Game Scarlet & Violet Expansion Pack \"Clay burst\" Box (Snow hazard & Clay burst)",
-    "price": 12600,
+    "price": 12999,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022081020-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9718,14 +9340,14 @@
   "https://snkrdunk.com/apparels/106864": {
     "name": "pkmn-tcg-SV1V Pokemon Card Game Scarlet & Violet Expansion Pack \"Violet ex\" Box",
     "nameEn": "pkmn-tcg-SV1V Pokemon Card Game Scarlet & Violet Expansion Pack \"Violet ex\" Box",
-    "price": 11650,
+    "price": 11630,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022083149-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/106863": {
     "name": "pkmn-tcg-SV1S Pokemon Card Game Scarlet & Violet Expansion Pack \"Scarlet ex\" Box",
     "nameEn": "pkmn-tcg-SV1S Pokemon Card Game Scarlet & Violet Expansion Pack \"Scarlet ex\" Box",
-    "price": 14000,
+    "price": 13900,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022081542-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9739,21 +9361,21 @@
   "https://snkrdunk.com/apparels/755998": {
     "name": "OP-15 ONE PIECE Card Game Booster Pack \"Adventure on KAMI’s Island\" Box",
     "nameEn": "OP-15 ONE PIECE Card Game Booster Pack \"Adventure on KAMI’s Island\" Box",
-    "price": 10088,
+    "price": 10070,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20260227120811-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
   "https://snkrdunk.com/apparels/751287": {
     "name": "EB-04 ONE PIECE Card Game Extra Booster \"EGGHEAD CRISIS\" Box",
     "nameEn": "EB-04 ONE PIECE Card Game Extra Booster \"EGGHEAD CRISIS\" Box",
-    "price": 8990,
+    "price": 8900,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20260130074117-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
   "https://snkrdunk.com/apparels/725356": {
     "name": "OP-14 ONE PIECE Card Game Booster Pack \"THE AZURE SEA'S SEVEN\" Box",
     "nameEn": "OP-14 ONE PIECE Card Game Booster Pack \"THE AZURE SEA'S SEVEN\" Box",
-    "price": 10300,
+    "price": 10140,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251121110237-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9767,7 +9389,7 @@
   "https://snkrdunk.com/apparels/548909": {
     "name": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
     "nameEn": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
-    "price": 24999,
+    "price": 24994,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250822063040-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9823,7 +9445,7 @@
   "https://snkrdunk.com/apparels/542574": {
     "name": "OP-12 ONE PIECE Card Game Booster Pack \"Legacy of the Master\" Box",
     "nameEn": "OP-12 ONE PIECE Card Game Booster Pack \"Legacy of the Master\" Box",
-    "price": 11450,
+    "price": 11200,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250530084849-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9837,7 +9459,7 @@
   "https://snkrdunk.com/apparels/498158": {
     "name": "OP-11 ONE PIECE Card Game Booster Pack \"A Fist of Divine Speed\" Box",
     "nameEn": "OP-11 ONE PIECE Card Game Booster Pack \"A Fist of Divine Speed\" Box",
-    "price": 23999,
+    "price": 23000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250227074343-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9865,7 +9487,7 @@
   "https://snkrdunk.com/apparels/299926": {
     "name": "OP-09 ONE PIECE Card Game Booster Pack \"Emperors In The New World\" Box",
     "nameEn": "OP-09 ONE PIECE Card Game Booster Pack \"Emperors In The New World\" Box",
-    "price": 14498,
+    "price": 14300,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240828053218-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -10047,7 +9669,7 @@
   "https://snkrdunk.com/apparels/136031": {
     "name": "OP-OP-01 ONE PIECE Card Game Booster Pack Romance Dawn Box",
     "nameEn": "OP-OP-01 ONE PIECE Card Game Booster Pack Romance Dawn Box",
-    "price": 31890,
+    "price": 31500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240520075219-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -10082,7 +9704,7 @@
   "undefined": {
     "name": "【状態A-/PSA10鑑定済】MレックウザEX(25th)《P》{024/025}[その他]",
     "nameEn": "【状態A-/PSA10鑑定済】MRayquazaEX(25th)《P》{024/025}[その他]",
-    "price": 82000,
+    "price": 81000,
     "img": "https://www.cardshop-shinsoku.jp/res/touch003/img/all/spacer.gif",
     "category": "PSA鑑定済"
   }
