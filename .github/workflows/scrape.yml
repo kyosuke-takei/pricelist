@@ -88,4 +88,3 @@ jobs:
           git pull origin main --rebase || true
           git push origin main --force
           git push origin main:gh-pages --force
-EOF
