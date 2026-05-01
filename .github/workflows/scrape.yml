@@ -1,4 +1,3 @@
-cat > ~/pricelist/.github/workflows/scrape.yml << 'EOF'
 name: Daily Scrape
 on:
   schedule:
