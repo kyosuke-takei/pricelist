@@ -1,3 +1,4 @@
+cat > ~/pricelist/.github/workflows/scrape.yml << 'EOF'
 name: Daily Scrape
 on:
   schedule:
@@ -39,6 +40,8 @@ jobs:
           POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
       - name: Run Shinsoku scraper
         run: node scrape_shinsoku.js
+      - name: Run OP PSA scraper
+        run: node scrape_op_psa.js
       - name: Run translator
         run: node translate.js
         env:
@@ -86,3 +89,4 @@ jobs:
           git pull origin main --rebase || true
           git push origin main --force
           git push origin main:gh-pages --force
+EOF
