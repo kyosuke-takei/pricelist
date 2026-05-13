@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Price List</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #fff; min-height: 100vh; }
+
+  /* Login */
+  #login-screen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .login-box {
+    background: #16213e; border: 1px solid #e8b84b; border-radius: 12px;
+    padding: 2.5rem; width: 360px;
+  }
+  .login-box h1 { color: #e8b84b; font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center; }
+  .login-box input {
+    width: 100%; padding: 0.75rem 1rem; border-radius: 8px;
+    border: 1px solid #333; background: #0f0f1a; color: #fff;
+    font-size: 1rem; margin-bottom: 1rem;
+  }
+  .login-box input:focus { outline: none; border-color: #e8b84b; }
+  .login-error { color: #ff6060; font-size: 0.85rem; margin-bottom: 0.75rem; display: none; }
+
+  /* Admin */
+  #admin-screen { display: none; }
+  header {
+    background: #16213e; padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid #e8b84b;
+  }
+  header h1 { color: #e8b84b; font-size: 1.3rem; }
+  .btn {
+    padding: 0.5rem 1.2rem; border-radius: 8px; border: none;
+    cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: #e8b84b; color: #000; }
+  .btn-danger { background: #ff4444; color: #fff; }
+  .btn-secondary { background: #333; color: #fff; }
+  .btn-sm { padding: 0.3rem 0.8rem; font-size: 0.8rem; }
+  .btn-logout { background: #333; color: #aaa; }
+
+  .token-bar {
+    background: #1a1a2e; border-bottom: 1px solid #333;
+    padding: 0.6rem 2rem; display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.85rem; color: #aaa;
+  }
+  .token-bar input {
+    flex: 1; max-width: 420px; padding: 0.4rem 0.8rem;
+    border-radius: 6px; border: 1px solid #333; background: #0f0f1a;
+    color: #fff; font-size: 0.85rem; font-family: monospace;
+  }
+  .token-bar input:focus { outline: none; border-color: #e8b84b; }
+  .token-status { font-size: 0.8rem; }
+  .token-ok { color: #00cc66; }
+  .token-ng { color: #ff6060; }
+
+  .main { padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .toolbar select, .toolbar input {
+    padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #333;
+    background: #1a1a2e; color: #fff; font-size: 0.9rem;
+  }
+  .toolbar select:focus, .toolbar input:focus { outline: none; border-color: #e8b84b; }
+  .item-count { color: #aaa; font-size: 0.85rem; margin-left: auto; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    background: #16213e; color: #e8b84b; padding: 0.75rem 1rem;
+    text-align: left; border-bottom: 1px solid #333; white-space: nowrap;
+  }
+  td {
+    padding: 0.6rem 1rem; border-bottom: 1px solid #1a1a2e;
+    vertical-align: middle;
+  }
+  tr:hover td { background: #16213e; }
+  .td-img img { width: 40px; height: 53px; object-fit: cover; border-radius: 4px; background: #111; }
+  .td-name { max-width: 220px; }
+  .td-name small { color: #888; display: block; }
+  .td-price { color: #e8b84b; white-space: nowrap; }
+  .td-stock { text-align: center; }
+  .td-actions { white-space: nowrap; display: flex; gap: 0.4rem; }
+  .category-badge {
+    display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px;
+    background: #2a2a4a; font-size: 0.75rem; color: #aaa; white-space: nowrap;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; padding: 1rem;
+  }
+  .modal { display: none; }
+  .modal.open { display: flex; }
+  .modal-box {
+    background: #16213e; border: 1px solid #e8b84b; border-radius: 12px;
+    width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+    padding: 2rem;
+  }
+  .modal-box h2 { color: #e8b84b; margin-bottom: 1.5rem; font-size: 1.2rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; color: #aaa; font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 0.6rem 0.9rem; border-radius: 8px;
+    border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.9rem;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none; border-color: #e8b84b;
+  }
+  .form-group textarea { resize: vertical; min-height: 60px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+  .img-preview {
+    width: 60px; height: 80px; object-fit: cover; border-radius: 4px;
+    background: #111; border: 1px solid #333; margin-top: 0.4rem;
+    display: none;
+  }
+
+  /* Confirm modal */
+  .confirm-box {
+    background: #16213e; border: 1px solid #ff4444; border-radius: 12px;
+    width: 100%; max-width: 400px; padding: 2rem; text-align: center;
+  }
+  .confirm-box h2 { color: #ff6060; margin-bottom: 1rem; }
+  .confirm-box p { color: #ccc; margin-bottom: 1.5rem; font-size: 0.9rem; }
+  .confirm-actions { display: flex; gap: 0.75rem; justify-content: center; }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+    background: #1a1a2e; border: 1px solid #e8b84b; border-radius: 8px;
+    padding: 0.8rem 1.4rem; font-size: 0.9rem; opacity: 0;
+    transition: opacity 0.3s; pointer-events: none;
+  }
+  #toast.show { opacity: 1; }
+  #toast.error { border-color: #ff4444; color: #ff6060; }
+  #toast.success { border-color: #00cc66; color: #00cc66; }
+
+  .saving-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2000; display: none;
+  }
+  .saving-box { background: #16213e; border: 1px solid #e8b84b; border-radius: 12px; padding: 2rem 3rem; text-align: center; color: #e8b84b; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<!-- Login -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>🔐 Admin Login</h1>
+    <p class="login-error" id="login-error">パスワードが違います</p>
+    <input type="password" id="password-input" placeholder="パスワード" autocomplete="current-password">
+    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">ログイン</button>
+  </div>
+</div>
+
+<!-- Admin -->
+<div id="admin-screen">
+  <header>
+    <h1>🎴 Admin Panel</h1>
+    <button class="btn btn-logout" onclick="doLogout()">ログアウト</button>
+  </header>
+
+  <div class="token-bar">
+    <span>GitHub Token:</span>
+    <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx" oninput="saveToken()">
+    <span class="token-status" id="token-status"></span>
+    <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" style="color:#888;font-size:0.8rem">トークン取得</a>
+  </div>
+
+  <div class="main">
+    <div class="toolbar">
+      <button class="btn btn-primary" onclick="openAddModal()">＋ 商品追加</button>
+      <select id="filter-cat" onchange="renderTable()">
+        <option value="">全カテゴリ</option>
+      </select>
+      <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="renderTable()" style="min-width:200px">
+      <span class="item-count" id="item-count"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table id="product-table">
+        <thead>
+          <tr>
+            <th>画像</th>
+            <th>商品名</th>
+            <th>カテゴリ</th>
+            <th>価格</th>
+            <th>在庫</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal modal-overlay" id="edit-modal">
+  <div class="modal-box">
+    <h2 id="modal-title">商品追加</h2>
+    <div class="form-group">
+      <label>カテゴリ *</label>
+      <select id="f-category" onchange="handleCatChange()"></select>
+    </div>
+    <div class="form-group" id="new-cat-group" style="display:none">
+      <label>新規カテゴリ名 *</label>
+      <input type="text" id="f-new-category" placeholder="例: ポケカシングル">
+    </div>
+    <div class="form-group">
+      <label>商品名（日本語）*</label>
+      <input type="text" id="f-name" placeholder="例: ピカチュウ【AR】{001/100}">
+    </div>
+    <div class="form-group">
+      <label>商品名（英語）</label>
+      <input type="text" id="f-nameEn" placeholder="例: Pikachu【AR】{001/100}">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>価格 *</label>
+        <input type="text" id="f-price" placeholder="例: 1,200円(税込)">
+      </div>
+      <div class="form-group">
+        <label>在庫数</label>
+        <input type="number" id="f-stock" placeholder="0" min="0">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>画像URL</label>
+      <input type="url" id="f-img" placeholder="https://..." oninput="previewImg()">
+      <img id="img-preview" class="img-preview" alt="preview">
+    </div>
+    <div class="form-group">
+      <label>商品リンクURL</label>
+      <input type="url" id="f-link" placeholder="https://...">
+    </div>
+    <div class="form-group">
+      <label>モデル番号</label>
+      <input type="text" id="f-modelNum" placeholder="例: IAP2300021830A">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('edit-modal')">キャンセル</button>
+      <button class="btn btn-primary" id="save-btn" onclick="saveItem()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal modal-overlay" id="confirm-modal">
+  <div class="confirm-box">
+    <h2>削除確認</h2>
+    <p id="confirm-msg">この商品を削除しますか？</p>
+    <div class="confirm-actions">
+      <button class="btn btn-secondary" onclick="closeModal('confirm-modal')">キャンセル</button>
+      <button class="btn btn-danger" id="confirm-ok-btn">削除する</button>
+    </div>
+  </div>
+</div>
+
+<!-- Saving overlay -->
+<div class="saving-overlay" id="saving-overlay">
+  <div class="saving-box">💾 GitHubに保存中...</div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const PASS_HASH = 'fab853b51a79a680720749e5ca5b7c86fa0fa8fde87595a80ae014d2739a80b5';
+const REPO = 'kyosuke-takei/pricelist';
+const FILE_PATH = 'data.json';
+
+let data = [];
+let editTarget = null; // { catIdx, itemIdx } or null for new item
+
+// ── Auth ──────────────────────────────────────────
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function doLogin() {
+  const pw = document.getElementById('password-input').value;
+  const hash = await sha256(pw);
+  if (hash === PASS_HASH) {
+    sessionStorage.setItem('admin', '1');
+    showAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('password-input').value = '';
+  }
+}
+
+document.getElementById('password-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogout() {
+  sessionStorage.removeItem('admin');
+  location.reload();
+}
+
+// ── Token ──────────────────────────────────────────
+function saveToken() {
+  const t = document.getElementById('gh-token').value.trim();
+  if (t) localStorage.setItem('gh_token', t);
+  document.getElementById('token-status').textContent = t ? '✓ 設定済' : '';
+  document.getElementById('token-status').className = 'token-status ' + (t ? 'token-ok' : '');
+}
+
+function loadToken() {
+  const t = localStorage.getItem('gh_token') || '';
+  if (t) {
+    document.getElementById('gh-token').value = t;
+    document.getElementById('token-status').textContent = '✓ 設定済';
+    document.getElementById('token-status').className = 'token-status token-ok';
+  }
+}
+
+// ── Init ──────────────────────────────────────────
+async function showAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'block';
+  loadToken();
+  await loadData();
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(`data.json?_=${Date.now()}`);
+    data = await res.json();
+    refreshCategoryFilter();
+    renderTable();
+  } catch (e) {
+    showToast('data.json の読み込みに失敗しました', 'error');
+  }
+}
+
+// ── Category helpers ──────────────────────────────
+function getCategories() {
+  return data.map(g => g.label);
+}
+
+function refreshCategoryFilter() {
+  const sel = document.getElementById('filter-cat');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">全カテゴリ</option>';
+  getCategories().forEach(label => {
+    const opt = document.createElement('option');
+    opt.value = label;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+  if (current) sel.value = current;
+}
+
+function refreshCategorySelect(selectedLabel) {
+  const sel = document.getElementById('f-category');
+  sel.innerHTML = '';
+  getCategories().forEach(label => {
+    const opt = document.createElement('option');
+    opt.value = label;
+    opt.textContent = label;
+    sel.appendChild(opt);
+  });
+  const newOpt = document.createElement('option');
+  newOpt.value = '__new__';
+  newOpt.textContent = '＋ 新規カテゴリを追加';
+  sel.appendChild(newOpt);
+  if (selectedLabel) sel.value = selectedLabel;
+}
+
+function handleCatChange() {
+  const val = document.getElementById('f-category').value;
+  document.getElementById('new-cat-group').style.display = val === '__new__' ? 'block' : 'none';
+}
+
+// ── Table ──────────────────────────────────────────
+function renderTable() {
+  const catFilter = document.getElementById('filter-cat').value;
+  const search = document.getElementById('filter-search').value.toLowerCase();
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = '';
+  let count = 0;
+
+  data.forEach((group, catIdx) => {
+    if (catFilter && group.label !== catFilter) return;
+    group.items.forEach((item, itemIdx) => {
+      const name = (item.name || '') + (item.nameEn || '');
+      if (search && !name.toLowerCase().includes(search)) return;
+      count++;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="td-img"><img src="${item.img || ''}" alt="" onerror="this.style.display='none'"></td>
+        <td class="td-name">
+          <div>${escHtml(item.name || '')}</div>
+          <small>${escHtml(item.nameEn || '')}</small>
+        </td>
+        <td><span class="category-badge">${escHtml(group.label)}</span></td>
+        <td class="td-price">${escHtml(item.price || '')}</td>
+        <td class="td-stock">${item.stock ?? '-'}</td>
+        <td class="td-actions">
+          <button class="btn btn-secondary btn-sm" onclick="openEditModal(${catIdx},${itemIdx})">編集</button>
+          <button class="btn btn-danger btn-sm" onclick="openDeleteConfirm(${catIdx},${itemIdx})">削除</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  });
+
+  document.getElementById('item-count').textContent = `${count} 件`;
+}
+
+// ── Add / Edit Modal ──────────────────────────────
+function openAddModal() {
+  editTarget = null;
+  document.getElementById('modal-title').textContent = '商品追加';
+  document.getElementById('save-btn').textContent = '追加する';
+  clearForm();
+  refreshCategorySelect('');
+  openModal('edit-modal');
+}
+
+function openEditModal(catIdx, itemIdx) {
+  editTarget = { catIdx, itemIdx };
+  const group = data[catIdx];
+  const item = group.items[itemIdx];
+  document.getElementById('modal-title').textContent = '商品編集';
+  document.getElementById('save-btn').textContent = '更新する';
+  refreshCategorySelect(group.label);
+  document.getElementById('f-name').value = item.name || '';
+  document.getElementById('f-nameEn').value = item.nameEn || '';
+  document.getElementById('f-price').value = item.price || '';
+  document.getElementById('f-stock').value = item.stock ?? '';
+  document.getElementById('f-img').value = item.img || '';
+  document.getElementById('f-link').value = item.link || '';
+  document.getElementById('f-modelNum').value = item.modelNum || '';
+  previewImg();
+  openModal('edit-modal');
+}
+
+function clearForm() {
+  ['f-name','f-nameEn','f-price','f-stock','f-img','f-link','f-modelNum','f-new-category'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('new-cat-group').style.display = 'none';
+  document.getElementById('img-preview').style.display = 'none';
+}
+
+function previewImg() {
+  const url = document.getElementById('f-img').value.trim();
+  const preview = document.getElementById('img-preview');
+  if (url) {
+    preview.src = url;
+    preview.style.display = 'block';
+    preview.onerror = () => { preview.style.display = 'none'; };
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+async function saveItem() {
+  const catSel = document.getElementById('f-category').value;
+  const isNewCat = catSel === '__new__';
+  const newCatName = document.getElementById('f-new-category').value.trim();
+  const name = document.getElementById('f-name').value.trim();
+  const price = document.getElementById('f-price').value.trim();
+
+  if (!name) { showToast('商品名（日本語）は必須です', 'error'); return; }
+  if (!price) { showToast('価格は必須です', 'error'); return; }
+  if (isNewCat && !newCatName) { showToast('新規カテゴリ名を入力してください', 'error'); return; }
+
+  const catLabel = isNewCat ? newCatName : catSel;
+
+  const item = {
+    name,
+    nameEn: document.getElementById('f-nameEn').value.trim() || undefined,
+    price,
+    stock: document.getElementById('f-stock').value !== '' ? parseInt(document.getElementById('f-stock').value) : undefined,
+    img: document.getElementById('f-img').value.trim() || undefined,
+    link: document.getElementById('f-link').value.trim() || undefined,
+    modelNum: document.getElementById('f-modelNum').value.trim() || undefined,
+  };
+  // undefinedキーを除去
+  Object.keys(item).forEach(k => item[k] === undefined && delete item[k]);
+
+  const newData = JSON.parse(JSON.stringify(data));
+
+  if (editTarget) {
+    const { catIdx, itemIdx } = editTarget;
+    const oldLabel = newData[catIdx].label;
+    if (oldLabel !== catLabel) {
+      // カテゴリ変更: 元から削除して新しいカテゴリへ
+      newData[catIdx].items.splice(itemIdx, 1);
+      if (newData[catIdx].items.length === 0) newData.splice(catIdx, 1);
+      addItemToCategory(newData, catLabel, item);
+    } else {
+      newData[catIdx].items[itemIdx] = item;
+    }
+  } else {
+    addItemToCategory(newData, catLabel, item);
+  }
+
+  await commitData(newData);
+}
+
+function addItemToCategory(newData, catLabel, item) {
+  const catIdx = newData.findIndex(g => g.label === catLabel);
+  if (catIdx >= 0) {
+    newData[catIdx].items.push(item);
+  } else {
+    newData.push({ label: catLabel, items: [item] });
+  }
+}
+
+// ── Delete ──────────────────────────────────────────
+function openDeleteConfirm(catIdx, itemIdx) {
+  const item = data[catIdx].items[itemIdx];
+  document.getElementById('confirm-msg').textContent = `「${item.name}」を削除しますか？`;
+  const btn = document.getElementById('confirm-ok-btn');
+  btn.onclick = async () => {
+    closeModal('confirm-modal');
+    const newData = JSON.parse(JSON.stringify(data));
+    newData[catIdx].items.splice(itemIdx, 1);
+    if (newData[catIdx].items.length === 0) newData.splice(catIdx, 1);
+    await commitData(newData);
+  };
+  openModal('confirm-modal');
+}
+
+// ── GitHub API ──────────────────────────────────────
+async function commitData(newData) {
+  const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
+  if (!token) {
+    showToast('GitHub Tokenを入力してください', 'error');
+    return;
+  }
+
+  showSaving(true);
+  try {
+    // 現在のファイルのSHAを取得
+    const metaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!metaRes.ok) throw new Error(`GitHub API error: ${metaRes.status}`);
+    const meta = await metaRes.json();
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+    const updateRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Admin: ${editTarget ? '商品更新' : '商品追加'} - ${new Date().toLocaleString('ja-JP')}`,
+        content,
+        sha: meta.sha
+      })
+    });
+
+    if (!updateRes.ok) {
+      const err = await updateRes.json();
+      throw new Error(err.message || updateRes.status);
+    }
+
+    data = newData;
+    refreshCategoryFilter();
+    renderTable();
+    closeModal('edit-modal');
+    showToast('GitHubに保存しました ✓', 'success');
+  } catch (e) {
+    showToast('保存失敗: ' + e.message, 'error');
+  } finally {
+    showSaving(false);
+  }
+}
+
+// ── Modal helpers ──────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.addEventListener('click', e => {
+  ['edit-modal','confirm-modal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.classList.contains('open') && e.target === el) closeModal(id);
+  });
+});
+
+// ── Toast ──────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+}
+
+function showSaving(show) {
+  document.getElementById('saving-overlay').style.display = show ? 'flex' : 'none';
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Boot ──────────────────────────────────────────
+if (sessionStorage.getItem('admin') === '1') {
+  showAdmin();
+}
+</script>
+</body>
+</html>
