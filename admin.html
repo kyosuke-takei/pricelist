@@ -186,10 +186,10 @@
   <div class="main">
     <div class="toolbar">
       <button class="btn btn-primary" onclick="openAddModal()">＋ 商品追加</button>
-      <select id="filter-cat" onchange="renderTable()">
+      <select id="filter-cat" onchange="resetAndRender()">
         <option value="">全カテゴリ</option>
       </select>
-      <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="renderTable()" style="min-width:200px">
+      <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="debounceRender()" style="min-width:200px">
       <span class="item-count" id="item-count"></span>
     </div>
 
@@ -208,6 +208,7 @@
         <tbody id="table-body"></tbody>
       </table>
     </div>
+    <div id="pagination" style="display:flex;gap:0.5rem;align-items:center;justify-content:center;padding:1.5rem 0;flex-wrap:wrap;"></div>
   </div>
 </div>
 
@@ -286,7 +287,10 @@ const REPO = 'kyosuke-takei/pricelist';
 const FILE_PATH = 'data.json';
 
 let data = [];
-let editTarget = null; // { catIdx, itemIdx } or null for new item
+let editTarget = null;
+let currentPage = 1;
+const PAGE_SIZE = 50;
+let debounceTimer = null;
 
 // ── Auth ──────────────────────────────────────────
 async function sha256(str) {
@@ -391,38 +395,94 @@ function handleCatChange() {
 }
 
 // ── Table ──────────────────────────────────────────
+function debounceRender() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => { currentPage = 1; renderTable(); }, 200);
+}
+
+function resetAndRender() {
+  currentPage = 1;
+  renderTable();
+}
+
 function renderTable() {
   const catFilter = document.getElementById('filter-cat').value;
   const search = document.getElementById('filter-search').value.toLowerCase();
-  const tbody = document.getElementById('table-body');
-  tbody.innerHTML = '';
-  let count = 0;
 
+  // フィルタ済みの全アイテムをフラットリストに
+  const filtered = [];
   data.forEach((group, catIdx) => {
     if (catFilter && group.label !== catFilter) return;
     group.items.forEach((item, itemIdx) => {
       const name = (item.name || '') + (item.nameEn || '');
       if (search && !name.toLowerCase().includes(search)) return;
-      count++;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="td-img"><img src="${item.img || ''}" alt="" onerror="this.style.display='none'"></td>
-        <td class="td-name">
-          <div>${escHtml(item.name || '')}</div>
-          <small>${escHtml(item.nameEn || '')}</small>
-        </td>
-        <td><span class="category-badge">${escHtml(group.label)}</span></td>
-        <td class="td-price">${escHtml(item.price || '')}</td>
-        <td class="td-stock">${item.stock ?? '-'}</td>
-        <td class="td-actions">
-          <button class="btn btn-secondary btn-sm" onclick="openEditModal(${catIdx},${itemIdx})">編集</button>
-          <button class="btn btn-danger btn-sm" onclick="openDeleteConfirm(${catIdx},${itemIdx})">削除</button>
-        </td>`;
-      tbody.appendChild(tr);
+      filtered.push({ group, catIdx, item, itemIdx });
     });
   });
 
-  document.getElementById('item-count').textContent = `${count} 件`;
+  const total = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+  const tbody = document.getElementById('table-body');
+  tbody.innerHTML = '';
+  pageItems.forEach(({ group, catIdx, item, itemIdx }) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="td-img"><img src="${item.img || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></td>
+      <td class="td-name">
+        <div>${escHtml(item.name || '')}</div>
+        <small>${escHtml(item.nameEn || '')}</small>
+      </td>
+      <td><span class="category-badge">${escHtml(group.label)}</span></td>
+      <td class="td-price">${escHtml(item.price || '')}</td>
+      <td class="td-stock">${item.stock ?? '-'}</td>
+      <td class="td-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openEditModal(${catIdx},${itemIdx})">編集</button>
+        <button class="btn btn-danger btn-sm" onclick="openDeleteConfirm(${catIdx},${itemIdx})">削除</button>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('item-count').textContent = `${total} 件`;
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const pg = document.getElementById('pagination');
+  pg.innerHTML = '';
+  if (totalPages <= 1) return;
+
+  const btnStyle = 'padding:0.4rem 0.8rem;border-radius:6px;border:1px solid #333;background:#1a1a2e;color:#fff;cursor:pointer;font-size:0.85rem;';
+  const activStyle = 'padding:0.4rem 0.8rem;border-radius:6px;border:1px solid #e8b84b;background:#e8b84b;color:#000;cursor:pointer;font-size:0.85rem;font-weight:bold;';
+
+  const addBtn = (label, page, disabled) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    b.style.cssText = page === currentPage ? activStyle : btnStyle;
+    if (disabled) { b.disabled = true; b.style.opacity = '0.4'; }
+    b.onclick = () => { currentPage = page; renderTable(); window.scrollTo(0,0); };
+    pg.appendChild(b);
+  };
+
+  addBtn('«', 1, currentPage === 1);
+  addBtn('‹', currentPage - 1, currentPage === 1);
+
+  // 前後2ページを表示
+  for (let p = Math.max(1, currentPage - 2); p <= Math.min(totalPages, currentPage + 2); p++) {
+    addBtn(p, p, false);
+  }
+
+  addBtn('›', currentPage + 1, currentPage === totalPages);
+  addBtn('»', totalPages, currentPage === totalPages);
+
+  const info = document.createElement('span');
+  info.textContent = `${currentPage} / ${totalPages} ページ`;
+  info.style.cssText = 'color:#888;font-size:0.8rem;';
+  pg.appendChild(info);
 }
 
 // ── Add / Edit Modal ──────────────────────────────
