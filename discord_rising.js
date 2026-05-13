@@ -75,37 +75,58 @@ async function scrapeRising() {
 }
 
 async function sendToDiscord(data) {
-  for (let i = 0; i < data.length; i++) {
-    const d = data[i];
-    const isFirst = i === 0;
+  if (data.length === 0) {
+    console.log('No rising cards to notify');
+    return;
+  }
 
-    const payload = {
-      username: 'Price Rising Bot',
-      embeds: [{
-        title: isFirst ? 'TOP Rising Cards (7 days / +5% or more) - ' + data.length + ' cards' : null,
-        description: isFirst
-          ? 'Cards with biggest price increase this week!\nBuy here: https://kyosuke-takei.github.io/pricelist/'
-          : null,
+  // Discordのembedは1メッセージに最大10個まで
+  const CHUNK_SIZE = 10;
+  const chunks = [];
+  for (let i = 0; i < data.length; i += CHUNK_SIZE) {
+    chunks.push(data.slice(i, i + CHUNK_SIZE));
+  }
+
+  for (let ci = 0; ci < chunks.length; ci++) {
+    const chunk = chunks[ci];
+    const isFirst = ci === 0;
+
+    const embeds = chunk.map((d, i) => ({
+      color: 0x00FF88,
+      author: { name: d.rank + '位: ' + d.name },
+      thumbnail: d.img ? { url: d.img } : null,
+      fields: [
+        { name: 'Price', value: 'JPY ' + d.price, inline: true },
+        { name: 'Change (7d)', value: d.change + ' (' + d.rate + ')', inline: true }
+      ]
+    }));
+
+    // 最初のメッセージにタイトルembedを先頭に追加
+    if (isFirst) {
+      embeds.unshift({
+        title: 'TOP Rising Cards (7 days / +5% or more) - ' + data.length + ' cards',
+        description: 'Cards with biggest price increase this week!\nBuy here: https://kyosuke-takei.github.io/pricelist/',
         color: 0x00FF88,
-        author: { name: d.rank + '位: ' + d.name },
-        image: d.img ? { url: d.img } : null,
-        fields: [
-          { name: 'Price', value: 'JPY ' + d.price, inline: true },
-          { name: 'Change (7d)', value: d.change + ' (' + d.rate + ')', inline: true }
-        ],
-        footer: i === data.length - 1 ? { text: 'JP Pokemon & One Piece Card Shop' } : null,
-        timestamp: isFirst ? new Date().toISOString() : null
-      }]
-    };
+        timestamp: new Date().toISOString()
+      });
+      // タイトル追加で11件になる場合は末尾を次チャンクへ（10件制限対応）
+      if (embeds.length > 10) embeds.pop();
+    }
+
+    // 最後のメッセージにフッターを追加
+    if (ci === chunks.length - 1) {
+      embeds[embeds.length - 1].footer = { text: 'JP Pokemon & One Piece Card Shop' };
+    }
 
     await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ username: 'Price Rising Bot', embeds })
     });
 
-    await new Promise(r => setTimeout(r, 800));
+    if (ci < chunks.length - 1) await new Promise(r => setTimeout(r, 1000));
   }
+
   console.log('Discord notified! Total: ' + data.length + ' cards');
 }
 
