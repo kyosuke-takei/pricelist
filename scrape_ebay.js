@@ -3,9 +3,11 @@ const fs = require('fs');
 const EBAY_APP_ID = process.env.EBAY_APP_ID;
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const PRICELIST_URL = 'https://kyosuke-takei.github.io/pricelist/';
+const TEST_MODE = process.argv.includes('--test');
 
 if (!EBAY_APP_ID) { console.log('No EBAY_APP_ID, skipping'); process.exit(0); }
 if (!WEBHOOK_URL) { console.log('No DISCORD_WEBHOOK_URL, skipping'); process.exit(0); }
+if (TEST_MODE) console.log('🧪 テストモード: 各カテゴリ最初の2件のみチェック');
 
 const data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
 
@@ -32,17 +34,28 @@ function getMultiplier(label) {
 
 // ── eBay検索キーワード生成 ───────────────────────
 function buildQuery(item, label) {
-  // 【AR】{194/193} → AR 194/193 に変換
-  const name = (item.nameEn || item.name)
-    .replace(/【([^\】]+)】/g, '$1')
-    .replace(/\{([^}]+)\}/g, '$1')
-    .replace(/[^\w\s\/\-]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  const nameEn = item.nameEn || item.name || '';
 
-  if (label.includes('PSA')) return `${name} PSA Japanese`;
-  if (label.includes('BOX')) return `${name} Japanese sealed booster box`;
-  return `${name} Japanese Pokemon card`;
+  // BOX: styleCodeからセット型番だけ抽出 (OPC-TCG-OP-15 → OP-15, pkmn-tcg-M5 → M5)
+  if (label.includes('BOX')) {
+    const code = (item.styleCode || '')
+      .replace(/^OPC-TCG-/, '')   // ワンピース: OPC-TCG-OP-15 → OP-15
+      .replace(/^pkmn-tcg-/, ''); // ポケカ: pkmn-tcg-M5 → M5
+    return code ? `${code} Japanese` : nameEn.split(' ').slice(0, 3).join(' ');
+  }
+
+  // PSA: グレード + カード番号のみ (PSA10 071/128)
+  if (label.includes('PSA')) {
+    const grade = nameEn.match(/PSA\s*(\d+)/i)?.[1];
+    const num = nameEn.match(/(\d{3}\/[\w\-]+)/)?.[1];
+    if (grade && num) return `PSA${grade} ${num} Japanese`;
+    if (num) return `${num} PSA Japanese`;
+    return nameEn.split(' ').slice(0, 3).join(' ');
+  }
+
+  // シングル: カード番号のみ (194/193)
+  const num = nameEn.match(/\{([^}]+)\}/)?.[1];
+  return num ? `${num} Japanese Pokemon` : nameEn.split(' ').slice(0, 2).join(' ');
 }
 
 // ── eBay落札済み検索 ─────────────────────────────
@@ -65,6 +78,9 @@ async function searchEbaySold(keyword) {
       { headers: { 'User-Agent': 'Mozilla/5.0' } }
     );
     const json = await res.json();
+    if (TEST_MODE) {
+      console.log(`  🌐 RAW:`, JSON.stringify(json).slice(0, 300));
+    }
     const resp = json['findCompletedItemsResponse']?.[0];
     const items = resp?.searchResult?.[0]?.item;
     const total = parseInt(resp?.paginationOutput?.[0]?.totalEntries?.[0] || '0');
@@ -163,7 +179,8 @@ async function main() {
 
   for (const cat of data) {
     const multiplier = getMultiplier(cat.label);
-    for (const item of cat.items) {
+    const items = TEST_MODE ? cat.items.slice(0, 2) : cat.items; // テストモードは2件のみ
+    for (const item of items) {
       const buyPrice = parsePrice(item.price);
 
       // 在庫なし・価格不明・安すぎはスキップ
@@ -174,11 +191,18 @@ async function main() {
       const result = await searchEbaySold(keyword);
       checked++;
 
+      if (TEST_MODE) {
+        console.log(`  🔍 検索: "${keyword}"`);
+        console.log(`  📊 結果: ${result ? `${result.count}件落札 / 平均$${result.avgUsd?.toFixed(2)} (¥${Math.round((result.avgUsd||0)*usdJpy)})` : 'マッチなし'}`);
+      }
+
       if (result && result.count >= 2) {
         const ebayAvgJpy = result.avgUsd * usdJpy;
         const ebayFee = ebayAvgJpy * 0.13; // eBay手数料
         const profit = ebayAvgJpy - ebayFee - buyPrice;
         const profitRate = (profit / buyPrice) * 100;
+
+        if (TEST_MODE) console.log(`  💰 利益: ¥${Math.round(profit)} (${profitRate.toFixed(1)}%)${profitRate >= 20 ? ' ✅' : ' ❌ (20%未満)'}`);
 
         if (profitRate >= 20) {
           opportunities.push({ item, cat, buyPrice, ebayAvgJpy, profit, profitRate, ebayResult: result });
@@ -186,7 +210,7 @@ async function main() {
         }
       }
 
-      if (checked % 50 === 0) console.log(`進捗: ${checked}件チェック済み...`);
+      if (!TEST_MODE && checked % 50 === 0) console.log(`進捗: ${checked}件チェック済み...`);
       await sleep(250); // API制限対策
     }
   }
