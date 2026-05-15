@@ -821,6 +821,12 @@ async function init() {
       item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
     });
   });
+  // Discord等からの ?q= パラメータで自動検索
+  const qParam = new URLSearchParams(window.location.search).get('q');
+  if (qParam) {
+    const searchEl = document.getElementById('search');
+    if (searchEl) searchEl.value = qParam;
+  }
   render();
 }
 
