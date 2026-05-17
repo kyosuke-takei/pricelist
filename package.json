@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ebay:test": "node scrape_ebay.js --test",
+    "ebay:run": "node scrape_ebay.js"
   },
   "keywords": [],
   "author": "",
