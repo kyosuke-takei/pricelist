@@ -355,6 +355,18 @@ async function sendToDiscord(opportunities, usdJpy) {
               lines.push('⚠️ eBay has Manga — store does not');
             }
 
+            if (hasMangaInStore) {
+              const hasRedMangaInStore = /\bred\b|レッド/i.test(nameEn);
+              const hasRedMangaInEbay = ebayTitle.includes('red manga') || ebayTitle.includes('red comic');
+              if (hasRedMangaInStore && hasRedMangaInEbay) {
+                lines.push('✅ Red Manga');
+              } else if (hasRedMangaInStore && !hasRedMangaInEbay) {
+                lines.push('⚠️ Red Manga — not in eBay title');
+              } else if (!hasRedMangaInStore && hasRedMangaInEbay) {
+                lines.push('⚠️ eBay has Red Manga — store does not');
+              }
+            }
+
             const hasPirateFlagInStore = /海賊旗/i.test(nameEn);
             const hasPirateFlagInEbay = ebayTitle.includes('pirate');
             if (hasPirateFlagInStore && hasPirateFlagInEbay) {
@@ -508,6 +520,9 @@ async function main() {
           // 漫画絵/コミックパラレルは双方向チェック
           const hasManga = /漫画|コミック/i.test(nameEn);
           if (!hasManga) mustExclude.push('manga', 'comic');
+          // RED MANGAパラレルは双方向チェック（漫画あり＆REDなし → red manga/red comic除外）
+          const hasRedManga = hasManga && /\bred\b|レッド/i.test(nameEn);
+          if (hasManga && !hasRedManga) mustExclude.push('red manga', 'red comic');
           // 海賊旗背景パラレル: 双方向チェック
           const hasPirateFlag = /海賊旗/i.test(nameEn);
           if (!hasPirateFlag) mustExclude.push('pirate');
@@ -518,6 +533,8 @@ async function main() {
           const nameEnLocal = item.nameEn || item.name || '';
           // 店舗が漫画絵 → eBayにも manga or comic が必要
           if (/漫画|コミック/i.test(nameEnLocal)) mustIncludeAnyOf.push(['manga', 'comic']);
+          // 店舗がRED MANGA → eBayにも red manga or red comic が必要
+          if (/漫画|コミック/i.test(nameEnLocal) && /\bred\b|レッド/i.test(nameEnLocal)) mustIncludeAnyOf.push(['red manga', 'red comic']);
           // 店舗が海賊旗 → eBayにも pirate が必要
           if (/海賊旗/i.test(nameEnLocal)) mustIncludeAnyOf.push(['pirate']);
         }
