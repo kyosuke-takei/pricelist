@@ -22,5 +22,6 @@ jobs:
       - name: eBay Price Comparison & Discord Notify
         env:
           EBAY_APP_ID: ${{ secrets.EBAY_APP_ID }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
+          DISCORD_EBAY_WEBHOOK_URL: ${{ secrets.DISCORD_EBAY_WEBHOOK_URL }}
         run: node scrape_ebay.js

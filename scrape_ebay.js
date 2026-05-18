@@ -9,12 +9,12 @@ const PRICELIST_URL = 'https://kyosuke-takei.github.io/pricelist/';
 const TEST_MODE = process.argv.includes('--test');
 const FULL_TEST_MODE = process.argv.includes('--full-test'); // 全件 + テストch
 const WEBHOOK_URL = (TEST_MODE || FULL_TEST_MODE)
-  ? (process.env.DISCORD_TEST_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL)
-  : process.env.DISCORD_WEBHOOK_URL;
+  ? (process.env.DISCORD_TEST_WEBHOOK_URL || process.env.DISCORD_EBAY_WEBHOOK_URL)
+  : process.env.DISCORD_EBAY_WEBHOOK_URL;
 
 if (!EBAY_CLIENT_ID) { console.log('No EBAY_APP_ID, skipping'); process.exit(0); }
 if (!EBAY_CLIENT_SECRET) { console.log('No EBAY_CLIENT_SECRET, skipping'); process.exit(0); }
-if (!WEBHOOK_URL) { console.log('No DISCORD_WEBHOOK_URL, skipping'); process.exit(0); }
+if (!WEBHOOK_URL) { console.log('No DISCORD_EBAY_WEBHOOK_URL, skipping'); process.exit(0); }
 if (TEST_MODE) console.log('🧪 テストモード: 各カテゴリ最初の2件のみチェック');
 if (FULL_TEST_MODE) console.log('🔬 フルテストモード: 全件チェック → テストchに送信');
 
