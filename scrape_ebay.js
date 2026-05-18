@@ -287,115 +287,153 @@ async function searchEbaySold(keyword, _token, { titleMustInclude } = {}) {
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // ── Discord通知 ──────────────────────────────────
+const BATCH_SIZE = 20;                          // 1バッチあたりの件数
+const BATCH_DELAY_MS = 30 * 60 * 1000;         // バッチ間の待機時間（30分）
+
 async function sendToDiscord(opportunities, usdJpy) {
   if (opportunities.length === 0) {
     console.log('No deals found');
     return;
   }
 
-  const CHUNK_SIZE = 3;
-  const chunks = [];
-  for (let i = 0; i < opportunities.length; i += CHUNK_SIZE) {
-    chunks.push(opportunities.slice(i, i + CHUNK_SIZE));
+  // バッチ分割
+  const batches = [];
+  for (let i = 0; i < opportunities.length; i += BATCH_SIZE) {
+    batches.push(opportunities.slice(i, i + BATCH_SIZE));
   }
+  console.log(`${opportunities.length}件を${batches.length}バッチに分割して送信`);
 
-  for (let ci = 0; ci < chunks.length; ci++) {
-    const chunk = chunks[ci];
-    const isFirst = ci === 0;
+  const CHUNK_SIZE = 3;
 
-    const embeds = chunk.map(op => {
-      const searchQ = encodeURIComponent(op.item.nameEn || op.item.name);
-      const url = `${PRICELIST_URL}?q=${searchQ}`;
-      const ebayUsd = op.ebayResult.medianLowUsd.toFixed(2);
-      const storeUsd = (op.storePrice / usdJpy).toFixed(2);
-      const savingUsd = (op.saving / usdJpy).toFixed(2);
-      const savingRate = op.savingRate.toFixed(1);
-      const displayTitle = buildDisplayTitle(op.item.nameEn || op.item.name);
-      const nameEn = op.item.nameEn || op.item.name || '';
-      const isOP = op.cat.label.includes('OP');
+  for (let bi = 0; bi < batches.length; bi++) {
+    const batch = batches[bi];
+    const batchStart = bi * BATCH_SIZE + 1;
+    const batchEnd = batchStart + batch.length - 1;
+    console.log(`\nバッチ ${bi + 1}/${batches.length} (${batchStart}–${batchEnd}件目) 送信中...`);
 
-      // レアリティ一致チェック
-      let rarityField = null;
-      if (op.cat.label.includes('PSA')) {
-        const storeRarity = isOP
-          ? extractRarityKeyword(nameEn, true)
-          : (nameEn.match(/《([^》]+)》/)?.[1] || '').replace(/[^\w\/]/g, '') || null;
-        const ebayTitle = (op.ebayResult.ebayTitle || '').toLowerCase();
-        const lines = [];
+    const chunks = [];
+    for (let i = 0; i < batch.length; i += CHUNK_SIZE) {
+      chunks.push(batch.slice(i, i + CHUNK_SIZE));
+    }
 
-        if (storeRarity && storeRarity !== '-') {
-          const matched = ebayTitle.includes(storeRarity.toLowerCase());
-          lines.push(`${matched ? '✅' : '⚠️'} ${storeRarity}${matched ? '' : ' — verify'}`);
-        }
+    for (let ci = 0; ci < chunks.length; ci++) {
+      const chunk = chunks[ci];
+      const isFirstChunk = ci === 0;
 
-        if (isOP) {
-          const hasMangaInStore = /漫画|コミック/i.test(nameEn);
-          const hasMangaInEbay = ebayTitle.includes('manga') || ebayTitle.includes('comic');
-          if (hasMangaInStore && hasMangaInEbay) {
-            lines.push('✅ Manga/Comic');
-          } else if (hasMangaInStore && !hasMangaInEbay) {
-            lines.push('⚠️ Manga — not in eBay title');
-          } else if (!hasMangaInStore && hasMangaInEbay) {
-            lines.push('⚠️ eBay has Manga — store does not');
+      const embeds = chunk.map(op => {
+        const searchQ = encodeURIComponent(op.item.nameEn || op.item.name);
+        const url = `${PRICELIST_URL}?q=${searchQ}`;
+        const ebayUsd = op.ebayResult.medianLowUsd.toFixed(2);
+        const storeUsd = (op.storePrice / usdJpy).toFixed(2);
+        const savingUsd = (op.saving / usdJpy).toFixed(2);
+        const savingRate = op.savingRate.toFixed(1);
+        const displayTitle = buildDisplayTitle(op.item.nameEn || op.item.name);
+        const nameEn = op.item.nameEn || op.item.name || '';
+        const isOP = op.cat.label.includes('OP');
+
+        let rarityField = null;
+        if (op.cat.label.includes('PSA')) {
+          const storeRarity = isOP
+            ? extractRarityKeyword(nameEn, true)
+            : (nameEn.match(/《([^》]+)》/)?.[1] || '').replace(/[^\w\/]/g, '') || null;
+          const ebayTitle = (op.ebayResult.ebayTitle || '').toLowerCase();
+          const lines = [];
+
+          if (storeRarity && storeRarity !== '-') {
+            const matched = ebayTitle.includes(storeRarity.toLowerCase());
+            lines.push(`${matched ? '✅' : '⚠️'} ${storeRarity}${matched ? '' : ' — verify'}`);
           }
 
-          const hasPirateFlagInStore = /海賊旗/i.test(nameEn);
-          const hasPirateFlagInEbay = ebayTitle.includes('pirate');
-          if (hasPirateFlagInStore && hasPirateFlagInEbay) {
-            lines.push('✅ Pirate Flag');
-          } else if (hasPirateFlagInStore && !hasPirateFlagInEbay) {
-            lines.push('⚠️ Pirate Flag — not in eBay title');
-          } else if (!hasPirateFlagInStore && hasPirateFlagInEbay) {
-            lines.push('⚠️ eBay has Pirate Flag — store does not');
+          if (isOP) {
+            const hasMangaInStore = /漫画|コミック/i.test(nameEn);
+            const hasMangaInEbay = ebayTitle.includes('manga') || ebayTitle.includes('comic');
+            if (hasMangaInStore && hasMangaInEbay) {
+              lines.push('✅ Manga/Comic');
+            } else if (hasMangaInStore && !hasMangaInEbay) {
+              lines.push('⚠️ Manga — not in eBay title');
+            } else if (!hasMangaInStore && hasMangaInEbay) {
+              lines.push('⚠️ eBay has Manga — store does not');
+            }
+
+            const hasPirateFlagInStore = /海賊旗/i.test(nameEn);
+            const hasPirateFlagInEbay = ebayTitle.includes('pirate');
+            if (hasPirateFlagInStore && hasPirateFlagInEbay) {
+              lines.push('✅ Pirate Flag');
+            } else if (hasPirateFlagInStore && !hasPirateFlagInEbay) {
+              lines.push('⚠️ Pirate Flag — not in eBay title');
+            } else if (!hasPirateFlagInStore && hasPirateFlagInEbay) {
+              lines.push('⚠️ eBay has Pirate Flag — store does not');
+            }
+          }
+
+          if (lines.length > 0) {
+            rarityField = { name: 'Rarity Check', value: lines.join('\n'), inline: true };
           }
         }
 
-        if (lines.length > 0) {
-          rarityField = { name: 'Rarity Check', value: lines.join('\n'), inline: true };
-        }
+        return {
+          color: op.savingRate >= 40 ? 0xFF6B6B : op.savingRate >= 25 ? 0xFFAA00 : 0x00CC66,
+          title: displayTitle,
+          url,
+          thumbnail: op.item.img ? { url: op.item.img } : undefined,
+          image: op.ebayResult.ebayImgUrl ? { url: op.ebayResult.ebayImgUrl } : undefined,
+          fields: [
+            { name: '🌍 eBay Cheapest (incl. shipping)', value: `[$${ebayUsd}](${op.ebayResult.ebayUrl})${op.ebayResult.shipping > 0 ? ` · shipping $${op.ebayResult.shipping.toFixed(2)}` : ' · Free shipping'}\n\`${(op.ebayResult.ebayTitle || '').slice(0, 80)}\``, inline: false },
+            ...(op.soldResult ? [{ name: '✔️ eBay Sold History', value: `$${op.soldResult.medianSoldUsd.toFixed(2)} · ${op.soldResult.count} sold`, inline: false }] : []),
+            { name: '🏪 Our Store Price', value: `[$${storeUsd}](${url})  (¥${op.storePrice.toLocaleString()})`, inline: false },
+            { name: '💸 You Save vs eBay', value: `$${savingUsd}  (${savingRate}% cheaper)`, inline: false },
+            { name: 'Category', value: op.cat.label, inline: true },
+            { name: 'Stock', value: `${op.item.stock ?? '-'}`, inline: true },
+            { name: 'eBay Listings', value: `${op.ebayResult.count}`, inline: true },
+            ...(rarityField ? [rarityField] : [])
+          ]
+        };
+      });
+
+      if (isFirstChunk) {
+        embeds.unshift({
+          title: `🛍️ JP Deals — Batch ${bi + 1}/${batches.length}  (${batchStart}–${batchEnd} of ${opportunities.length})`,
+          description: [
+            `**What is this channel?**`,
+            `This bot scans our JP store daily and compares prices against eBay listings. Items where our store is at least 15% cheaper than eBay are posted here — so you can buy directly from us and skip the eBay markup.`,
+            ``,
+            `**How to use**`,
+            `• Click the deal title to search the item on our store`,
+            `• Check the eBay link to confirm the listing`,
+            `• Compare the store image (top-right thumbnail) vs the eBay image (large photo) to verify it's the same card`,
+            `• The **Rarity Check** field flags potential variant mismatches (rarity, manga art, etc.)`,
+            ``,
+            `**Notes**`,
+            `• ⚠️ Prices and stock are collected automatically — always verify before purchasing`,
+            `• Savings % = (eBay cheapest BIN incl. shipping − Our price) ÷ eBay price`,
+            `• 1 USD = ¥${usdJpy.toFixed(0)}  ·  Batch ${bi + 1}/${batches.length}  (deals ${batchStart}–${batchEnd} of ${opportunities.length})`,
+          ].join('\n'),
+          color: 0x00BBFF,
+          timestamp: new Date().toISOString()
+        });
+        if (embeds.length > 10) embeds.pop();
       }
 
-      return {
-        color: op.savingRate >= 40 ? 0xFF6B6B : op.savingRate >= 25 ? 0xFFAA00 : 0x00CC66,
-        title: displayTitle,
-        url,
-        thumbnail: op.item.img ? { url: op.item.img } : undefined,
-        image: op.ebayResult.ebayImgUrl ? { url: op.ebayResult.ebayImgUrl } : undefined,
-        fields: [
-          { name: '🌍 eBay Cheapest (incl. shipping)', value: `[$${ebayUsd}](${op.ebayResult.ebayUrl})${op.ebayResult.shipping > 0 ? ` · shipping $${op.ebayResult.shipping.toFixed(2)}` : ' · Free shipping'}\n\`${(op.ebayResult.ebayTitle || '').slice(0, 80)}\``, inline: false },
-          ...(op.soldResult ? [{ name: '✔️ eBay Sold History', value: `$${op.soldResult.medianSoldUsd.toFixed(2)} · ${op.soldResult.count} sold`, inline: false }] : []),
-          { name: '🏪 Our Store Price', value: `[$${storeUsd}](${url})  (¥${op.storePrice.toLocaleString()})`, inline: false },
-          { name: '💸 You Save vs eBay', value: `$${savingUsd}  (${savingRate}% cheaper)`, inline: false },
-          { name: 'Category', value: op.cat.label, inline: true },
-          { name: 'Stock', value: `${op.item.stock ?? '-'}`, inline: true },
-          { name: 'eBay Listings', value: `${op.ebayResult.count}`, inline: true },
-          ...(rarityField ? [rarityField] : [])
-        ]
-      };
-    });
+      if (ci === chunks.length - 1) {
+        embeds[embeds.length - 1].footer = { text: 'eBay Browse API · Savings = (eBay median low price − Our price) ÷ eBay price' };
+      }
 
-    if (isFirst) {
-      embeds.unshift({
-        title: `🛍️ Cheaper Than eBay! — Top ${opportunities.length} Deals`,
-        description: `Buy directly from our JP store and save vs eBay prices\n1 USD = ¥${usdJpy.toFixed(0)}`,
-        color: 0x00BBFF,
-        timestamp: new Date().toISOString()
-      });
-      if (embeds.length > 10) embeds.pop();
+      try {
+        const res = await axios.post(WEBHOOK_URL, { username: 'eBay Market Research', embeds }, { httpsAgent });
+        console.log(`  chunk ${ci + 1}/${chunks.length} sent (${res.status})`);
+      } catch (e) {
+        console.error(`  chunk ${ci + 1} FAILED: ${e.response?.status} ${JSON.stringify(e.response?.data)}`);
+      }
+
+      if (ci < chunks.length - 1) await sleep(1500);
     }
 
-    if (ci === chunks.length - 1) {
-      embeds[embeds.length - 1].footer = { text: 'eBay Browse API · Savings = (eBay median low price − Our price) ÷ eBay price' };
+    // 次のバッチまで待機（最後のバッチ以外）
+    if (bi < batches.length - 1) {
+      const delayMin = BATCH_DELAY_MS / 60000;
+      console.log(`  次のバッチまで ${delayMin}分待機...`);
+      await sleep(BATCH_DELAY_MS);
     }
-
-    try {
-      const res = await axios.post(WEBHOOK_URL, { username: '🛍️ JP Deal Finder', embeds }, { httpsAgent });
-      console.log(`  chunk ${ci + 1}/${chunks.length} sent (${res.status})`);
-    } catch (e) {
-      console.error(`  chunk ${ci + 1} FAILED: ${e.response?.status} ${JSON.stringify(e.response?.data)}`);
-    }
-
-    if (ci < chunks.length - 1) await sleep(1500);
   }
 
   console.log(`Discord notification sent: ${opportunities.length} deals`);
