@@ -1252,13 +1252,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639615f32302e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/64574": {
-    "name": "ペパーのヨクバリス【AR】{075/063}",
-    "nameEn": "ペパーのGreedent【AR】{075/063}",
-    "price": 680,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639615f31382e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/65259": {
     "name": "ロケット団のワナイダー【AR】{099/098}",
     "nameEn": "Team Rocket's Spidops【AR】{099/098}",
@@ -2475,13 +2468,6 @@
     "nameEn": "〔状態B〕Clauncher【AR】{083/078}",
     "price": 280,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535631565f41525f372e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/40582": {
-    "name": "コイキング【AR】{080/073}",
-    "nameEn": "Magikarp【AR】{080/073}",
-    "price": 25800,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535631615f41525f362e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/40583": {
@@ -7020,13 +7006,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639415253525f32382e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/63730": {
-    "name": "〔状態B〕ボルケニオンex【SAR】{124/100}",
-    "nameEn": "〔状態B〕Volcanion ex【SAR】{124/100}",
-    "price": 1280,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535639415253525f32342e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/63735": {
     "name": "〔状態B〕ナンジャモのハラバリーex【SR】{114/100}",
     "nameEn": "〔状態B〕ナンジャモのBellibolt ex【SR】{114/100}",
@@ -8616,13 +8595,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f31362e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/53561": {
-    "name": "〔状態B〕ガオガエンex【SR】{085/071}",
-    "nameEn": "〔状態B〕Incineroar ex【SR】{085/071}",
-    "price": 290,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354d5f31342e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/53563": {
     "name": "〔状態B〕テツノイワオex【SR】{087/071}",
     "nameEn": "〔状態B〕Iron Boulder ex【SR】{087/071}",
@@ -8952,13 +8924,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f382e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/78796": {
-    "name": "〔状態A-〕メガスターミーex【SR】{095/080}",
-    "nameEn": "[Condition A-] Mega Starmie ex【SR】{095/080}",
-    "price": 830,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4d335f30315f362e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/78797": {
     "name": "〔状態A-〕メガピクシーex【SR】{096/080}",
     "nameEn": "[Condition A-] Mega Clefable ex【SR】{096/080}",
@@ -9109,28 +9074,28 @@
   "https://snkrdunk.com/apparels/806644": {
     "name": "pkmn-tcg-M5 Pokemon Card Game MEGA Expansion Pack \"Abyss Eye\" Box",
     "nameEn": "pkmn-tcg-M5 Pokemon Card Game MEGA Expansion Pack \"Abyss Eye\" Box",
-    "price": 12999,
+    "price": 13300,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/3ce9bb85-3dc2-4fe5-9e41-1920917ca856.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/762693": {
     "name": "pkmn-tcg-M4 Pokemon Card Game MEGA Expansion Pack \"Ninja Spinner\" Box",
     "nameEn": "pkmn-tcg-M4 Pokemon Card Game MEGA Expansion Pack \"Ninja Spinner\" Box",
-    "price": 12740,
+    "price": 12750,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/244b2a87-ebe1-41bb-a812-6daa8aaddc80.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/743533": {
     "name": "pkmn-tcg-M3 Pokemon Card Game MEGA Expansion Pack \"Munikis / Nihil Zero\" Box",
     "nameEn": "pkmn-tcg-M3 Pokemon Card Game MEGA Expansion Pack \"Munikis / Nihil Zero\" Box",
-    "price": 8799,
+    "price": 8600,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20260126035830-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/724998": {
     "name": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
     "nameEn": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
-    "price": 3800,
+    "price": 3945,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251223071721-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9144,28 +9109,28 @@
   "https://snkrdunk.com/apparels/687430": {
     "name": "pkmn-tcg-M2 Pokemon Card Game MEGA Expansion Pack \"Inferno X\" Box",
     "nameEn": "pkmn-tcg-M2 Pokemon Card Game MEGA Expansion Pack \"Inferno X\" Box",
-    "price": 29300,
+    "price": 29000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250926055512-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/628146": {
     "name": "pkmn-tcg-M1L Pokemon Card Game MEGA Expansion Pack \"Mega Brave\" Box",
     "nameEn": "pkmn-tcg-M1L Pokemon Card Game MEGA Expansion Pack \"Mega Brave\" Box",
-    "price": 12900,
+    "price": 13000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250805020822-2.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/628148": {
     "name": "pkmn-tcg-M1S Pokemon Card Game MEGA Expansion Pack \"Mega Symphonia\" Box",
     "nameEn": "pkmn-tcg-M1S Pokemon Card Game MEGA Expansion Pack \"Mega Symphonia\" Box",
-    "price": 10900,
+    "price": 10800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250805020822-5.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/584770": {
     "name": "pkmn-tcg-SV11B Pokemon Card Game Scarlet & Violet Expansion Pack \"Black Bolt\" Box",
     "nameEn": "pkmn-tcg-SV11B Pokemon Card Game Scarlet & Violet Expansion Pack \"Black Bolt\" Box",
-    "price": 25500,
+    "price": 25000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073859-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9179,7 +9144,7 @@
   "https://snkrdunk.com/apparels/550896": {
     "name": "pkmn-tcg-SV10 Pokemon Card Game Scarlet & Violet Expansion Pack \"Glory of Team Rocket\" Box",
     "nameEn": "pkmn-tcg-SV10 Pokemon Card Game Scarlet & Violet Expansion Pack \"Glory of Team Rocket\" Box",
-    "price": 30200,
+    "price": 30290,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074548-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9214,7 +9179,7 @@
   "https://snkrdunk.com/apparels/424297": {
     "name": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
     "nameEn": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
-    "price": 23260,
+    "price": 23200,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250813062440-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9228,7 +9193,7 @@
   "https://snkrdunk.com/apparels/395189": {
     "name": "pkmn-tcg-SV8 Pokemon Card Game Scarlet & Violet Expansion Pack \"Supercharged Breaker / Super Electric Breaker\" Box",
     "nameEn": "pkmn-tcg-SV8 Pokemon Card Game Scarlet & Violet Expansion Pack \"Supercharged Breaker / Super Electric Breaker\" Box",
-    "price": 38500,
+    "price": 39500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073625-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9256,7 +9221,7 @@
   "https://snkrdunk.com/apparels/283206": {
     "name": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
     "nameEn": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
-    "price": 11489,
+    "price": 11300,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080114-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9277,7 +9242,7 @@
   "https://snkrdunk.com/apparels/224649": {
     "name": "pkmn-tcg-SV6 Pokemon Card Game Scarlet & Violet Expansion Pack \"Mask of Change\" Box",
     "nameEn": "pkmn-tcg-SV6 Pokemon Card Game Scarlet & Violet Expansion Pack \"Mask of Change\" Box",
-    "price": 13400,
+    "price": 13500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251023022714-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9305,7 +9270,7 @@
   "https://snkrdunk.com/apparels/171882": {
     "name": "pkmn-tcg-SV5K Pokemon Card Game Scarlet & Violet Expansion Pack \"Wild Force\" Box",
     "nameEn": "pkmn-tcg-SV5K Pokemon Card Game Scarlet & Violet Expansion Pack \"Wild Force\" Box",
-    "price": 13200,
+    "price": 12999,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022081228-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9326,7 +9291,7 @@
   "https://snkrdunk.com/apparels/151755": {
     "name": "pkmn-tcg-SV4a Pokemon Card Game Scarlet & Violet High Class Pack \"Shiny Treasure ex\" Box",
     "nameEn": "pkmn-tcg-SV4a Pokemon Card Game Scarlet & Violet High Class Pack \"Shiny Treasure ex\" Box",
-    "price": 19799,
+    "price": 19780,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074908-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9340,7 +9305,7 @@
   "https://snkrdunk.com/apparels/140591": {
     "name": "pkmn-tcg-SV4K Pokemon Card Game Scarlet & Violet Expansion Pack \"Ancient roar\" Box",
     "nameEn": "pkmn-tcg-SV4K Pokemon Card Game Scarlet & Violet Expansion Pack \"Ancient roar\" Box",
-    "price": 11750,
+    "price": 11500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251029025022-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9354,14 +9319,14 @@
   "https://snkrdunk.com/apparels/127743": {
     "name": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
     "nameEn": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
-    "price": 22900,
+    "price": 23000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080406-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/118914": {
     "name": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
     "nameEn": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
-    "price": 71000,
+    "price": 70899,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073446-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9382,7 +9347,7 @@
   "https://snkrdunk.com/apparels/111467": {
     "name": "pkmn-tcg-SV1a Pokemon Card Game Scarlet & Violet Enhanced Expansion \"Triplet Beat\" Box",
     "nameEn": "pkmn-tcg-SV1a Pokemon Card Game Scarlet & Violet Enhanced Expansion \"Triplet Beat\" Box",
-    "price": 20500,
+    "price": 20600,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022074319-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9396,7 +9361,7 @@
   "https://snkrdunk.com/apparels/106863": {
     "name": "pkmn-tcg-SV1S Pokemon Card Game Scarlet & Violet Expansion Pack \"Scarlet ex\" Box",
     "nameEn": "pkmn-tcg-SV1S Pokemon Card Game Scarlet & Violet Expansion Pack \"Scarlet ex\" Box",
-    "price": 13800,
+    "price": 13555,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022081542-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9417,7 +9382,7 @@
   "https://snkrdunk.com/apparels/751287": {
     "name": "EB-04 ONE PIECE Card Game Extra Booster \"EGGHEAD CRISIS\" Box",
     "nameEn": "EB-04 ONE PIECE Card Game Extra Booster \"EGGHEAD CRISIS\" Box",
-    "price": 9499,
+    "price": 9400,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20260130074117-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9438,7 +9403,7 @@
   "https://snkrdunk.com/apparels/548909": {
     "name": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
     "nameEn": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
-    "price": 27500,
+    "price": 27499,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250822063040-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9529,14 +9494,14 @@
   "https://snkrdunk.com/apparels/382246": {
     "name": "OP-10 ONE PIECE Card Game Booster Pack \"Royal Blood\" Box",
     "nameEn": "OP-10 ONE PIECE Card Game Booster Pack \"Royal Blood\" Box",
-    "price": 9400,
+    "price": 9800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20241129061652-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
   "https://snkrdunk.com/apparels/299926": {
     "name": "OP-09 ONE PIECE Card Game Booster Pack \"Emperors In The New World\" Box",
     "nameEn": "OP-09 ONE PIECE Card Game Booster Pack \"Emperors In The New World\" Box",
-    "price": 19900,
+    "price": 20000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240828053218-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9592,7 +9557,7 @@
   "https://snkrdunk.com/apparels/190553": {
     "name": "OP-08 ONE PIECE Card Game Booster Pack Two Legends Box",
     "nameEn": "OP-08 ONE PIECE Card Game Booster Pack Two Legends Box",
-    "price": 9200,
+    "price": 9050,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240523061358-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9718,7 +9683,7 @@
   "https://snkrdunk.com/apparels/136031": {
     "name": "OP-OP-01 ONE PIECE Card Game Booster Pack Romance Dawn Box",
     "nameEn": "OP-OP-01 ONE PIECE Card Game Booster Pack Romance Dawn Box",
-    "price": 42000,
+    "price": 43000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240520075219-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -9890,13 +9855,6 @@
     "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303236303330385f6636376138662e6a7067003136300000660023666666666666.jpg",
     "category": "OP PSA鑑定済"
   },
-  "https://www.cardrush-op.jp/product/12474": {
-    "name": "〔PSA10鑑定済〕モンキー・D・ルフィ(英語版/COLLEGE BASKETBALL US VOYAGE)【P】{P-055}",
-    "nameEn": "〔PSA10鑑定済〕モンキー・D・ルフィ(英語版/COLLEGE BASKETBALL US VOYAGE)【P】{P-055}",
-    "price": 118000,
-    "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303236303330385f3465616437332e6a7067003136300000660023666666666666.jpg",
-    "category": "OP PSA鑑定済"
-  },
   "https://www.cardrush-op.jp/product/12070": {
     "name": "〔PSA10鑑定済〕ロロノア・ゾロ(illust:AKIRA EGAWA)【SR】{ST21-015}",
     "nameEn": "〔PSA10鑑定済〕ロロノア・ゾロ(illust:AKIRA EGAWA)【SR】{ST21-015}",
@@ -10042,13 +10000,6 @@
     "nameEn": "〔PSA10鑑定済〕ドン!!カード(金枠/Heroines Special Set)【-】{-}",
     "price": 64800,
     "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303235313231385f3061396164362e6a7067003136300000660023666666666666.jpg",
-    "category": "OP PSA鑑定済"
-  },
-  "https://www.cardrush-op.jp/product/10467": {
-    "name": "〔PSA10鑑定済〕モンキー・D・ルフィ(ONE PIECE magazine)【SR】{ST21-014}",
-    "nameEn": "〔PSA10鑑定済〕モンキー・D・ルフィ(ONE PIECE magazine)【SR】{ST21-014}",
-    "price": 44800,
-    "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303235313131325f3736633137372e6a7067003136300000660023666666666666.jpg",
     "category": "OP PSA鑑定済"
   },
   "https://www.cardrush-op.jp/product/10421": {
@@ -10455,13 +10406,6 @@
     "nameEn": "〔PSA10鑑定済〕ユースタス・キッド(CS/illust:Studio Vigor Co.Ltd)【SR】{ST10-013}",
     "price": 348000,
     "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303233313231335f6137336237322e6a7067003136300000660023666666666666.jpg",
-    "category": "OP PSA鑑定済"
-  },
-  "https://www.cardrush-op.jp/product/2682": {
-    "name": "〔PSA10鑑定済〕モンキー・D・ルフィ(金文字)【L】{ST01-001}",
-    "nameEn": "〔PSA10鑑定済〕モンキー・D・ルフィ(金文字)【L】{ST01-001}",
-    "price": 57800,
-    "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f4f50505341313231315f32392e6a7067003136300000660023666666666666.jpg",
     "category": "OP PSA鑑定済"
   },
   "https://www.cardrush-op.jp/product/2661": {
