@@ -2547,13 +2547,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535637615f32362e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/57356": {
-    "name": "タッツー【AR】{067/064}",
-    "nameEn": "Horsea【AR】{067/064}",
-    "price": 880,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f4352535636615f332e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/53274": {
     "name": "ユキハミ【AR】{073/071}",
     "nameEn": "Snom【AR】{073/071}",
@@ -4199,13 +4192,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f392e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
-  "https://www.cardrush-pokemon.jp/product/53415": {
-    "name": "〔状態A-〕ゴース【AR】{080/071}",
-    "nameEn": "[Condition A-] Gastly【AR】{080/071}",
-    "price": 3580,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f392e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
   "https://www.cardrush-pokemon.jp/product/49638": {
     "name": "ダストダス【AR】{075/066}",
     "nameEn": "Garbodor【AR】{075/066}",
@@ -4918,13 +4904,6 @@
     "nameEn": "〔状態B〕Chatot【AR】{081/071}",
     "price": 420,
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f31302e6a7067003136300000660023666666666666.jpg",
-    "category": "AR/CHR"
-  },
-  "https://www.cardrush-pokemon.jp/product/53283": {
-    "name": "チラーミィ【AR】{082/071}",
-    "nameEn": "Minccino【AR】{082/071}",
-    "price": 880,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f43525356354b5f31312e6a7067003136300000660023666666666666.jpg",
     "category": "AR/CHR"
   },
   "https://www.cardrush-pokemon.jp/product/53312": {
@@ -8119,13 +8098,6 @@
     "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f535637615f372e6a7067003136300000660023666666666666.jpg",
     "category": "SR/SSR/HR/UR/SAR/MUR/MA"
   },
-  "https://www.cardrush-pokemon.jp/product/59695": {
-    "name": "〔状態B〕アローラナッシーex【SAR】{089/064}",
-    "nameEn": "〔状態B〕アローラExeggutor ex【SAR】{089/064}",
-    "price": 2180,
-    "img": "https://www.cardrush-pokemon.jp/data/cardrushpokemon/_/70726f647563742f50526530325f32302e6a7067003136300000660023666666666666.jpg",
-    "category": "SR/SSR/HR/UR/SAR/MUR/MA"
-  },
   "https://www.cardrush-pokemon.jp/product/59698": {
     "name": "〔状態B〕アローラナッシーex【UR】{092/064}",
     "nameEn": "〔状態B〕アローラExeggutor ex【UR】{092/064}",
@@ -9816,7 +9788,7 @@
   "https://snkrdunk.com/apparels/806644": {
     "name": "pkmn-tcg-M5 Pokemon Card Game MEGA Expansion Pack \"Abyss Eye\" Box",
     "nameEn": "pkmn-tcg-M5 Pokemon Card Game MEGA Expansion Pack \"Abyss Eye\" Box",
-    "price": 12750,
+    "price": 13000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/667a6ca8-42f7-48fb-933c-e9b30def7a98.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9837,14 +9809,14 @@
   "https://snkrdunk.com/apparels/724998": {
     "name": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
     "nameEn": "pkmn-tcg-MC Pokemon Card Game MEGA The Start Deck 100 \"Battle Collection\"",
-    "price": 3880,
+    "price": 3800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251223071721-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/721913": {
     "name": "pkmn-tcg-M2a Pokemon Card Game MEGA High Class Pack \"MEGA Dream ex\" Box",
     "nameEn": "pkmn-tcg-M2a Pokemon Card Game MEGA High Class Pack \"MEGA Dream ex\" Box",
-    "price": 18000,
+    "price": 16600,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251128091038-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9914,14 +9886,14 @@
   "https://snkrdunk.com/apparels/484952": {
     "name": "pkmn-tcg-SV9 Pokemon Card Game Scarlet & Violet Expansion Pack \"Battle Partners\" Box",
     "nameEn": "pkmn-tcg-SV9 Pokemon Card Game Scarlet & Violet Expansion Pack \"Battle Partners\" Box",
-    "price": 10800,
+    "price": 10777,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022075717-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/424297": {
     "name": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
     "nameEn": "pkmn-tcg-SV8a Pokemon Card Game Scarlet & Violet High Class Pack \"Terastal Festival ex\" Box",
-    "price": 22999,
+    "price": 22800,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250813062440-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -9963,7 +9935,7 @@
   "https://snkrdunk.com/apparels/283206": {
     "name": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
     "nameEn": "pkmn-tcg-SV7 Pokemon Card Game Scarlet & Violet Expansion Pack \"Stellar Miracle\" Box",
-    "price": 10800,
+    "price": 10700,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080114-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -10061,14 +10033,14 @@
   "https://snkrdunk.com/apparels/127743": {
     "name": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
     "nameEn": "pkmn-tcg-SV3 Pokemon Card Game Scarlet & Violet Expansion Pack \"Ruler of the Black Flame\" Box",
-    "price": 23000,
+    "price": 23600,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022080406-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
   "https://snkrdunk.com/apparels/118914": {
     "name": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
     "nameEn": "pkmn-tcg-SV2a Pokemon Card Game Scarlet & Violet Enhanced Expansion Pack \"pokemon card 151\" Box",
-    "price": 69998,
+    "price": 69997,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022073446-0.webp?size=l",
     "category": "ポケカ未開封BOX"
   },
@@ -10138,14 +10110,14 @@
   "https://snkrdunk.com/apparels/691521": {
     "name": "EB-03 ONE PIECE Card Game Extra Booster \"ONE PIECE Heroines edition\" Box",
     "nameEn": "EB-03 ONE PIECE Card Game Extra Booster \"ONE PIECE Heroines edition\" Box",
-    "price": 18500,
+    "price": 18200,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20251022082902-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
   "https://snkrdunk.com/apparels/548909": {
     "name": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
     "nameEn": "OP-13 ONE PIECE Card Game Booster Pack \"CARRYING ON HIS WILL\" Box",
-    "price": 26500,
+    "price": 26000,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250822063040-1.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -10201,7 +10173,7 @@
   "https://snkrdunk.com/apparels/542574": {
     "name": "OP-12 ONE PIECE Card Game Booster Pack \"Legacy of the Master\" Box",
     "nameEn": "OP-12 ONE PIECE Card Game Booster Pack \"Legacy of the Master\" Box",
-    "price": 13500,
+    "price": 13490,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20250530084849-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
@@ -10252,13 +10224,6 @@
     "nameEn": "PRB-01 ONE PIECE Card Game Premium Booster ONE PIECE CARD THE BEST Box",
     "price": 14500,
     "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240724064506-0.webp?size=l",
-    "category": "ワンピース未開封BOX"
-  },
-  "https://snkrdunk.com/apparels/294198": {
-    "name": "ST-20 ONE PIECE Card Game Start Deck \"Yellow Charlotte Katakuri\"",
-    "nameEn": "ST-20 ONE PIECE Card Game Start Deck \"Yellow Charlotte Katakuri\"",
-    "price": 1000,
-    "img": "https://cdn.snkrdunk.com/upload_bg_removed/20240712015205-0.webp?size=l",
     "category": "ワンピース未開封BOX"
   },
   "https://snkrdunk.com/apparels/294197": {
@@ -10898,13 +10863,6 @@
     "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303234313232335f3834623739622e6a7067003136300000660023666666666666.jpg",
     "category": "OP PSA鑑定済"
   },
-  "https://www.cardrush-op.jp/product/6715": {
-    "name": "〔PSA10鑑定済〕シャンクス(パラレル/漫画背景/漫画絵)【SR/SP】{OP09-004}",
-    "nameEn": "〔PSA10鑑定済〕シャンクス(パラレル/漫画背景/漫画絵)【SR/SP】{OP09-004}",
-    "price": 218000,
-    "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303234313231345f6432613036622e6a7067003136300000660023666666666666.jpg",
-    "category": "OP PSA鑑定済"
-  },
   "https://www.cardrush-op.jp/product/6630": {
     "name": "〔PSA10鑑定済〕モンキー・D・ドラゴン(パラレル/SP/和柄/illust:Anderson)【SP】{OP07-015[OP09]}",
     "nameEn": "〔PSA10鑑定済〕モンキー・D・ドラゴン(パラレル/SP/和柄/illust:Anderson)【SP】{OP07-015[OP09]}",
@@ -11015,13 +10973,6 @@
     "nameEn": "〔PSA10鑑定済〕モンキー・D・ルフィ(ONE PIECE EMOTION)【P】{P-041}",
     "price": 52800,
     "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303234303930385f6364333439382e6a7067003136300000660023666666666666.jpg",
-    "category": "OP PSA鑑定済"
-  },
-  "https://www.cardrush-op.jp/product/5987": {
-    "name": "〔PSA10鑑定済〕ナミ(パラレル/漫画背景/漫画絵)【R/SP】{OP01-016}",
-    "nameEn": "〔PSA10鑑定済〕ナミ(パラレル/漫画背景/漫画絵)【R/SP】{OP01-016}",
-    "price": 188000,
-    "img": "https://www.cardrush-op.jp/data/cardrush-op/_/70726f647563742f32303234303930385f6263623165662e6a7067003136300000660023666666666666.jpg",
     "category": "OP PSA鑑定済"
   },
   "https://www.cardrush-op.jp/product/4697": {
