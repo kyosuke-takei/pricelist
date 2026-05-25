@@ -21,10 +21,21 @@
 
   .rate-bar { background: #111; padding: 0.4rem 2rem; font-size: 0.75rem; color: #666; }
 
-  .controls { padding: 1rem 2rem; background: #16213e; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
-  .tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1px solid #e8b84b; background: transparent; color: #e8b84b; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+  .controls { padding: 0.75rem 2rem; background: #16213e; display: flex; flex-direction: column; gap: 0.6rem; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+  .controls-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+
+  /* ゲーム選択ボタン */
+  .game-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .game-btn { padding: 0.5rem 1.3rem; border-radius: 10px; border: 2px solid #333; background: transparent; color: #666; cursor: pointer; font-size: 0.88rem; font-weight: bold; transition: all 0.2s; }
+  .game-btn.active { border-color: #e8b84b; background: rgba(232,184,75,0.12); color: #e8b84b; }
+  .game-btn:hover:not(.active) { border-color: #555; color: #aaa; }
+
+  /* カテゴリーサブタブ */
+  .sub-tabs { display: none; gap: 0.4rem; flex-wrap: wrap; padding-top: 0.2rem; border-top: 1px solid #222; }
+  .sub-tabs.visible { display: flex; }
+  .tab { padding: 0.4rem 1rem; border-radius: 20px; border: 1px solid #e8b84b; background: transparent; color: #e8b84b; cursor: pointer; font-size: 0.82rem; transition: all 0.2s; }
   .tab.active { background: #e8b84b; color: #000; font-weight: bold; }
+
   .search { flex: 1; min-width: 200px; padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.9rem; }
   .search:focus { outline: none; border-color: #e8b84b; }
   .sort { padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.85rem; cursor: pointer; }
@@ -143,26 +154,30 @@
 <div class="rate-bar" id="rate-bar">Exchange rate: loading...</div>
 
 <div class="controls">
-  <div class="tabs">
-    <button class="tab active" onclick="setTab('all', this)">All</button>
-    <button class="tab" onclick="setTab('AR/CHR', this)">AR / CHR</button>
-    <button class="tab" onclick="setTab('SR/SSR/HR/UR/SAR/MUR/MA', this)">SR / SAR / UR+</button>
-    <button class="tab" onclick="setTab('ポケカ未開封BOX', this)">Pokémon Sealed</button>
-    <button class="tab" onclick="setTab('ワンピース未開封BOX', this)">One Piece Sealed</button>
-    <button class="tab" onclick="setTab('PSA鑑定済', this)">PSA Graded</button>
-    <button class="tab" onclick="setTab('OP PSA鑑定済', this)">OP PSA Graded</button>
+  <!-- Row 1: タイトル選択 -->
+  <div class="game-selector">
+    <button class="game-btn active" onclick="setGame('all', this)">All</button>
+    <button class="game-btn" onclick="setGame('pokemon', this)">🎴 Pokémon</button>
+    <button class="game-btn" onclick="setGame('onepiece', this)">⚓ One Piece</button>
+    <button class="game-btn" onclick="setGame('yugioh', this)">👁 Yu-Gi-Oh</button>
+    <button class="game-btn" onclick="setGame('weiss', this)">🃏 Weiss</button>
   </div>
-  <input class="search" type="text" id="search" placeholder="Search..." oninput="render()">
-  <select class="sort" id="sort" onchange="render()">
-    <option value="price-desc">Price: High to Low</option>
-    <option value="price-asc">Price: Low to High</option>
-    <option value="name">Name A-Z</option>
-    <option value="change">Biggest Price Drop</option>
-    <option value="grade-desc">Grade: High to Low</option>
-    <option value="grade-asc">Grade: Low to High</option>
-  </select>
-  <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> In Stock Only</label>
-  <span class="count" id="count"></span>
+  <!-- Row 2: カテゴリーサブタブ（JS動的生成） -->
+  <div class="sub-tabs" id="category-tabs"></div>
+  <!-- Row 3: 検索・ソート -->
+  <div class="controls-row">
+    <input class="search" type="text" id="search" placeholder="Search..." oninput="render()">
+    <select class="sort" id="sort" onchange="render()">
+      <option value="price-desc">Price: High to Low</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="name">Name A-Z</option>
+      <option value="change">Biggest Price Drop</option>
+      <option value="grade-desc">Grade: High to Low</option>
+      <option value="grade-asc">Grade: Low to High</option>
+    </select>
+    <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> In Stock Only</label>
+    <span class="count" id="count"></span>
+  </div>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -296,7 +311,45 @@ const GAS_URL = 'https://script.google.com/macros/s/AKfycbxArarkuZgUpRK6AHk_KWU1
 let cart = [];
 let data = [];
 let history = {};
+let currentGame = 'all';
 let currentTab = 'all';
+
+const GAME_CATEGORIES = {
+  pokemon: {
+    display: '🎴 Pokémon',
+    labels: ['AR/CHR','SR/SSR/HR/UR/SAR/MUR/MA','ポケカ未開封BOX','未開封BOX シュリンクあり','未開封BOX シュリンクなし','パック','デッキ','プロモ','その他','PSA鑑定済'],
+    tabs: [
+      { label: 'AR/CHR',                     display: 'AR / CHR' },
+      { label: 'SR/SSR/HR/UR/SAR/MUR/MA',    display: 'SR / SAR / UR+' },
+      { label: 'ポケカ未開封BOX',             display: 'Sealed (old)' },
+      { label: '未開封BOX シュリンクあり',    display: 'BOX Shrink ✅' },
+      { label: '未開封BOX シュリンクなし',    display: 'BOX No Shrink' },
+      { label: 'パック',                      display: 'Pack' },
+      { label: 'デッキ',                      display: 'Deck' },
+      { label: 'プロモ',                      display: 'Promo' },
+      { label: 'その他',                      display: 'Etc' },
+      { label: 'PSA鑑定済',                   display: 'PSA Graded' },
+    ]
+  },
+  onepiece: {
+    display: '⚓ One Piece',
+    labels: ['ワンピース未開封BOX','OP PSA鑑定済'],
+    tabs: [
+      { label: 'ワンピース未開封BOX', display: 'Sealed BOX' },
+      { label: 'OP PSA鑑定済',        display: 'PSA Graded' },
+    ]
+  },
+  yugioh: {
+    display: '👁 Yu-Gi-Oh',
+    labels: [],
+    tabs: []
+  },
+  weiss: {
+    display: '🃏 Weiss',
+    labels: [],
+    tabs: []
+  },
+};
 let currentPage = 1;
 const PAGE_SIZE = 100;
 let usdRate = 150;
@@ -343,6 +396,12 @@ function getBadge(item) {
   const hotBadge = isTrending ? '<span class="badge" style="background:#ff2244;color:#fff;">🔥 HOT</span>' : '';
   if (item.category === 'ワンピース未開封BOX') return hotBadge + '<span class="badge badge-op">ONE PIECE</span>';
   if (item.category === 'ポケカ未開封BOX') return hotBadge + '<span class="badge badge-box">SEALED</span>';
+  if (item.category === '未開封BOX シュリンクあり') return hotBadge + '<span class="badge badge-box">BOX ✅ Shrink</span>';
+  if (item.category === '未開封BOX シュリンクなし') return hotBadge + '<span class="badge badge-box" style="background:#2a1e0a;color:#ffcc60;">BOX No Shrink</span>';
+  if (item.category === 'パック') return hotBadge + '<span class="badge" style="background:#1e2a3a;color:#60ccff;">PACK</span>';
+  if (item.category === 'デッキ') return hotBadge + '<span class="badge" style="background:#2a1e3a;color:#cc88ff;">DECK</span>';
+  if (item.category === 'プロモ') return hotBadge + '<span class="badge" style="background:#3a1e1e;color:#ff8888;">PROMO</span>';
+  if (item.category === 'その他') return hotBadge + '<span class="badge" style="background:#222;color:#888;">ETC</span>';
   const types = ['MUR','SAR','SSR','CHR','MA','HR','UR','SR','AR'];
   for (const t of types) {
     if (item.name.includes(`【${t}】`)) return hotBadge + `<span class="badge badge-${t.toLowerCase()}">${t}</span>`;
@@ -368,10 +427,30 @@ function goPage(p) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+function setGame(game, el) {
+  currentGame = game;
+  currentTab = 'all';
+  currentPage = 1;
+  document.querySelectorAll('.game-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const container = document.getElementById('category-tabs');
+  const gameDef = GAME_CATEGORIES[game];
+  if (!gameDef || gameDef.tabs.length === 0) {
+    container.innerHTML = '';
+    container.classList.remove('visible');
+  } else {
+    container.innerHTML =
+      `<button class="tab active" onclick="setTab('all',this)">All</button>` +
+      gameDef.tabs.map(t => `<button class="tab" onclick="setTab('${t.label}',this)">${t.display}</button>`).join('');
+    container.classList.add('visible');
+  }
+  render();
+}
+
 function setTab(tab, el) {
   currentTab = tab;
   currentPage = 1;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#category-tabs .tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   render();
 }
@@ -380,13 +459,19 @@ function render() {
   const query = document.getElementById('search').value.toLowerCase();
   const sortBy = document.getElementById('sort').value;
   let items = [];
-  if (currentTab === 'all') {
-    data.forEach(cat => cat.items.forEach(item => {
-      items.push({ ...item, category: cat.label });
-    }));
-  } else {
+  if (currentTab !== 'all') {
     const cat = data.find(c => c.label === currentTab);
     if (cat) items = cat.items.map(item => ({ ...item, category: cat.label }));
+  } else if (currentGame !== 'all') {
+    const gameDef = GAME_CATEGORIES[currentGame];
+    if (gameDef) {
+      data.forEach(cat => {
+        if (gameDef.labels.includes(cat.label))
+          cat.items.forEach(item => items.push({ ...item, category: cat.label }));
+      });
+    }
+  } else {
+    data.forEach(cat => cat.items.forEach(item => items.push({ ...item, category: cat.label })));
   }
   if (document.getElementById("in-stock-only")?.checked) items = items.filter(i => (typeof i.stock === "number" ? i.stock : 99) > 0);
   if (query) items = items.filter(i =>
@@ -634,8 +719,9 @@ function calcWeight() {
   items.forEach(item => {
     const qty = item.qty || 1;
     const cat = item.category || '';
-    if (cat === 'ポケカ未開封BOX') { pokeCount += qty; totalWeightG += qty * 300; }
+    if (cat === 'ポケカ未開封BOX' || cat === '未開封BOX シュリンクあり' || cat === '未開封BOX シュリンクなし') { pokeCount += qty; totalWeightG += qty * 300; }
     else if (cat === 'ワンピース未開封BOX') { opCount += qty; totalWeightG += qty * 350; }
+    else if (cat === 'パック') { singleCount += qty; totalWeightG += qty * 50; }
     else if (cat === 'PSA鑑定済') { psaCount += qty; totalWeightG += qty * 100; }
     else { singleCount += qty; totalWeightG += qty * 20; }
   });
@@ -816,8 +902,15 @@ async function init() {
   data.forEach(cat => {
     const isPokeSealed = cat.label === 'ポケカ未開封BOX';
     const isOPSealed = cat.label === 'ワンピース未開封BOX';
+    const isShrinkOn  = cat.label === '未開封BOX シュリンクあり';
+    const isShrinkOff = cat.label === '未開封BOX シュリンクなし';
+    const isPack      = cat.label === 'パック';
     cat.items.forEach(item => {
-      const multiplier = isPokeSealed ? 0.97 : isOPSealed ? 1.20 : 1.05;
+      let multiplier = 1.05;
+      if (isPokeSealed) multiplier = 0.97;
+      else if (isOPSealed) multiplier = 1.20;
+      else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
+      else if (cat.label === 'デッキ' || cat.label === 'プロモ' || cat.label === 'その他') multiplier = 1.0;
       item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
     });
   });
