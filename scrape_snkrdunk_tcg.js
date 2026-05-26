@@ -3,11 +3,11 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 puppeteer.use(StealthPlugin());
 
+// カテゴリID指定でTCG封入商品のみ対象（シングル・PSA混入を防ぐ）
 const SEARCH_URLS = [
   'https://snkrdunk.com/search?keywords=%E3%83%88%E3%83%AC%E3%82%AB+%28%E3%83%9C%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%91%E3%83%83%E3%82%AF%29&searchCategoryIds=6%2F26&brandIds=pokemon',
   'https://snkrdunk.com/search?keywords=%E3%83%88%E3%83%AC%E3%82%AB+%28%E3%83%87%E3%83%83%E3%82%AD%29&searchCategoryIds=6%2F27&brandIds=pokemon',
   'https://snkrdunk.com/search?keywords=%E3%83%88%E3%83%AC%E3%82%AB+%28%E3%83%97%E3%83%AD%E3%83%A2%29&searchCategoryIds=6%2F28&brandIds=pokemon',
-  'https://snkrdunk.com/search?keywords=%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3&brandIds=pokemon',
 ];
 
 const CACHE_FILE = 'snkrdunk_cache.json';
@@ -23,6 +23,10 @@ function classifyByName(name) {
   const n = name || '';
   const nl = n.toLowerCase();
 
+  // PSA/GEM鑑定品・シングルカード → その他
+  if (nl.includes('psa') || n.includes('GEM') || n.includes('鑑定済') ||
+      n.includes('〔PSA') || n.includes('[PSA')) return LABEL_OTHER;
+
   if (n.includes('プロモ') || nl.includes('promo') ||
       n.includes('販促') || n.includes('特典')) return LABEL_PROMO;
 
@@ -36,6 +40,10 @@ function classifyByName(name) {
   // BOX判定（大文字小文字問わず box / ボックス）→ デフォルトはシュリンクあり
   const isBox = nl.includes('box') || n.includes('ボックス');
   if (isBox) return LABEL_SHRINK_ON;
+
+  // 複数パック封入セット（ポケモンセンター限定セット等）→ BOX扱い
+  // ただし「スターターセット」「パックセット」は上でデッキ判定済み or パック扱いへ
+  if (n.includes('セット') && (n.includes('パック') || n.includes('コレクション'))) return LABEL_SHRINK_ON;
 
   // パック単品
   if (n.includes('パック') || nl.includes('pack')) return LABEL_PACK;
@@ -51,6 +59,7 @@ function classifyByPage(name, pageText) {
   if (t.includes('デッキ') || t.includes('構築済み')) return LABEL_DECK;
   if (t.includes('シュリンクあり') || t.includes('シュリンク付き')) return LABEL_SHRINK_ON;
   if (t.includes('シュリンクなし') || t.includes('シュリンク無し')) return LABEL_SHRINK_OFF;
+  if (t.includes('ボックス') || t.toLowerCase().includes('box')) return LABEL_SHRINK_ON;
   if (t.includes('パック') && !t.includes('未開封BOX')) return LABEL_PACK;
   return LABEL_OTHER;
 }
