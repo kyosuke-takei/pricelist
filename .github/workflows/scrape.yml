@@ -41,6 +41,8 @@ jobs:
         run: node scrape_shinsoku.js
       - name: Run OP PSA scraper
         run: node scrape_op_psa.js
+      - name: Run SNKRDUNK TCG scraper
+        run: node scrape_snkrdunk_tcg.js
       - name: Run translator
         run: node translate.js
         env:
