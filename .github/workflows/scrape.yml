@@ -47,6 +47,8 @@ jobs:
         run: node scrape_snkrdunk_yugioh.js
       - name: Run SNKRDUNK Weiss Schwarz scraper
         run: node scrape_snkrdunk_weiss.js
+      - name: Split data by game
+        run: node split_data.js
       - name: Run translator
         run: node translate.js
         env:
@@ -89,7 +91,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           rm -rf tmp/
-          git add data.json history/
+          git add data.json data_*.json history/
           git commit -m "Auto update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
           git pull origin main --rebase || true
           git push origin main --force

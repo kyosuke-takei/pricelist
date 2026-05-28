@@ -166,7 +166,7 @@
   <div class="sub-tabs" id="category-tabs"></div>
   <!-- Row 3: 検索・ソート -->
   <div class="controls-row">
-    <input class="search" type="text" id="search" placeholder="Search..." oninput="render()">
+    <input class="search" type="text" id="search" placeholder="Search..." oninput="debouncedRender()">
     <select class="sort" id="sort" onchange="render()">
       <option value="price-desc">Price: High to Low</option>
       <option value="price-asc">Price: Low to High</option>
@@ -314,6 +314,64 @@ let history = {};
 let currentGame = 'all';
 let currentTab = 'all';
 
+// ─── Lazy-load per-game data ───
+const gameDataCache = {};   // game key → array of category objects (populated on demand)
+const GAME_DATA_FILES = {
+  pokemon:  'data_pokemon.json',
+  onepiece: 'data_op.json',
+  yugioh:   'data_yugioh.json',
+  weiss:    'data_weiss.json',
+};
+
+function applyMultipliers(cats) {
+  cats.forEach(cat => {
+    const isPokeSealed = cat.label === 'ポケカ未開封BOX';
+    const isOPSealed   = cat.label === 'ワンピース未開封BOX';
+    const isShrinkOn   = cat.label === '未開封BOX シュリンクあり';
+    const isShrinkOff  = cat.label === '未開封BOX シュリンクなし';
+    const isPack       = cat.label === 'パック';
+    cat.items.forEach(item => {
+      if (item._price !== undefined) return;
+      let multiplier = 1.05;
+      if (isPokeSealed)        multiplier = 0.97;
+      else if (isOPSealed)     multiplier = 1.20;
+      else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
+      else if (['デッキ','プロモ','その他'].includes(cat.label)) multiplier = 1.0;
+      else if (cat.label.startsWith('遊戯王'))   multiplier = 1.0;
+      else if (cat.label.startsWith('ヴァイス')) multiplier = 1.0;
+      item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
+    });
+  });
+}
+
+async function ensureGameData(game) {
+  if (game === 'all') {
+    await Promise.all(Object.keys(GAME_DATA_FILES).map(g => ensureGameData(g)));
+    return;
+  }
+  if (gameDataCache[game] !== undefined) return;  // already loaded or loading
+  gameDataCache[game] = [];  // prevent concurrent duplicate fetches
+  const file = GAME_DATA_FILES[game];
+  if (!file) return;
+  try {
+    const cats = await fetch(file).then(r => r.json());
+    applyMultipliers(cats);
+    gameDataCache[game] = cats;
+  } catch (e) { console.warn('Failed to load', file, e); }
+}
+
+function getActiveData() {
+  if (currentGame === 'all') return Object.values(gameDataCache).flat();
+  return gameDataCache[currentGame] || [];
+}
+
+// ─── Debounced render for search input ───
+let _renderTimer = null;
+function debouncedRender() {
+  clearTimeout(_renderTimer);
+  _renderTimer = setTimeout(render, 250);
+}
+
 const GAME_CATEGORIES = {
   pokemon: {
     display: '🎴 Pokémon',
@@ -440,7 +498,7 @@ function goPage(p) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function setGame(game, el) {
+async function setGame(game, el) {
   currentGame = game;
   currentTab = 'all';
   currentPage = 1;
@@ -457,6 +515,7 @@ function setGame(game, el) {
       gameDef.tabs.map(t => `<button class="tab" onclick="setTab('${t.label}',this)">${t.display}</button>`).join('');
     container.classList.add('visible');
   }
+  await ensureGameData(game);
   render();
 }
 
@@ -473,18 +532,18 @@ function render() {
   const sortBy = document.getElementById('sort').value;
   let items = [];
   if (currentTab !== 'all') {
-    const cat = data.find(c => c.label === currentTab);
+    const cat = getActiveData().find(c => c.label === currentTab);
     if (cat) items = cat.items.map(item => ({ ...item, category: cat.label }));
   } else if (currentGame !== 'all') {
     const gameDef = GAME_CATEGORIES[currentGame];
     if (gameDef) {
-      data.forEach(cat => {
+      getActiveData().forEach(cat => {
         if (gameDef.labels.includes(cat.label))
           cat.items.forEach(item => items.push({ ...item, category: cat.label }));
       });
     }
   } else {
-    data.forEach(cat => cat.items.forEach(item => items.push({ ...item, category: cat.label })));
+    getActiveData().forEach(cat => cat.items.forEach(item => items.push({ ...item, category: cat.label })));
   }
   if (document.getElementById("in-stock-only")?.checked) items = items.filter(i => (typeof i.stock === "number" ? i.stock : 99) > 0);
   if (query) items = items.filter(i =>
@@ -906,29 +965,12 @@ async function init() {
     window._fedexFuelRate = fedexFuelData.rate;
     console.log('FedEx fuel:', fedexFuelData.rate + '%');
   } catch { window._fedexFuelRate = 45.5; }
-  const res = await fetch('data.json');
-  data = await res.json();
-  try {
-    const trendRes = await fetch('trending_cache.json');
-    window._trending = await trendRes.json();
-  } catch { window._trending = []; }
-  data.forEach(cat => {
-    const isPokeSealed = cat.label === 'ポケカ未開封BOX';
-    const isOPSealed = cat.label === 'ワンピース未開封BOX';
-    const isShrinkOn  = cat.label === '未開封BOX シュリンクあり';
-    const isShrinkOff = cat.label === '未開封BOX シュリンクなし';
-    const isPack      = cat.label === 'パック';
-    cat.items.forEach(item => {
-      let multiplier = 1.05;
-      if (isPokeSealed) multiplier = 0.97;
-      else if (isOPSealed) multiplier = 1.20;
-      else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
-      else if (cat.label === 'デッキ' || cat.label === 'プロモ' || cat.label === 'その他') multiplier = 1.0;
-      else if (cat.label.startsWith('遊戯王')) multiplier = 1.0;
-      else if (cat.label.startsWith('ヴァイス')) multiplier = 1.0;
-      item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
-    });
-  });
+  // 全ゲームのデータを並列fetch（data.jsonを1本ずつ読む旧方式より高速）
+  const [trendRes] = await Promise.all([
+    fetch('trending_cache.json').then(r => r.json()).catch(() => []),
+    ensureGameData('all'),
+  ]);
+  window._trending = trendRes;
   // Discord等からの ?q= パラメータで自動検索
   const qParam = new URLSearchParams(window.location.search).get('q');
   if (qParam) {
