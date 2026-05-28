@@ -340,8 +340,15 @@ const GAME_CATEGORIES = {
   },
   yugioh: {
     display: '👁 Yu-Gi-Oh',
-    labels: [],
-    tabs: []
+    labels: ['遊戯王 BOX シュリンクあり','遊戯王 BOX シュリンクなし','遊戯王 パック','遊戯王 デッキ','遊戯王 プロモ','遊戯王 その他'],
+    tabs: [
+      { label: '遊戯王 BOX シュリンクあり', display: 'BOX Shrink ✅' },
+      { label: '遊戯王 BOX シュリンクなし', display: 'BOX No Shrink' },
+      { label: '遊戯王 パック',             display: 'Pack' },
+      { label: '遊戯王 デッキ',             display: 'Deck' },
+      { label: '遊戯王 プロモ',             display: 'Promo' },
+      { label: '遊戯王 その他',             display: 'Etc' },
+    ]
   },
   weiss: {
     display: '🃏 Weiss',
@@ -910,6 +917,7 @@ async function init() {
       else if (isOPSealed) multiplier = 1.20;
       else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
       else if (cat.label === 'デッキ' || cat.label === 'プロモ' || cat.label === 'その他') multiplier = 1.0;
+      else if (cat.label.startsWith('遊戯王')) multiplier = 1.0;
       item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
     });
   });
