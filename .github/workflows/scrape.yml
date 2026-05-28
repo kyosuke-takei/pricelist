@@ -45,6 +45,8 @@ jobs:
         run: node scrape_snkrdunk_tcg.js
       - name: Run SNKRDUNK Yu-Gi-Oh scraper
         run: node scrape_snkrdunk_yugioh.js
+      - name: Run SNKRDUNK Weiss Schwarz scraper
+        run: node scrape_snkrdunk_weiss.js
       - name: Run translator
         run: node translate.js
         env:

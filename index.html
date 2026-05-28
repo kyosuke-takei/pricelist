@@ -352,8 +352,15 @@ const GAME_CATEGORIES = {
   },
   weiss: {
     display: '🃏 Weiss',
-    labels: [],
-    tabs: []
+    labels: ['ヴァイス BOX シュリンクあり','ヴァイス BOX シュリンクなし','ヴァイス パック','ヴァイス デッキ','ヴァイス プロモ','ヴァイス その他'],
+    tabs: [
+      { label: 'ヴァイス BOX シュリンクあり', display: 'BOX Shrink ✅' },
+      { label: 'ヴァイス BOX シュリンクなし', display: 'BOX No Shrink' },
+      { label: 'ヴァイス パック',             display: 'Pack' },
+      { label: 'ヴァイス デッキ',             display: 'Deck' },
+      { label: 'ヴァイス プロモ',             display: 'Promo' },
+      { label: 'ヴァイス その他',             display: 'Etc' },
+    ]
   },
 };
 let currentPage = 1;
@@ -918,6 +925,7 @@ async function init() {
       else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
       else if (cat.label === 'デッキ' || cat.label === 'プロモ' || cat.label === 'その他') multiplier = 1.0;
       else if (cat.label.startsWith('遊戯王')) multiplier = 1.0;
+      else if (cat.label.startsWith('ヴァイス')) multiplier = 1.0;
       item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
     });
   });
