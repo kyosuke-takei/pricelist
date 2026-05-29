@@ -1,0 +1,45 @@
+name: Update Prices from Google Sheets
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # 6時間ごとに自動実行
+  workflow_dispatch:          # GitHub画面から手動実行も可能
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update prices from Google Sheets (AI normalize)
+        run: node update_from_sheets.js
+        env:
+          SHEETS_CSV_URL:    ${{ secrets.SHEETS_CSV_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Split data by game
+        run: node split_data.js
+
+      - name: Deploy
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data.json data_*.json
+          git commit -m "Price update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
+          git pull origin main --rebase || true
+          git push origin main --force
+          git push origin main:gh-pages --force
