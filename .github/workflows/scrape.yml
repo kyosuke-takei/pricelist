@@ -1,98 +1,18 @@
-name: Daily Scrape
+name: Daily Scrape (DISABLED)
 on:
-  schedule:
-    - cron: '0 0,6,12,18 * * *'
+  # スクレイピングを停止しています
+  # schedule:
+  #   - cron: '0 0,6,12,18 * * *'
   workflow_dispatch:
-permissions:
-  contents: write
+    inputs:
+      confirm:
+        description: 'この workflow は現在無効化されています'
+        required: true
+        default: 'disabled'
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    if: false  # 手動実行も含め、すべての実行をブロック
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Chrome dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libnspr4 libnss3 libatk1.0-0 libatk-bridge2.0-0 \
-            libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
-            libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
-      - name: Install ffmpeg
-        run: sudo apt-get install -y ffmpeg
-      - name: Run scraper
-        run: node scrape.js
-        env:
-          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
-      - name: Run SNKRDUNK scraper
-        run: node scrape_snkrdunk.js
-        env:
-          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
-      - name: Run Shinsoku scraper
-        run: node scrape_shinsoku.js
-      - name: Run OP PSA scraper
-        run: node scrape_op_psa.js
-      - name: Run SNKRDUNK TCG scraper
-        run: node scrape_snkrdunk_tcg.js
-      - name: Run SNKRDUNK Yu-Gi-Oh scraper
-        run: node scrape_snkrdunk_yugioh.js
-      - name: Run SNKRDUNK Weiss Schwarz scraper
-        run: node scrape_snkrdunk_weiss.js
-      - name: Split data by game
-        run: node split_data.js
-      - name: Run translator
-        run: node translate.js
-        env:
-          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
-      - name: Save history
-        run: node save_history.js
-      - name: Generate rising cache
-        run: node scrape_rising.js --json > rising_cache.json
-      - name: Generate trending cache
-        run: node scrape_trending.js
-      - name: Scrape fuel surcharge
-        run: node scrape_fuel.js
-      - name: Scrape FedEx fuel surcharge
-        run: node scrape_fedex_fuel.js
-      - name: Generate reel image
-        run: node generate_reel.js
-      - name: Generate reel video
-        run: node generate_video.js
-      - name: Generate deals video
-        run: node generate_deals_video.js
-      - name: Upload to GitHub Releases
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: reel-${{ github.run_number }}
-          name: "Reel ${{ github.run_number }}"
-          files: |
-            reel_output/reel_*.png
-            reel_output/video_*.mp4
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Notify Rising Cards
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: node discord_rising.js
-      - name: Notify Discord
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: node discord_notify.js
-      - name: Deploy
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          rm -rf tmp/
-          git add data.json data_*.json history/
-          git commit -m "Auto update: $(date '+%Y-%m-%d %H:%M')" || echo "No changes"
-          git pull origin main --rebase || true
-          git push origin main --force
-          git push origin main:gh-pages --force
+      - name: Disabled
+        run: echo "Scraping is disabled"
