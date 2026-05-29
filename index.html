@@ -129,23 +129,39 @@
   }
   .contract-btoc { background: #0d3320; color: #4dff99; border: 1px solid #1a5c3a; }
   .contract-standard { background: #1a1a3a; color: #8888ff; border: 1px solid #2a2a5a; }
+
+  /* Language selector */
+  header { position: relative; }
+  .lang-selector { position: absolute; top: 1rem; right: 2rem; display: flex; gap: 0.3rem; }
+  .lang-btn { padding: 0.25rem 0.55rem; border-radius: 6px; border: 1px solid #444; background: transparent; color: #777; cursor: pointer; font-size: 0.72rem; font-weight: bold; transition: all 0.18s; letter-spacing: 0.03em; }
+  .lang-btn.active { border-color: #e8b84b; background: rgba(232,184,75,0.15); color: #e8b84b; }
+  .lang-btn:hover:not(.active) { border-color: #666; color: #ccc; }
+  @media (max-width: 600px) {
+    .lang-selector { position: static; justify-content: center; padding: 0.5rem 0 0; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🎴 Japanese Pokemon Card Price List</h1>
-  <p>Live prices · Singles, Sealed BOX & One Piece</p>
+  <h1 data-i18n="siteTitle">🎴 Japanese TCG Price List</h1>
+  <p data-i18n="siteSubtitle">Live prices · Pokémon · One Piece · Yu-Gi-Oh · Weiss</p>
+  <div class="lang-selector">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+    <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+  </div>
 </header>
 
 <div class="notice-bar">
-  <div class="notice-title">⭐ Important Reminders ⭐</div>
+  <div class="notice-title" data-i18n="noticeTitle">⭐ Important Reminders ⭐</div>
   <ol class="notice-list">
-    <li>There are only a limited amount of boxes available for the prices listed. Boxes are sold on a first come first serve basis.</li>
-    <li>Amount and prices are guaranteed only upon payment.</li>
-    <li>Due to the recent volatility in the market, if payment cannot be confirmed within 3 hours of the invoice being issued, we will re-quote.</li>
+    <li data-i18n="notice1">There are only a limited amount of boxes available for the prices listed. Boxes are sold on a first come first serve basis.</li>
+    <li data-i18n="notice2">Amount and prices are guaranteed only upon payment.</li>
+    <li data-i18n="notice3">Due to the recent volatility in the market, if payment cannot be confirmed within 3 hours of the invoice being issued, we will re-quote.</li>
   </ol>
-  <div class="notice-how">
+  <div class="notice-how" data-i18n-html="noticeHow">
     <strong>How to buy↓</strong><br>
     Once you let us know the quantity you'd like, we will send an invoice via PayPal and then ship the items via FedEx or DHL.
   </div>
@@ -168,14 +184,12 @@
   <div class="controls-row">
     <input class="search" type="text" id="search" placeholder="Search..." oninput="debouncedRender()">
     <select class="sort" id="sort" onchange="render()">
-      <option value="price-desc">Price: High to Low</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="name">Name A-Z</option>
-      <option value="change">Biggest Price Drop</option>
-      <option value="grade-desc">Grade: High to Low</option>
-      <option value="grade-asc">Grade: Low to High</option>
+      <option value="trending" selected data-i18n="sortTrending">🔥 Trending</option>
+      <option value="price-desc" data-i18n="sortPriceDesc">Price: High → Low</option>
+      <option value="price-asc" data-i18n="sortPriceAsc">Price: Low → High</option>
+      <option value="name" data-i18n="sortName">Name A-Z</option>
     </select>
-    <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> In Stock Only</label>
+    <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> <span data-i18n="inStockOnly">In Stock Only</span></label>
     <span class="count" id="count"></span>
   </div>
 </div>
@@ -197,33 +211,33 @@
       </div>
     </div>
     <div class="modal-stats">
-      <div class="stat-box"><div class="stat-label">7D High</div><div class="stat-value" id="m-high">-</div></div>
-      <div class="stat-box"><div class="stat-label">7D Low</div><div class="stat-value" id="m-low">-</div></div>
-      <div class="stat-box"><div class="stat-label">7D Change</div><div class="stat-value" id="m-change">-</div></div>
+      <div class="stat-box"><div class="stat-label" data-i18n="statHigh">7D High</div><div class="stat-value" id="m-high">-</div></div>
+      <div class="stat-box"><div class="stat-label" data-i18n="statLow">7D Low</div><div class="stat-value" id="m-low">-</div></div>
+      <div class="stat-box"><div class="stat-label" data-i18n="statChange">7D Change</div><div class="stat-value" id="m-change">-</div></div>
     </div>
     <div class="chart-wrap"><canvas id="m-chart"></canvas></div>
-    <button class="btn-add-cart" id="btn-add-cart" onclick="addToCart(window._currentModalIdx); document.getElementById('modal').classList.remove('open')">Add to Request List 📋</button>
+    <button class="btn-add-cart" id="btn-add-cart" data-i18n="addToCart" onclick="addToCart(window._currentModalIdx); document.getElementById('modal').classList.remove('open')">Add to Request List 📋</button>
   </div>
 </div>
 
 <!-- カートボタン -->
-<button class="cart-btn" onclick="openCart()">📋 Request <span id="cart-count">0</span></button>
+<button class="cart-btn" onclick="openCart()"><span data-i18n="cartBtnLabel">📋 Request</span> <span id="cart-count">0</span></button>
 
-<!-- カートモーダル -->
+<!-- Cart modal -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart(event)">
   <div class="cart-modal">
-    <h2>📋 Order Request</h2>
-    <div class="cart-note">
+    <h2 data-i18n="cartModalTitle">📋 Order Request</h2>
+    <div class="cart-note" data-i18n="cartNote">
       ⚠️ This is a request form only — not a confirmed order. We will contact you within 24 hours to confirm availability and send a payment invoice.
     </div>
     <div id="cart-items"></div>
     <div class="cart-total" id="cart-total"></div>
     <div id="order-form">
-      <div class="form-group"><label>Full Name *</label><input id="f-name" placeholder="John Smith"></div>
-      <div class="form-group"><label>Email *</label><input id="f-email" type="email" placeholder="john@example.com"></div>
-      <div class="form-group"><label>Country *</label>
+      <div class="form-group"><label data-i18n="labelName">Full Name *</label><input id="f-name" data-i18n-ph="namePlaceholder" placeholder="John Smith"></div>
+      <div class="form-group"><label data-i18n="labelEmail">Email *</label><input id="f-email" type="email" placeholder="john@example.com"></div>
+      <div class="form-group"><label data-i18n="labelCountry">Country *</label>
         <select id="f-country" onchange="calcShipping()" style="width:100%;padding:0.6rem 1rem;border-radius:8px;border:1px solid #333;background:#0f0f1a;color:#fff;font-size:0.9rem;">
-          <option value="">-- Select Country --</option>
+          <option value="" data-i18n="selectCountry">-- Select Country --</option>
           <optgroup label="Asia">
             <option value="South Korea">South Korea</option>
             <option value="China">China</option>
@@ -286,20 +300,20 @@
         </select>
       </div>
       <div class="form-group">
-        <label>📦 Estimated Shipping (DHL Express)</label>
+        <label data-i18n="labelShipping">📦 Estimated Shipping</label>
         <div id="shipping-calc" style="background:#0f0f1a;border-radius:8px;padding:1rem;margin-top:0.5rem;font-size:0.85rem;">
-          <div style="color:#888;">Enter your country above to calculate shipping</div>
+          <div id="shipping-hint" data-i18n="shippingHint" style="color:#888;">Enter your country above to calculate shipping</div>
         </div>
       </div>
-      <div class="form-group"><label>Address *</label><textarea id="f-address" placeholder="123 Main St, City, State, ZIP"></textarea></div>
-      <div class="form-group"><label>Notes</label><textarea id="f-notes" placeholder="Any special requests..."></textarea></div>
-      <button class="btn-order" id="btn-order" onclick="submitOrder()">Send Request</button>
+      <div class="form-group"><label data-i18n="labelAddress">Address *</label><textarea id="f-address" data-i18n-ph="addrPlaceholder" placeholder="123 Main St, City, State, ZIP"></textarea></div>
+      <div class="form-group"><label data-i18n="labelNotes">Notes</label><textarea id="f-notes" data-i18n-ph="notesPlaceholder" placeholder="Any special requests..."></textarea></div>
+      <button class="btn-order" id="btn-order" data-i18n="sendRequest" onclick="submitOrder()">Send Request</button>
     </div>
     <div id="order-success" class="order-success" style="display:none">
-      <h3>✅ Request Received!</h3>
-      <p style="color:#aaa">We'll contact you at <span id="s-email"></span> within 24 hours to confirm availability and send a payment invoice.</p>
+      <h3 data-i18n="successTitle">✅ Request Received!</h3>
+      <p id="success-contact-p" style="color:#aaa">We'll contact you at <span id="s-email"></span> within 24 hours to confirm availability and send a payment invoice.</p>
       <p style="color:#e8b84b; margin-top:1rem; font-weight:bold" id="s-ordernum"></p>
-      <div class="success-note">
+      <div class="success-note" data-i18n="successNote">
         ⚠️ Please note: This is not a confirmed order. Stock and prices are subject to change until payment is received.
       </div>
     </div>
@@ -313,6 +327,7 @@ let data = [];
 let history = {};
 let currentGame = 'all';
 let currentTab = 'all';
+let currentLang = localStorage.getItem('tcg-lang') || 'en';
 
 // ─── Lazy-load per-game data ───
 const gameDataCache = {};   // game key → array of category objects (populated on demand)
@@ -371,6 +386,218 @@ function debouncedRender() {
   clearTimeout(_renderTimer);
   _renderTimer = setTimeout(render, 250);
 }
+
+// ─── i18n ───────────────────────────────────────────────────
+const TRANSLATIONS = {
+  en: {
+    siteTitle: '🎴 Japanese TCG Price List',
+    siteSubtitle: 'Live prices · Pokémon · One Piece · Yu-Gi-Oh · Weiss',
+    noticeTitle: '⭐ Important Reminders ⭐',
+    notice1: 'There are only a limited amount of boxes available for the prices listed. Boxes are sold on a first come first serve basis.',
+    notice2: 'Amount and prices are guaranteed only upon payment.',
+    notice3: 'Due to the recent volatility in the market, if payment cannot be confirmed within 3 hours of the invoice being issued, we will re-quote.',
+    noticeHow: '<strong>How to buy↓</strong><br>Once you let us know the quantity you\'d like, we will send an invoice via PayPal and then ship the items via FedEx or DHL.',
+    sortTrending: '🔥 Trending',
+    sortPriceDesc: 'Price: High → Low',
+    sortPriceAsc: 'Price: Low → High',
+    sortName: 'Name A-Z',
+    inStockOnly: 'In Stock Only',
+    statHigh: '7D High', statLow: '7D Low', statChange: '7D Change',
+    addToCart: 'Add to Request List 📋',
+    outOfStock: 'Out of Stock',
+    cartBtnLabel: '📋 Request',
+    cartModalTitle: '📋 Order Request',
+    cartNote: '⚠️ This is a request form only — not a confirmed order. We will contact you within 24 hours to confirm availability and send a payment invoice.',
+    cartEmpty: 'Your request list is empty',
+    estTotal: 'Est. Total:',
+    labelName: 'Full Name *', labelEmail: 'Email *', labelCountry: 'Country *',
+    selectCountry: '-- Select Country --',
+    labelShipping: '📦 Estimated Shipping',
+    shippingHint: 'Enter your country above to calculate shipping',
+    labelAddress: 'Address *', labelNotes: 'Notes',
+    namePlaceholder: 'John Smith',
+    addrPlaceholder: '123 Main St, City, State, ZIP',
+    notesPlaceholder: 'Any special requests...',
+    sendRequest: 'Send Request', sending: 'Sending...',
+    noItems: 'No items found',
+    stockInfo: (n, r) => `Stock: ${n} (${r} available)`,
+    stockCard: n => `Stock: ${n}`,
+    onlyN: n => `Sorry, only ${n} in stock!`,
+    fillRequired: 'Please fill in all required fields',
+    successTitle: '✅ Request Received!',
+    successContact: email => `We'll contact you at <span id="s-email">${email}</span> within 24 hours to confirm availability and send a payment invoice.`,
+    successNote: '⚠️ Please note: This is not a confirmed order. Stock and prices are subject to change until payment is received.',
+    rateText: r => `Exchange rate: 1 USD = ¥${r} · Prices include Japanese tax (10%)`,
+    rateFallback: 'Exchange rate: ~¥150 (fallback)',
+    estNote: '⚠️ Estimate only. Excludes customs duties & taxes.',
+  },
+  fr: {
+    siteTitle: '🎴 Liste de Prix TCG Japonais',
+    siteSubtitle: 'Prix en direct · Pokémon · One Piece · Yu-Gi-Oh · Weiss',
+    noticeTitle: '⭐ Rappels importants ⭐',
+    notice1: 'Le nombre de boîtes disponibles est limité. Les ventes se font par ordre d\'arrivée.',
+    notice2: 'Les quantités et prix ne sont garantis qu\'après réception du paiement.',
+    notice3: 'En raison de la volatilité du marché, si le paiement n\'est pas confirmé dans les 3 heures, nous recoterons.',
+    noticeHow: '<strong>Comment acheter↓</strong><br>Indiquez la quantité souhaitée, nous enverrons une facture PayPal et expédierons via FedEx ou DHL.',
+    sortTrending: '🔥 Tendance',
+    sortPriceDesc: 'Prix : Haut → Bas',
+    sortPriceAsc: 'Prix : Bas → Haut',
+    sortName: 'Nom A-Z',
+    inStockOnly: 'En stock uniquement',
+    statHigh: '7J Maximum', statLow: '7J Minimum', statChange: '7J Variation',
+    addToCart: 'Ajouter à la liste 📋',
+    outOfStock: 'Rupture de stock',
+    cartBtnLabel: '📋 Demande',
+    cartModalTitle: '📋 Demande de commande',
+    cartNote: '⚠️ Ceci est uniquement un formulaire de demande — pas une commande confirmée. Nous vous contacterons dans les 24 heures.',
+    cartEmpty: 'Votre liste est vide',
+    estTotal: 'Total estimé :',
+    labelName: 'Nom complet *', labelEmail: 'E-mail *', labelCountry: 'Pays *',
+    selectCountry: '-- Sélectionner un pays --',
+    labelShipping: '📦 Expédition estimée',
+    shippingHint: 'Entrez votre pays pour calculer les frais d\'expédition',
+    labelAddress: 'Adresse *', labelNotes: 'Remarques',
+    namePlaceholder: 'Jean Dupont',
+    addrPlaceholder: '12 Rue de la Paix, Paris, 75001',
+    notesPlaceholder: 'Demandes spéciales...',
+    sendRequest: 'Envoyer la demande', sending: 'Envoi...',
+    noItems: 'Aucun article trouvé',
+    stockInfo: (n, r) => `Stock : ${n} (${r} dispo)`,
+    stockCard: n => `Stock : ${n}`,
+    onlyN: n => `Désolé, seulement ${n} en stock !`,
+    fillRequired: 'Veuillez remplir tous les champs obligatoires',
+    successTitle: '✅ Demande reçue !',
+    successContact: email => `Nous vous contacterons à <span id="s-email">${email}</span> dans les 24 heures.`,
+    successNote: '⚠️ Ceci n\'est pas une commande confirmée. Les stocks et prix peuvent changer jusqu\'au paiement.',
+    rateText: r => `Taux de change : 1 USD = ¥${r} · Prix incluant la taxe japonaise (10%)`,
+    rateFallback: 'Taux de change : ~¥150',
+    estNote: '⚠️ Estimation uniquement. Hors droits de douane et taxes.',
+  },
+  it: {
+    siteTitle: '🎴 Listino Prezzi TCG Giapponesi',
+    siteSubtitle: 'Prezzi live · Pokémon · One Piece · Yu-Gi-Oh · Weiss',
+    noticeTitle: '⭐ Promemoria importanti ⭐',
+    notice1: 'Il numero di box disponibili è limitato. Le vendite sono al primo arrivato.',
+    notice2: 'Quantità e prezzi sono garantiti solo dopo il pagamento.',
+    notice3: 'A causa della volatilità del mercato, ricoteremo se il pagamento non è confermato entro 3 ore.',
+    noticeHow: '<strong>Come acquistare↓</strong><br>Indica la quantità desiderata, invieremo una fattura PayPal e spediremo via FedEx o DHL.',
+    sortTrending: '🔥 Tendenza',
+    sortPriceDesc: 'Prezzo: Alto → Basso',
+    sortPriceAsc: 'Prezzo: Basso → Alto',
+    sortName: 'Nome A-Z',
+    inStockOnly: 'Solo disponibili',
+    statHigh: '7G Massimo', statLow: '7G Minimo', statChange: '7G Variazione',
+    addToCart: 'Aggiungi alla lista 📋',
+    outOfStock: 'Esaurito',
+    cartBtnLabel: '📋 Richiesta',
+    cartModalTitle: '📋 Richiesta d\'ordine',
+    cartNote: '⚠️ Questo è solo un modulo di richiesta — non un ordine confermato. Vi contatteremo entro 24 ore per confermare la disponibilità.',
+    cartEmpty: 'La tua lista è vuota',
+    estTotal: 'Totale stimato:',
+    labelName: 'Nome completo *', labelEmail: 'E-mail *', labelCountry: 'Paese *',
+    selectCountry: '-- Seleziona paese --',
+    labelShipping: '📦 Spedizione stimata',
+    shippingHint: 'Inserisci il tuo paese per calcolare le spese di spedizione',
+    labelAddress: 'Indirizzo *', labelNotes: 'Note',
+    namePlaceholder: 'Mario Rossi',
+    addrPlaceholder: 'Via Roma 1, Milano, 20100',
+    notesPlaceholder: 'Richieste speciali...',
+    sendRequest: 'Invia richiesta', sending: 'Invio...',
+    noItems: 'Nessun articolo trovato',
+    stockInfo: (n, r) => `Stock: ${n} (${r} disponibil${r===1?'e':'i'})`,
+    stockCard: n => `Stock: ${n}`,
+    onlyN: n => `Spiacenti, solo ${n} in stock!`,
+    fillRequired: 'Compila tutti i campi obbligatori',
+    successTitle: '✅ Richiesta ricevuta!',
+    successContact: email => `Ti contatteremo a <span id="s-email">${email}</span> entro 24 ore.`,
+    successNote: '⚠️ Non è un ordine confermato. Stock e prezzi possono variare fino al pagamento.',
+    rateText: r => `Tasso: 1 USD = ¥${r} · Prezzi con imposta giapponese (10%)`,
+    rateFallback: 'Tasso: ~¥150',
+    estNote: '⚠️ Solo stima. Esclusi dazi doganali e tasse.',
+  },
+  zh: {
+    siteTitle: '🎴 日本TCG价格表',
+    siteSubtitle: '实时价格 · 宝可梦 · 海贼王 · 游戏王 · Weiss',
+    noticeTitle: '⭐ 重要提醒 ⭐',
+    notice1: '价格列表中的卡盒数量有限，先到先得。',
+    notice2: '数量和价格仅在付款后才予以保证。',
+    notice3: '由于近期市场波动，如无法在开具发票后3小时内确认付款，我们将重新报价。',
+    noticeHow: '<strong>购买方式↓</strong><br>告知所需数量后，我们将通过PayPal发送发票，并通过FedEx或DHL发货。',
+    sortTrending: '🔥 热度排序',
+    sortPriceDesc: '价格：高→低',
+    sortPriceAsc: '价格：低→高',
+    sortName: '名称 A-Z',
+    inStockOnly: '仅显示有货',
+    statHigh: '7日最高', statLow: '7日最低', statChange: '7日涨跌',
+    addToCart: '加入请求列表 📋',
+    outOfStock: '已售罄',
+    cartBtnLabel: '📋 请求',
+    cartModalTitle: '📋 订购请求',
+    cartNote: '⚠️ 这仅是询价表单，不是已确认的订单。我们将在24小时内联系您确认库存并发送付款发票。',
+    cartEmpty: '请求列表为空',
+    estTotal: '预计总计：',
+    labelName: '姓名 *', labelEmail: '邮箱 *', labelCountry: '国家/地区 *',
+    selectCountry: '-- 请选择国家 --',
+    labelShipping: '📦 预计运费',
+    shippingHint: '请在上方输入国家以计算运费',
+    labelAddress: '地址 *', labelNotes: '备注',
+    namePlaceholder: '张三',
+    addrPlaceholder: '省市区街道门牌号',
+    notesPlaceholder: '特殊要求...',
+    sendRequest: '发送请求', sending: '发送中...',
+    noItems: '未找到商品',
+    stockInfo: (n, r) => `库存：${n}（可购 ${r}）`,
+    stockCard: n => `库存：${n}`,
+    onlyN: n => `抱歉，仅剩 ${n} 件！`,
+    fillRequired: '请填写所有必填项',
+    successTitle: '✅ 已收到请求！',
+    successContact: email => `我们将在24小时内通过 <span id="s-email">${email}</span> 联系您。`,
+    successNote: '⚠️ 请注意：这不是已确认的订单。库存和价格在收到付款之前可能会变化。',
+    rateText: r => `汇率：1 USD = ¥${r} · 价格含日本消费税（10%）`,
+    rateFallback: '汇率：~¥150',
+    estNote: '⚠️ 仅供估算，不含关税及其他税费。',
+  },
+};
+
+function t(key, ...args) {
+  const v = (TRANSLATIONS[currentLang] || TRANSLATIONS.en)[key] ?? TRANSLATIONS.en[key];
+  return typeof v === 'function' ? v(...args) : (v ?? '');
+}
+
+function applyTranslations() {
+  // text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t(el.dataset.i18n);
+    if (v) el.textContent = v;
+  });
+  // innerHTML (for elements with <strong>, <br> etc.)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t(el.dataset.i18nHtml);
+    if (v) el.innerHTML = v;
+  });
+  // placeholder attributes
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const v = t(el.dataset.i18nPh);
+    if (v) el.placeholder = v;
+  });
+  // <option> elements with data-i18n
+  document.querySelectorAll('option[data-i18n]').forEach(el => {
+    const v = t(el.dataset.i18n);
+    if (v) el.textContent = v;
+  });
+  // active lang button
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+  });
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('tcg-lang', lang);
+  applyTranslations();
+  render();
+}
+// ────────────────────────────────────────────────────────────
 
 const GAME_CATEGORIES = {
   pokemon: {
@@ -431,10 +658,9 @@ async function loadRate() {
     const r = await fetch('https://open.er-api.com/v6/latest/USD');
     const j = await r.json();
     usdRate = j.rates.JPY;
-    document.getElementById('rate-bar').textContent =
-      `Exchange rate: 1 USD = ¥${usdRate.toFixed(0)} · Prices include Japanese tax (10%)`;
+    document.getElementById('rate-bar').textContent = t('rateText', usdRate.toFixed(0));
   } catch {
-    document.getElementById('rate-bar').textContent = 'Exchange rate: ~¥150 (fallback)';
+    document.getElementById('rate-bar').textContent = t('rateFallback');
   }
 }
 
@@ -549,12 +775,19 @@ function render() {
   if (query) items = items.filter(i =>
     (i.nameEn||i.name).toLowerCase().includes(query) || i.name.toLowerCase().includes(query)
   );
-  if (sortBy === 'price-desc') items.sort((a,b) => b._price - a._price);
+  if (sortBy === 'trending') {
+    const trendList = window._trending || [];
+    items.sort((a, b) => {
+      const ai = trendList.findIndex(t => t.url === a.link);
+      const bi = trendList.findIndex(t => t.url === b.link);
+      const as = ai === -1 ? Infinity : ai;
+      const bs = bi === -1 ? Infinity : bi;
+      if (as !== bs) return as - bs;
+      return b._price - a._price;
+    });
+  } else if (sortBy === 'price-desc') items.sort((a,b) => b._price - a._price);
   else if (sortBy === 'price-asc') items.sort((a,b) => a._price - b._price);
   else if (sortBy === 'name') items.sort((a,b) => (a.nameEn||a.name).localeCompare(b.nameEn||b.name));
-  else if (sortBy === 'change') items.sort((a,b) => (getPriceChange(a)||0) - (getPriceChange(b)||0));
-  else if (sortBy === 'grade-desc') items.sort((a,b) => extractGrade(b) - extractGrade(a));
-  else if (sortBy === 'grade-asc') items.sort((a,b) => extractGrade(a) - extractGrade(b));
   const totalItems = items.length;
   const totalPages = Math.ceil(totalItems / PAGE_SIZE);
   if (currentPage > totalPages) currentPage = 1;
@@ -562,7 +795,7 @@ function render() {
   const pageItems = items.slice(start, start + PAGE_SIZE);
   document.getElementById('count').textContent = `${totalItems} items`;
   const grid = document.getElementById('grid');
-  if (!pageItems.length) { grid.innerHTML = '<div class="empty">No items found</div>'; return; }
+  if (!pageItems.length) { grid.innerHTML = `<div class="empty">${t('noItems')}</div>`; return; }
   window._renderedItems = items;
   grid.innerHTML = pageItems.map((item, i) => {
     const change = getPriceChange(item);
@@ -582,7 +815,7 @@ function render() {
           : `<div class="card-price">¥${item._price.toLocaleString()}</div>
              <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)} USD</div>`
         }
-        <div class="card-stock" style="color:${stockColor}">Stock: ${stockNum}</div>
+        <div class="card-stock" style="color:${stockColor}">${t('stockCard', stockNum)}</div>
         ${changeHtml}
       </div>
     </div>`;
@@ -614,14 +847,14 @@ function openModal(idx) {
   document.getElementById('m-jpname').textContent = item.nameJp || item.name;
   document.getElementById('m-price').textContent = `¥${item._price.toLocaleString()}`;
   document.getElementById('m-usd').textContent = `≈ $${(item._price/usdRate).toFixed(2)} USD`;
-  document.getElementById('m-stock').textContent = `Stock: ${stockNum} (${remaining} available)`;
+  document.getElementById('m-stock').textContent = t('stockInfo', stockNum, remaining);
   const btn = document.getElementById('btn-add-cart');
   if (remaining <= 0) {
     btn.disabled = true;
-    btn.textContent = 'Out of Stock';
+    btn.textContent = t('outOfStock');
   } else {
     btn.disabled = false;
-    btn.textContent = 'Add to Request List 📋';
+    btn.textContent = t('addToCart');
   }
   if (hist.length > 0) {
     const prices = hist.map(h => h.price);
@@ -672,7 +905,7 @@ function addToCart(idx) {
   const existing = cart.find(c => c.link === item.link);
   const maxStock = typeof item.stock === 'number' ? item.stock : 99;
   if (existing) {
-    if (existing.qty >= maxStock) { alert(`Sorry, only ${maxStock} in stock!`); return; }
+    if (existing.qty >= maxStock) { alert(t('onlyN', maxStock)); return; }
     existing.qty++;
   } else {
     cart.push({ ...item, qty: 1 });
@@ -688,7 +921,7 @@ function changeQty(link, delta) {
   if (newQty <= 0) {
     cart = cart.filter(c => c.link !== link);
   } else if (newQty > maxStock) {
-    alert(`Sorry, only ${maxStock} in stock!`); return;
+    alert(t('onlyN', maxStock)); return;
   } else {
     item.qty = newQty;
   }
@@ -709,14 +942,14 @@ function updateCartCount() {
 function renderCart() {
   const el = document.getElementById('cart-items');
   if (!cart.length) {
-    el.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Your request list is empty</p>';
+    el.innerHTML = `<p style="color:#888;text-align:center;padding:2rem">${t('cartEmpty')}</p>`;
     document.getElementById('cart-total').textContent = '';
     return;
   }
   el.innerHTML = cart.map(item => `
     <div class="cart-item">
       <img src="${item.img}" alt="${item.nameEn||item.name}">
-      <div class="cart-item-name">${item.nameEn||item.name}<br><small style="color:#555">Stock: ${item.stock}</small></div>
+      <div class="cart-item-name">${item.nameEn||item.name}<br><small style="color:#555">${t('stockCard', item.stock)}</small></div>
       <div class="cart-item-qty">
         <button class="qty-btn" onclick="changeQty('${item.link}', -1)">−</button>
         <span>${item.qty}</span>
@@ -726,7 +959,7 @@ function renderCart() {
       <button class="cart-item-remove" onclick="removeFromCart('${item.link}')">×</button>
     </div>`).join('');
   const total = cart.reduce((s,c) => s+c._price*c.qty, 0);
-  document.getElementById('cart-total').innerHTML = `Est. Total: ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
+  document.getElementById('cart-total').innerHTML = `${t('estTotal')} ¥${total.toLocaleString()} <span style="color:#888;font-size:0.8rem">≈ $${(total/usdRate).toFixed(2)} USD</span>`;
   calcShipping();
 }
 
@@ -897,7 +1130,7 @@ function calcShipping(){
         ${fxRow(tFICP,'FICP (Connect Plus) · 4-7 days')}
       </div>
     </div>
-    <div style="color:#ff9060;font-size:0.72rem;">⚠️ Estimate only. Excludes customs duties & taxes.</div>
+    <div style="color:#ff9060;font-size:0.72rem;">${t('estNote')}</div>
   `;
 }
 async function submitOrder() {
@@ -905,10 +1138,10 @@ async function submitOrder() {
   const email = document.getElementById('f-email').value.trim();
   const country = document.getElementById('f-country').value.trim();
   const address = document.getElementById('f-address').value.trim();
-  if (!name||!email||!country||!address) { alert('Please fill in all required fields'); return; }
-  if (!cart.length) { alert('Your request list is empty'); return; }
+  if (!name||!email||!country||!address) { alert(t('fillRequired')); return; }
+  if (!cart.length) { alert(t('cartEmpty')); return; }
   const btn = document.getElementById('btn-order');
-  btn.disabled = true; btn.textContent = 'Sending...';
+  btn.disabled = true; btn.textContent = t('sending');
   try {
     // 送料計算
     const wG=calcWeight();
@@ -936,17 +1169,20 @@ async function submitOrder() {
     const result = await res.json();
     if (result.success) {
       document.getElementById('order-form').style.display = 'none';
-      document.getElementById('order-success').style.display = 'block';
-      document.getElementById('s-email').textContent = email;
+      const successEl = document.getElementById('order-success');
+      successEl.style.display = 'block';
+      document.getElementById('success-contact-p').innerHTML = t('successContact', email);
       document.getElementById('s-ordernum').textContent = `Request #${result.orderNum}`;
+      // re-apply translations to newly shown success block
+      successEl.querySelectorAll('[data-i18n]').forEach(el => { const v = t(el.dataset.i18n); if (v) el.textContent = v; });
       cart = []; updateCartCount();
     } else {
       alert('Error: ' + result.error);
-      btn.disabled = false; btn.textContent = 'Send Request';
+      btn.disabled = false; btn.textContent = t('sendRequest');
     }
   } catch(e) {
     alert('Connection error. Please try again.');
-    btn.disabled = false; btn.textContent = 'Send Request';
+    btn.disabled = false; btn.textContent = t('sendRequest');
   }
 }
 
@@ -977,6 +1213,7 @@ async function init() {
     const searchEl = document.getElementById('search');
     if (searchEl) searchEl.value = qParam;
   }
+  applyTranslations();
   render();
 }
 
