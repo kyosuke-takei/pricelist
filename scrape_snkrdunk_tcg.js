@@ -148,11 +148,17 @@ function classifyByPage(name, pageText) {
   function getCacheLabel(url) {
     const entry = labelCache[url];
     if (!entry) return null;
-    // SKIPエントリ: { label:'SKIP', until: timestamp }
-    if (typeof entry === 'object' && entry.label === 'SKIP') {
-      return Date.now() < entry.until ? 'SKIP' : null; // 期限切れならnull→再訪問
+    if (typeof entry === 'object') {
+      if (entry.label === 'SKIP') return Date.now() < entry.until ? 'SKIP' : null;
+      return entry.label; // { label, stock } 形式
     }
-    return entry; // 通常ラベル文字列
+    return entry; // 旧形式: ラベル文字列
+  }
+
+  function getCacheStock(url) {
+    const entry = labelCache[url];
+    if (typeof entry === 'object' && typeof entry.stock === 'number') return entry.stock;
+    return 1;
   }
 
   let hitCount = 0, visitCount = 0, nameCount = 0, skipCount = 0;
@@ -173,7 +179,7 @@ function classifyByPage(name, pageText) {
       if (categories[cachedLabel]) {
         categories[cachedLabel].push({
           name: cached.name, nameEn: cached.name,
-          price: cached.price, img: cached.img, stock: 1, link: productUrl,
+          price: cached.price, img: cached.img, stock: getCacheStock(productUrl), link: productUrl,
         });
         hitCount++;
         process.stdout.write(`[HIT] `);
@@ -231,7 +237,7 @@ function classifyByPage(name, pageText) {
       }
 
       const label = classifyByPage(detail.name, detail.pageText);
-      labelCache[productUrl] = label;
+      labelCache[productUrl] = { label, stock: detail.stock }; // 在庫数もキャッシュに保存
       categories[label].push({
         name: detail.name, nameEn: detail.name,
         price: detail.price, img: detail.img, stock: detail.stock, link: productUrl,

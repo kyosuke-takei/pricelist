@@ -1,9 +1,13 @@
-name: Daily Scrape (Manual only)
+name: Daily Scrape (DISABLED)
 on:
-  # schedule は停止中
+  # schedule は停止中（法的確認中）
   # schedule:
   #   - cron: '0 0,6,12,18 * * *'
-  workflow_dispatch:   # GitHub Actions 画面から手動実行のみ許可
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: '実行するには "run" と入力してください'
+        required: true
 permissions:
   contents: write
 jobs:
