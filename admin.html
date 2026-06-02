@@ -155,6 +155,56 @@
     z-index: 2000; display: none;
   }
   .saving-box { background: #16213e; border: 1px solid #e8b84b; border-radius: 12px; padding: 2rem 3rem; text-align: center; color: #e8b84b; font-size: 1.1rem; }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; gap: 0; border-bottom: 2px solid #333;
+    margin-bottom: 1.5rem;
+  }
+  .tab-btn {
+    padding: 0.65rem 1.6rem; border: none; cursor: pointer;
+    background: transparent; color: #888; font-size: 0.95rem;
+    font-weight: bold; border-bottom: 3px solid transparent;
+    margin-bottom: -2px; transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn.active { color: #e8b84b; border-bottom-color: #e8b84b; }
+  .tab-btn:hover:not(.active) { color: #ccc; }
+
+  /* ── LINE取込 UI ── */
+  #tab-line { display: none; }
+  .line-textarea {
+    width: 100%; min-height: 260px; padding: 1rem;
+    border-radius: 8px; border: 1px solid #333;
+    background: #0f0f1a; color: #fff; font-size: 0.88rem;
+    font-family: 'Segoe UI', sans-serif; resize: vertical;
+    line-height: 1.6;
+  }
+  .line-textarea:focus { outline: none; border-color: #e8b84b; }
+  .line-controls { display: flex; gap: 0.75rem; align-items: center; margin: 0.75rem 0 1.5rem; }
+  .parse-summary { color: #aaa; font-size: 0.85rem; }
+
+  /* preview table */
+  .line-preview-wrap { overflow-x: auto; }
+  #line-preview-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  #line-preview-table th {
+    background: #16213e; color: #e8b84b; padding: 0.65rem 0.8rem;
+    text-align: left; border-bottom: 1px solid #333; white-space: nowrap;
+  }
+  #line-preview-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #1a1a2e; vertical-align: middle; }
+  #line-preview-table tr.row-matched td { }
+  #line-preview-table tr.row-price-changed td { background: rgba(232,184,75,0.06); }
+  #line-preview-table tr.row-unmatched td { background: rgba(255,68,68,0.07); }
+  .match-badge { display: inline-block; padding: 0.18rem 0.55rem; border-radius: 10px; font-size: 0.75rem; font-weight: bold; }
+  .badge-ok { background: #0d3d1f; color: #00cc66; }
+  .badge-new { background: #3d2a0d; color: #ffa040; }
+  .badge-skip { background: #2a2a2a; color: #666; }
+  .price-old { color: #888; text-decoration: line-through; margin-right: 0.4rem; }
+  .price-new { color: #e8b84b; font-weight: bold; }
+  .price-same { color: #888; }
+  .shrink-badge { font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 8px; background: #1a2a3a; color: #6ab; margin-left: 0.3rem; }
+  .cat-select-inline { padding: 0.25rem 0.5rem; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.78rem; max-width: 220px; }
+  .line-apply-bar { display: flex; gap: 1rem; align-items: center; margin-top: 1.2rem; flex-wrap: wrap; }
+  .apply-count { color: #aaa; font-size: 0.85rem; }
 </style>
 </head>
 <body>
@@ -184,31 +234,84 @@
   </div>
 
   <div class="main">
-    <div class="toolbar">
-      <button class="btn btn-primary" onclick="openAddModal()">＋ 商品追加</button>
-      <select id="filter-cat" onchange="resetAndRender()">
-        <option value="">全カテゴリ</option>
-      </select>
-      <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="debounceRender()" style="min-width:200px">
-      <span class="item-count" id="item-count"></span>
+    <!-- タブバー -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tabBtn-items" onclick="switchTab('items')">📋 商品一覧</button>
+      <button class="tab-btn" id="tabBtn-line" onclick="switchTab('line')">📲 LINE取込</button>
     </div>
 
-    <div class="table-wrap">
-      <table id="product-table">
-        <thead>
-          <tr>
-            <th>画像</th>
-            <th>商品名</th>
-            <th>カテゴリ</th>
-            <th>価格</th>
-            <th>在庫</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-      </table>
+    <!-- 商品一覧タブ -->
+    <div id="tab-items">
+      <div class="toolbar">
+        <button class="btn btn-primary" onclick="openAddModal()">＋ 商品追加</button>
+        <select id="filter-cat" onchange="resetAndRender()">
+          <option value="">全カテゴリ</option>
+        </select>
+        <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="debounceRender()" style="min-width:200px">
+        <span class="item-count" id="item-count"></span>
+      </div>
+
+      <div class="table-wrap">
+        <table id="product-table">
+          <thead>
+            <tr>
+              <th>画像</th>
+              <th>商品名</th>
+              <th>カテゴリ</th>
+              <th>価格</th>
+              <th>在庫</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <div id="pagination" style="display:flex;gap:0.5rem;align-items:center;justify-content:center;padding:1.5rem 0;flex-wrap:wrap;"></div>
     </div>
-    <div id="pagination" style="display:flex;gap:0.5rem;align-items:center;justify-content:center;padding:1.5rem 0;flex-wrap:wrap;"></div>
+
+    <!-- LINE取込タブ -->
+    <div id="tab-line">
+      <p style="color:#aaa;font-size:0.88rem;margin-bottom:0.75rem">
+        LINEからコピーした価格リストをそのまま貼り付けてください。<br>
+        <span style="color:#666">（☑️商品名 / ・商品名 の後に N BOX@価格円 の形式を認識します。カートン単位は無視されます）</span>
+      </p>
+      <textarea class="line-textarea" id="line-input" placeholder="お疲れさまです。少量となりますが下記商品のご提案となります。
+
+☑️アビスアイ
+21BOX@15,500円
+20BOX@14,100円（シュリなし）
+☑️OP-15
+16BOX@12,500円
+…"></textarea>
+      <div class="line-controls">
+        <button class="btn btn-primary" onclick="parseAndPreview()">🔍 解析する</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('line-input').value='';document.getElementById('line-preview-section').style.display='none'">クリア</button>
+        <span class="parse-summary" id="parse-summary"></span>
+      </div>
+
+      <div id="line-preview-section" style="display:none">
+        <div class="line-preview-wrap">
+          <table id="line-preview-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"></th>
+                <th>LINE商品名</th>
+                <th>マッチ商品</th>
+                <th>カテゴリ</th>
+                <th>数量</th>
+                <th>旧価格 → 新価格</th>
+                <th>状態</th>
+              </tr>
+            </thead>
+            <tbody id="line-preview-body"></tbody>
+          </table>
+        </div>
+        <div class="line-apply-bar">
+          <button class="btn btn-primary" onclick="applyLineImport()">✅ 選択した項目をGitHubに保存</button>
+          <span class="apply-count" id="apply-count"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -678,6 +781,271 @@ function showSaving(show) {
 
 function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Tab ──────────────────────────────────────────
+function switchTab(tab) {
+  ['items', 'line'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
+    document.getElementById('tabBtn-' + t).classList.toggle('active', t === tab);
+  });
+}
+
+// ── LINE取込: パース ──────────────────────────────
+const BOX_CATS_SHRINK   = ['ポケカ未開封BOX', 'ワンピース未開封BOX', '未開封BOX シュリンクあり', '遊戯王 BOX シュリンクあり', 'ヴァイス BOX シュリンクあり'];
+const BOX_CATS_NOSHRINK = ['未開封BOX シュリンクなし', '遊戯王 BOX シュリンクなし', 'ヴァイス BOX シュリンクなし'];
+const BOX_CATS_ALL      = [...BOX_CATS_SHRINK, ...BOX_CATS_NOSHRINK];
+
+function parseLineText(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const results = [];
+  let currentName = null;
+
+  const nameRe = /^[☑️✅・◆▶►▷][\s️]*/u;
+  // N BOX@価格円 / Nパック@価格円  ※カートンは無視
+  const priceRe = /^(\d[\d,]*)\s*(BOX|box|ボックス|パック|pack)\s*[@＠]\s*([\d,]+)円?(.*)?$/i;
+
+  for (const line of lines) {
+    if (nameRe.test(line)) {
+      currentName = line.replace(nameRe, '').replace(/\s*$/, '').trim();
+      continue;
+    }
+    if (!currentName) continue;
+
+    const m = priceRe.exec(line);
+    if (!m) continue;
+
+    const qty   = parseInt(m[1].replace(/,/g, ''), 10);
+    const price = parseInt(m[3].replace(/,/g, ''), 10);
+    const note  = (m[4] || '').trim();
+    const shrink = !/シュリなし|シュリンクなし/i.test(note);
+
+    results.push({ lineName: currentName, qty, price, shrink });
+  }
+  return results;
+}
+
+// ── LINE取込: マッチング ──────────────────────────
+function normalize(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[　\s]/g, '')
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[-－ー]/g, '-');
+}
+
+function findMatch(lineName, shrink) {
+  const needle = normalize(lineName);
+  const targetCats = shrink ? BOX_CATS_SHRINK : BOX_CATS_NOSHRINK;
+  const fallbackCats = shrink ? BOX_CATS_NOSHRINK : BOX_CATS_SHRINK;
+
+  let best = null;
+  let bestScore = 0;
+
+  const score = (item, catLabel) => {
+    const fields = [item.name, item.nameJp, item.nameEn].filter(Boolean).map(normalize);
+    let s = 0;
+    for (const f of fields) {
+      if (f.includes(needle) || needle.includes(f)) {
+        // 長さが近いほど高スコア
+        const overlap = Math.min(needle.length, f.length) / Math.max(needle.length, f.length);
+        s = Math.max(s, overlap * (f.includes(needle) ? 1.2 : 1.0));
+      }
+    }
+    // 優先カテゴリなら +0.1
+    if (targetCats.includes(catLabel)) s += 0.1;
+    if (BOX_CATS_ALL.includes(catLabel)) s += 0.05;
+    return s;
+  };
+
+  data.forEach((group, catIdx) => {
+    if (!BOX_CATS_ALL.includes(group.label)) return;
+    group.items.forEach((item, itemIdx) => {
+      const s = score(item, group.label);
+      if (s > bestScore) {
+        bestScore = s;
+        best = { catIdx, itemIdx, score: s };
+      }
+    });
+  });
+
+  return bestScore >= 0.25 ? best : null;
+}
+
+function formatPrice(yen) {
+  return '¥' + yen.toLocaleString('ja-JP');
+}
+
+// ── LINE取込: プレビュー描画 ──────────────────────
+let lineRows = []; // { parsed, match, checked }
+
+function parseAndPreview() {
+  const text = document.getElementById('line-input').value;
+  const parsed = parseLineText(text);
+
+  lineRows = parsed.map(p => ({
+    parsed: p,
+    match: findMatch(p.lineName, p.shrink),
+    checked: true,
+    overrideCat: null
+  }));
+
+  document.getElementById('parse-summary').textContent =
+    `${parsed.length} 件検出 / マッチ: ${lineRows.filter(r => r.match).length} 件`;
+
+  renderLinePreview();
+  document.getElementById('line-preview-section').style.display = lineRows.length ? 'block' : 'none';
+  updateApplyCount();
+}
+
+function renderLinePreview() {
+  const tbody = document.getElementById('line-preview-body');
+  tbody.innerHTML = '';
+
+  lineRows.forEach((row, idx) => {
+    const { parsed, match } = row;
+    const newPriceStr = formatPrice(parsed.price);
+
+    let matchedName = '', catLabel = '', oldPrice = '', rowClass = 'row-unmatched';
+    if (match) {
+      const item = data[match.catIdx].items[match.itemIdx];
+      matchedName = item.name || item.nameJp || '';
+      catLabel = data[match.catIdx].label;
+      oldPrice = item.price || '';
+      rowClass = (oldPrice !== newPriceStr) ? 'row-price-changed' : 'row-matched';
+    }
+
+    const shrinkLabel = parsed.shrink
+      ? '<span class="shrink-badge">シュリあり</span>'
+      : '<span class="shrink-badge" style="background:#2a1a1a;color:#f86">シュリなし</span>';
+
+    const priceCell = match
+      ? (oldPrice !== newPriceStr
+          ? `<span class="price-old">${escHtml(oldPrice)}</span><span class="price-new">${escHtml(newPriceStr)}</span>`
+          : `<span class="price-same">${escHtml(newPriceStr)}</span>`)
+      : `<span class="price-new">${escHtml(newPriceStr)}</span>`;
+
+    const badge = match
+      ? '<span class="match-badge badge-ok">マッチ</span>'
+      : '<span class="match-badge badge-new">未マッチ</span>';
+
+    // カテゴリセル: 未マッチ時はセレクト
+    let catCell;
+    if (match) {
+      catCell = `<span class="category-badge">${escHtml(catLabel)}</span>`;
+    } else {
+      const opts = BOX_CATS_ALL.map(c =>
+        `<option value="${escHtml(c)}" ${row.overrideCat === c ? 'selected' : ''}>${escHtml(c)}</option>`
+      ).join('');
+      catCell = `<select class="cat-select-inline" onchange="setOverrideCat(${idx}, this.value)"><option value="">カテゴリ選択</option>${opts}</select>`;
+    }
+
+    const tr = document.createElement('tr');
+    tr.className = rowClass;
+    tr.innerHTML = `
+      <td><input type="checkbox" ${row.checked ? 'checked' : ''} onchange="setChecked(${idx}, this.checked)"></td>
+      <td>${escHtml(parsed.lineName)}${shrinkLabel}</td>
+      <td style="max-width:260px;font-size:0.8rem">${match ? escHtml(matchedName) : '<span style="color:#666">—</span>'}</td>
+      <td>${catCell}</td>
+      <td style="color:#aaa">${parsed.qty} BOX</td>
+      <td>${priceCell}</td>
+      <td>${badge}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('check-all').checked = lineRows.every(r => r.checked);
+}
+
+function setChecked(idx, val) {
+  lineRows[idx].checked = val;
+  updateApplyCount();
+  document.getElementById('check-all').checked = lineRows.every(r => r.checked);
+}
+
+function toggleAllChecks(val) {
+  lineRows.forEach(r => r.checked = val);
+  renderLinePreview();
+  updateApplyCount();
+}
+
+function setOverrideCat(idx, catLabel) {
+  lineRows[idx].overrideCat = catLabel || null;
+}
+
+function updateApplyCount() {
+  const n = lineRows.filter(r => r.checked).length;
+  document.getElementById('apply-count').textContent = `${n} 件を適用します`;
+}
+
+// ── LINE取込: 一括適用 ────────────────────────────
+async function applyLineImport() {
+  const targets = lineRows.filter(r => r.checked);
+  if (!targets.length) { showToast('適用する項目がありません', 'error'); return; }
+
+  const newData = JSON.parse(JSON.stringify(data));
+  let updated = 0;
+
+  for (const row of targets) {
+    const { parsed, match, overrideCat } = row;
+    const newPrice = formatPrice(parsed.price);
+
+    if (match) {
+      newData[match.catIdx].items[match.itemIdx].price = newPrice;
+      updated++;
+    } else if (overrideCat) {
+      // 未マッチ・カテゴリ手動指定 → 新規追加
+      const catIdx = newData.findIndex(g => g.label === overrideCat);
+      const newItem = { name: parsed.lineName, price: newPrice, stock: parsed.qty };
+      if (catIdx >= 0) newData[catIdx].items.push(newItem);
+      else newData.push({ label: overrideCat, items: [newItem] });
+      updated++;
+    }
+  }
+
+  if (!updated) { showToast('更新できる項目がありません（未マッチかつカテゴリ未選択）', 'error'); return; }
+
+  // commitData を流用（コミットメッセージだけカスタム）
+  const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
+  if (!token) { showToast('GitHub Tokenを入力してください', 'error'); return; }
+
+  showSaving(true);
+  try {
+    const metaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!metaRes.ok) throw new Error(`GitHub API error: ${metaRes.status}`);
+    const meta = await metaRes.json();
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+    const updateRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `LINE取込: ${updated}件更新 - ${new Date().toLocaleString('ja-JP')}`,
+        content,
+        sha: meta.sha
+      })
+    });
+    if (!updateRes.ok) {
+      const err = await updateRes.json();
+      throw new Error(err.message || updateRes.status);
+    }
+    data = newData;
+    refreshCategoryFilter();
+    renderTable();
+    showToast(`${updated} 件をGitHubに保存しました ✓`, 'success');
+    document.getElementById('line-preview-section').style.display = 'none';
+    document.getElementById('line-input').value = '';
+    document.getElementById('parse-summary').textContent = '';
+  } catch(e) {
+    showToast('保存失敗: ' + e.message, 'error');
+  } finally {
+    showSaving(false);
+  }
 }
 
 // ── Boot ──────────────────────────────────────────
