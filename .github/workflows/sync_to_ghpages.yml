@@ -1,0 +1,43 @@
+name: Sync frontend files to gh-pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'admin.html'
+      - 'mockup.html'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync HTML files to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # gh-pages ブランチに切り替え
+          git checkout gh-pages
+
+          # main から HTML ファイルだけ持ってくる
+          git checkout main -- index.html admin.html
+
+          # mockup.html は存在する場合のみ
+          git checkout main -- mockup.html 2>/dev/null || true
+
+          # 変更があればコミット＆プッシュ
+          if git diff --staged --quiet; then
+            echo "No changes to sync."
+          else
+            git commit -m "Auto-sync HTML from main [skip ci]"
+            git push origin gh-pages
+            echo "Synced to gh-pages ✓"
+          fi
