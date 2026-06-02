@@ -206,6 +206,12 @@
   .line-apply-bar { display: flex; gap: 1rem; align-items: center; margin-top: 1.2rem; flex-wrap: wrap; }
   .apply-count { color: #aaa; font-size: 0.85rem; }
 
+  /* 一括貼り付けボックス */
+  .autosplit-box {
+    background: #0d1f35; border: 1px solid #2a4a6a; border-radius: 10px;
+    padding: 1rem; margin-bottom: 1.2rem;
+  }
+
   /* 業者ブロック */
   .supplier-block {
     background: #111827; border: 1px solid #2a2a4a; border-radius: 10px;
@@ -300,9 +306,26 @@
 
     <!-- LINE取込タブ -->
     <div id="tab-line">
-      <p style="color:#aaa;font-size:0.88rem;margin-bottom:1rem">
-        複数業者のLINEメッセージを貼り付けて比較・集約できます。業者ごとにブロックを追加してください。
-      </p>
+      <!-- グループチャット一括貼り付け -->
+      <div id="autosplit-section" style="display:none">
+        <div class="autosplit-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem">
+            <span style="color:#e8b84b;font-weight:bold;font-size:0.9rem">📋 グループチャット一括貼り付け</span>
+            <button class="btn-remove-supplier" onclick="document.getElementById('autosplit-section').style.display='none'">✕ 閉じる</button>
+          </div>
+          <p style="color:#888;font-size:0.8rem;margin-bottom:0.6rem">送信者名 — 時刻 の形式が含まれていれば業者ごとに自動分割します</p>
+          <textarea class="line-textarea" id="autosplit-input" style="min-height:200px" placeholder="グループチャットの内容をここに丸ごと貼り付け..."></textarea>
+          <div style="display:flex;gap:0.75rem;margin-top:0.6rem;align-items:center">
+            <button class="btn btn-primary" onclick="autoSplitAndFill()">🔄 送信者ごとに自動分割</button>
+            <span id="autosplit-msg" style="color:#aaa;font-size:0.82rem"></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="toggleAutosplit()">📋 グループチャットから一括貼り付け</button>
+        <span style="color:#555;font-size:0.82rem">または個別に業者を追加↓</span>
+      </div>
 
       <!-- 業者ブロック一覧 -->
       <div id="supplier-blocks"></div>
@@ -863,52 +886,199 @@ function clearAllSuppliers() {
   addSupplierBlock();
 }
 
-// ── LINE取込: パーサー ────────────────────────────
+// ── グループチャット自動分割 ──────────────────────
+function toggleAutosplit() {
+  const sec = document.getElementById('autosplit-section');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+}
+
+// "名前 — 時刻" パターンでLINEグループチャットを分割
+function autoSplitText(fullText) {
+  // 送信者行: テキスト — (昨日/今日/HH:MM)
+  const senderRe = /^(.+?)\s+[—–]\s+(昨日|今日|\d{1,2}:\d{2})/;
+  const lines = fullText.split('\n');
+  const segments = [];
+  let curName = null, curLines = [];
+
+  for (const line of lines) {
+    const m = senderRe.exec(line.trim());
+    if (m) {
+      if (curName !== null && curLines.join('\n').trim()) {
+        segments.push({ name: cleanSenderName(curName), text: curLines.join('\n') });
+      }
+      curName = m[1].trim();
+      curLines = [];
+    } else {
+      curLines.push(line);
+    }
+  }
+  if (curName !== null && curLines.join('\n').trim()) {
+    segments.push({ name: cleanSenderName(curName), text: curLines.join('\n') });
+  }
+  return segments;
+}
+
+function cleanSenderName(raw) {
+  const cleaned = raw
+    .replace(/^【[^】]*】\s*/, '')      // 【5-1009】を除去
+    .replace(/^\d[\d\-]*\s+/, '')       // 5-1089 などの番号を除去
+    .replace(/^(合同会社|株式会社|有限会社)\s*/, '') // 会社形態を除去
+    .replace(/（[^）]*）\s*$/, '')       // 末尾の（括弧）を除去
+    .trim();
+  return cleaned || raw.trim();
+}
+
+function autoSplitAndFill() {
+  const text = document.getElementById('autosplit-input').value.trim();
+  if (!text) { showToast('テキストを貼り付けてください', 'error'); return; }
+
+  const segments = autoSplitText(text);
+  if (!segments.length) {
+    document.getElementById('autosplit-msg').textContent = '送信者を検出できませんでした。業者ブロックに手動で貼り付けてください';
+    return;
+  }
+
+  // 既存ブロックをクリアして置き換え
+  document.getElementById('supplier-blocks').innerHTML = '';
+  supplierIdCounter = 0;
+  segments.forEach(s => addSupplierBlock(s.name, s.text));
+
+  showToast(`${segments.length} 業者を自動検出しました ✓`, 'success');
+  document.getElementById('autosplit-section').style.display = 'none';
+  document.getElementById('autosplit-input').value = '';
+  document.getElementById('autosplit-msg').textContent = '';
+}
+
+// ── LINE取込: 各種価格行フォーマット対応 ──────────
+function tryParsePriceLine(line) {
+  let m;
+
+  // 1. 標準: 21BOX@15,500円 / 3BOX@11,900円（シュリなし）
+  m = /^(\d[\d,]*)\s*(BOX|box|ボックス|パック|pack)\s*[@＠]\s*([\d,]+)円?(.*)?$/i.exec(line);
+  if (m) {
+    const note = (m[4] || '').trim();
+    const shrink = /シュリなし|シュリンクなし|シュリンク無し?|シュリ無|白箱/i.test(note) ? false : null;
+    return { qty: +m[1].replace(/,/g,''), unit: 'BOX', price: +m[3].replace(/,/g,''), note, shrink, isCarton: false };
+  }
+
+  // 2. カートン: 1カートン@168,000円 / 4カートン　@ 165000円
+  m = /^(\d[\d,]*)\s*カートン\s*[@＠]\s*([\d,]+)円?(.*)?$/.exec(line);
+  if (m) return { qty: +m[1], unit: 'カートン', price: +m[2].replace(/,/g,''), note: (m[3]||'').trim(), shrink: null, isCarton: true };
+
+  // 3. case: 2case＠70,000円 / 1case＠140,000円
+  m = /^(\d[\d,]*)\s*[Cc]ase\s*[@＠]\s*([\d,]+)円?(.*)?$/i.exec(line);
+  if (m) return { qty: +m[1], unit: 'case', price: +m[2].replace(/,/g,''), note: (m[3]||'').trim(), shrink: null, isCarton: true };
+
+  // 4. HJC: @17,000円　×100BOX / @価格 ×N
+  m = /^[@＠]\s*([\d,]+)円?\s*[×xX]\s*(\d+)\s*(BOX|box|パック|個)?/.exec(line);
+  if (m) return { qty: +m[2], unit: 'BOX', price: +m[1].replace(/,/g,''), note: '', shrink: null, isCarton: false };
+
+  // 5. 馬場和也: @15300円  在庫数400
+  m = /^[@＠]\s*([\d,]+)円?\s+在庫数\s*(\d+)/.exec(line);
+  if (m) return { qty: +m[2], unit: 'BOX', price: +m[1].replace(/,/g,''), note: '', shrink: null, isCarton: false };
+
+  // 6. 馬場和也スタンドアロン: @15300円（数量なし → qty=1）
+  m = /^[@＠]\s*([\d,]+)円?\s*$/.exec(line);
+  if (m) return { qty: 1, unit: 'BOX', price: +m[1].replace(/,/g,''), note: '', shrink: null, isCarton: false };
+
+  // 7. N&U逆順: 15500@30 / 15500@30BOX（価格≥1000 かつ 数量≤999）
+  m = /^([\d,]+)\s*[@＠]\s*(\d+)\s*(?:BOX|box)?\s*$/.exec(line);
+  if (m) {
+    const price = +m[1].replace(/,/g,''), qty = +m[2];
+    if (price >= 1000 && qty <= 999) return { qty, unit: 'BOX', price, note: '', shrink: null, isCarton: false };
+  }
+
+  // 8. N&Uカートン逆順: カートン435000@1
+  m = /^カートン([\d,]+)\s*[@＠]\s*(\d+)/.exec(line);
+  if (m) return { qty: +m[2], unit: 'カートン', price: +m[1].replace(/,/g,''), note: '', shrink: null, isCarton: true };
+
+  // 9. スペース入り: 89box @ 15000円 / 100box @ 20500円
+  m = /^(\d+)\s+box\s+[@＠]\s*([\d,]+)円?/i.exec(line);
+  if (m) return { qty: +m[1], unit: 'BOX', price: +m[2].replace(/,/g,''), note: '', shrink: null, isCarton: false };
+
+  // 10. ファインコ武: 174000円/ 1ケース
+  m = /^([\d,]+)円\s*[\/／]\s*(\d+)\s*(ケース|カートン)/.exec(line);
+  if (m) return { qty: +m[2], unit: m[3], price: +m[1].replace(/,/g,''), note: '', shrink: null, isCarton: true };
+
+  return null;
+}
+
+// 商品名からシュリ情報を抽出
+function extractShrinkFromName(name) {
+  const re = /\s*(シュリなし|シュリンクなし|シュリンク無し?|シュリンク無|シュリ無|白箱)/i;
+  if (re.test(name)) return { cleanName: name.replace(re, '').trim(), shrink: false };
+  return { cleanName: name, shrink: true };
+}
+
+// 商品名っぽい行か判定（プレフィックスなし形式用）
+function looksLikeProductName(line) {
+  if (!line || line.length > 60) return false;
+  if (/^\d/.test(line)) return false;                          // 数字始まり
+  if (/^[◇◎⚠☆★♦]/.test(line)) return false;                  // 注釈記号
+  if (/送料|発送|転送|適格|国内|着払|発払|買取|問合|◇|◎/.test(line)) return false;
+  if (/円[\/／]/.test(line)) return false;
+  return true;
+}
+
+// ── LINE取込: パーサー本体 ────────────────────────
 function normalize(str) {
   return (str || '')
     .toLowerCase()
     .replace(/[　\s]/g, '')
     .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
     .replace(/[－ー]/g, '-')
-    .replace(/[（(][^）)]*[）)]/g, ''); // 括弧内注記を除去してマッチ精度向上
+    .replace(/[（(][^）)]*[）)]/g, '');
 }
 
 function parseLineText(text) {
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const lines = text.split('\n').map(l => l.trim());
   const results = [];
   let currentName = null;
+  let inDamageSection = false;
 
-  // 商品名行: ☑️ ✅ ・ ◆ など
-  const nameRe = /^[☑✅・◆▶►▷◇●○■□★☆]\s*[️\s]*/u;
-  // セクション見出し: 絵文字サンドイッチ（🔴ポケモンカード在庫品🔴 など）→ スキップ
+  // 名前プレフィックス（各種書き方に対応）
+  const namePrefixRe = /^[☑✅・◆▶►▷◇●○■□★☆▢◉▼🌈]\s*[️\s]*/u;
+  // 絵文字サンドイッチ → セクション見出し（スキップ）
   const sectionRe = /^\p{Emoji_Presentation}.*\p{Emoji_Presentation}\s*$/u;
-  // 価格行: N BOX/パック/カートン/個 @ 価格円（円は任意）
-  const priceRe = /^(\d[\d,]*)\s*(BOX|ボックス|パック|pack|カートン|個)\s*[@＠]\s*([\d,]+)円?(.*)?$/i;
+  // ダメージ品セクション → 以降スキップ
+  const damageSectionRe = /⚠.*ダメージ品/i;
 
-  for (const line of lines) {
-    // セクション見出しはスキップ
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line) continue;
+
+    // ダメージセクション以降はスキップ
+    if (damageSectionRe.test(line)) { inDamageSection = true; continue; }
+    if (inDamageSection) continue;
+
+    // セクション見出し → スキップ、名前リセット
     if (sectionRe.test(line)) { currentName = null; continue; }
 
-    if (nameRe.test(line)) {
-      currentName = line.replace(nameRe, '').trim();
+    // 価格行か試みる
+    const priceResult = tryParsePriceLine(line);
+    if (priceResult && priceResult.price > 100) {
+      if (currentName) {
+        const { cleanName, shrink: nameShrink } = extractShrinkFromName(currentName);
+        const shrink = priceResult.shrink !== null ? priceResult.shrink : nameShrink;
+        results.push({ lineName: cleanName, qty: priceResult.qty, price: priceResult.price, shrink, isCarton: priceResult.isCarton, note: priceResult.note });
+      }
       continue;
     }
-    if (!currentName) continue;
 
-    const m = priceRe.exec(line);
-    if (!m) continue;
+    // 明示プレフィックス付き商品名
+    if (namePrefixRe.test(line)) {
+      currentName = line.replace(namePrefixRe, '').trim();
+      continue;
+    }
 
-    const qty   = parseInt(m[1].replace(/,/g, ''), 10);
-    const unit  = m[2].toUpperCase();
-    const price = parseInt(m[3].replace(/,/g, ''), 10);
-    const note  = (m[4] || '').trim();
-
-    // カートンはそのまま記録（unit='カートン'でフラグ立て）
-    const isCarton = /カートン/i.test(unit);
-    // シュリなし判定: 明示的な記載 or 白箱
-    const shrink = !/シュリなし|シュリンクなし|白箱/i.test(note);
-
-    results.push({ lineName: currentName, qty, price, shrink, isCarton, note });
+    // プレフィックスなし形式（次行が価格行なら商品名として採用）
+    if (looksLikeProductName(line)) {
+      const nextLine = lines.slice(i + 1).find(l => l.trim());
+      if (nextLine) {
+        const np = tryParsePriceLine(nextLine);
+        if (np && np.price > 100) currentName = line;
+      }
+    }
   }
   return results;
 }
