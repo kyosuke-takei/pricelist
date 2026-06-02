@@ -205,6 +205,35 @@
   .cat-select-inline { padding: 0.25rem 0.5rem; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.78rem; max-width: 220px; }
   .line-apply-bar { display: flex; gap: 1rem; align-items: center; margin-top: 1.2rem; flex-wrap: wrap; }
   .apply-count { color: #aaa; font-size: 0.85rem; }
+
+  /* 業者ブロック */
+  .supplier-block {
+    background: #111827; border: 1px solid #2a2a4a; border-radius: 10px;
+    padding: 1rem; margin-bottom: 0.8rem;
+  }
+  .supplier-block-header { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.6rem; }
+  .supplier-name-input {
+    padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid #333;
+    background: #0f0f1a; color: #fff; font-size: 0.88rem; width: 180px;
+  }
+  .supplier-name-input:focus { outline: none; border-color: #e8b84b; }
+  .supplier-label { color: #888; font-size: 0.82rem; }
+  .btn-remove-supplier { background: transparent; border: 1px solid #444; color: #888; border-radius: 6px; padding: 0.3rem 0.7rem; cursor: pointer; font-size: 0.8rem; margin-left: auto; }
+  .btn-remove-supplier:hover { border-color: #ff4444; color: #ff4444; }
+
+  /* 比較テーブルの業者価格セル */
+  .supplier-price-cell { text-align: center; min-width: 90px; }
+  .sp-price { font-size: 0.85rem; font-weight: bold; }
+  .sp-qty { font-size: 0.72rem; color: #888; }
+  .sp-best { color: #00cc66; }
+  .sp-none { color: #444; }
+  .price-select {
+    padding: 0.25rem 0.4rem; border-radius: 6px; border: 1px solid #333;
+    background: #0f0f1a; color: #e8b84b; font-size: 0.82rem;
+    font-weight: bold; max-width: 130px;
+  }
+  .price-select:focus { outline: none; border-color: #e8b84b; }
+  .carton-note { font-size: 0.7rem; color: #fa0; background: #2a1f00; padding: 0.1rem 0.4rem; border-radius: 8px; }
 </style>
 </head>
 <body>
@@ -271,35 +300,32 @@
 
     <!-- LINE取込タブ -->
     <div id="tab-line">
-      <p style="color:#aaa;font-size:0.88rem;margin-bottom:0.75rem">
-        LINEからコピーした価格リストをそのまま貼り付けてください。<br>
-        <span style="color:#666">（☑️商品名 / ・商品名 の後に N BOX@価格円 の形式を認識します。カートン単位は無視されます）</span>
+      <p style="color:#aaa;font-size:0.88rem;margin-bottom:1rem">
+        複数業者のLINEメッセージを貼り付けて比較・集約できます。業者ごとにブロックを追加してください。
       </p>
-      <textarea class="line-textarea" id="line-input" placeholder="お疲れさまです。少量となりますが下記商品のご提案となります。
 
-☑️アビスアイ
-21BOX@15,500円
-20BOX@14,100円（シュリなし）
-☑️OP-15
-16BOX@12,500円
-…"></textarea>
+      <!-- 業者ブロック一覧 -->
+      <div id="supplier-blocks"></div>
+      <button class="btn btn-secondary" style="margin-bottom:1.2rem" onclick="addSupplierBlock()">＋ 業者を追加</button>
+
       <div class="line-controls">
-        <button class="btn btn-primary" onclick="parseAndPreview()">🔍 解析する</button>
-        <button class="btn btn-secondary" onclick="document.getElementById('line-input').value='';document.getElementById('line-preview-section').style.display='none'">クリア</button>
+        <button class="btn btn-primary" onclick="parseAndPreview()">🔍 解析・比較する</button>
+        <button class="btn btn-secondary" onclick="clearAllSuppliers()">クリア</button>
         <span class="parse-summary" id="parse-summary"></span>
       </div>
 
       <div id="line-preview-section" style="display:none">
         <div class="line-preview-wrap">
           <table id="line-preview-table">
-            <thead>
+            <thead id="line-preview-thead">
               <tr>
                 <th><input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"></th>
                 <th>LINE商品名</th>
                 <th>マッチ商品</th>
                 <th>カテゴリ</th>
-                <th>数量</th>
-                <th>旧価格 → 新価格</th>
+                <!-- 業者列はJS側で動的追加 -->
+                <th>適用価格</th>
+                <th>旧価格</th>
                 <th>状態</th>
               </tr>
             </thead>
@@ -791,23 +817,80 @@ function switchTab(tab) {
   });
 }
 
-// ── LINE取込: パース ──────────────────────────────
+// ── LINE取込: 定数 ────────────────────────────────
 const BOX_CATS_SHRINK   = ['ポケカ未開封BOX', 'ワンピース未開封BOX', '未開封BOX シュリンクあり', '遊戯王 BOX シュリンクあり', 'ヴァイス BOX シュリンクあり'];
 const BOX_CATS_NOSHRINK = ['未開封BOX シュリンクなし', '遊戯王 BOX シュリンクなし', 'ヴァイス BOX シュリンクなし'];
 const BOX_CATS_ALL      = [...BOX_CATS_SHRINK, ...BOX_CATS_NOSHRINK];
+
+// ── 業者ブロック管理 ──────────────────────────────
+let supplierIdCounter = 0;
+
+function addSupplierBlock(name = '', text = '') {
+  const id = ++supplierIdCounter;
+  const div = document.createElement('div');
+  div.className = 'supplier-block';
+  div.id = `supplier-block-${id}`;
+  div.innerHTML = `
+    <div class="supplier-block-header">
+      <span class="supplier-label">業者名</span>
+      <input class="supplier-name-input" id="supplier-name-${id}" type="text" placeholder="例: 業者A" value="${escHtml(name)}">
+      <button class="btn-remove-supplier" onclick="removeSupplierBlock(${id})">✕ 削除</button>
+    </div>
+    <textarea class="line-textarea" id="supplier-text-${id}" placeholder="LINEメッセージをここに貼り付け...">${escHtml(text)}</textarea>`;
+  document.getElementById('supplier-blocks').appendChild(div);
+}
+
+function removeSupplierBlock(id) {
+  const el = document.getElementById(`supplier-block-${id}`);
+  if (el) el.remove();
+}
+
+function getSuppliers() {
+  return Array.from(document.querySelectorAll('.supplier-block')).map(el => {
+    const id = el.id.replace('supplier-block-', '');
+    return {
+      name: (document.getElementById(`supplier-name-${id}`)?.value.trim() || `業者${id}`),
+      text: document.getElementById(`supplier-text-${id}`)?.value || ''
+    };
+  }).filter(s => s.text.trim());
+}
+
+function clearAllSuppliers() {
+  document.getElementById('supplier-blocks').innerHTML = '';
+  supplierIdCounter = 0;
+  document.getElementById('line-preview-section').style.display = 'none';
+  document.getElementById('parse-summary').textContent = '';
+  addSupplierBlock();
+}
+
+// ── LINE取込: パーサー ────────────────────────────
+function normalize(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[　\s]/g, '')
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+    .replace(/[－ー]/g, '-')
+    .replace(/[（(][^）)]*[）)]/g, ''); // 括弧内注記を除去してマッチ精度向上
+}
 
 function parseLineText(text) {
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
   const results = [];
   let currentName = null;
 
-  const nameRe = /^[☑️✅・◆▶►▷][\s️]*/u;
-  // N BOX@価格円 / Nパック@価格円  ※カートンは無視
-  const priceRe = /^(\d[\d,]*)\s*(BOX|box|ボックス|パック|pack)\s*[@＠]\s*([\d,]+)円?(.*)?$/i;
+  // 商品名行: ☑️ ✅ ・ ◆ など
+  const nameRe = /^[☑✅・◆▶►▷◇●○■□★☆]\s*[️\s]*/u;
+  // セクション見出し: 絵文字サンドイッチ（🔴ポケモンカード在庫品🔴 など）→ スキップ
+  const sectionRe = /^\p{Emoji_Presentation}.*\p{Emoji_Presentation}\s*$/u;
+  // 価格行: N BOX/パック/カートン/個 @ 価格円（円は任意）
+  const priceRe = /^(\d[\d,]*)\s*(BOX|ボックス|パック|pack|カートン|個)\s*[@＠]\s*([\d,]+)円?(.*)?$/i;
 
   for (const line of lines) {
+    // セクション見出しはスキップ
+    if (sectionRe.test(line)) { currentName = null; continue; }
+
     if (nameRe.test(line)) {
-      currentName = line.replace(nameRe, '').replace(/\s*$/, '').trim();
+      currentName = line.replace(nameRe, '').trim();
       continue;
     }
     if (!currentName) continue;
@@ -816,28 +899,24 @@ function parseLineText(text) {
     if (!m) continue;
 
     const qty   = parseInt(m[1].replace(/,/g, ''), 10);
+    const unit  = m[2].toUpperCase();
     const price = parseInt(m[3].replace(/,/g, ''), 10);
     const note  = (m[4] || '').trim();
-    const shrink = !/シュリなし|シュリンクなし/i.test(note);
 
-    results.push({ lineName: currentName, qty, price, shrink });
+    // カートンはそのまま記録（unit='カートン'でフラグ立て）
+    const isCarton = /カートン/i.test(unit);
+    // シュリなし判定: 明示的な記載 or 白箱
+    const shrink = !/シュリなし|シュリンクなし|白箱/i.test(note);
+
+    results.push({ lineName: currentName, qty, price, shrink, isCarton, note });
   }
   return results;
 }
 
 // ── LINE取込: マッチング ──────────────────────────
-function normalize(str) {
-  return (str || '')
-    .toLowerCase()
-    .replace(/[　\s]/g, '')
-    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
-    .replace(/[-－ー]/g, '-');
-}
-
 function findMatch(lineName, shrink) {
   const needle = normalize(lineName);
   const targetCats = shrink ? BOX_CATS_SHRINK : BOX_CATS_NOSHRINK;
-  const fallbackCats = shrink ? BOX_CATS_NOSHRINK : BOX_CATS_SHRINK;
 
   let best = null;
   let bestScore = 0;
@@ -847,12 +926,10 @@ function findMatch(lineName, shrink) {
     let s = 0;
     for (const f of fields) {
       if (f.includes(needle) || needle.includes(f)) {
-        // 長さが近いほど高スコア
         const overlap = Math.min(needle.length, f.length) / Math.max(needle.length, f.length);
         s = Math.max(s, overlap * (f.includes(needle) ? 1.2 : 1.0));
       }
     }
-    // 優先カテゴリなら +0.1
     if (targetCats.includes(catLabel)) s += 0.1;
     if (BOX_CATS_ALL.includes(catLabel)) s += 0.05;
     return s;
@@ -862,10 +939,7 @@ function findMatch(lineName, shrink) {
     if (!BOX_CATS_ALL.includes(group.label)) return;
     group.items.forEach((item, itemIdx) => {
       const s = score(item, group.label);
-      if (s > bestScore) {
-        bestScore = s;
-        best = { catIdx, itemIdx, score: s };
-      }
+      if (s > bestScore) { bestScore = s; best = { catIdx, itemIdx, score: s }; }
     });
   });
 
@@ -876,35 +950,92 @@ function formatPrice(yen) {
   return '¥' + yen.toLocaleString('ja-JP');
 }
 
+// ── LINE取込: 集約・比較グループ作成 ──────────────
+let lineGroups = []; // 集約後のグループ
+
+function buildGroups(suppliers) {
+  // key → group
+  const map = new Map();
+
+  suppliers.forEach((sup, supIdx) => {
+    const parsed = parseLineText(sup.text);
+    parsed.forEach(p => {
+      const match = findMatch(p.lineName, p.shrink);
+      // グループキー: マッチあり→ catIdx:itemIdx、なし→ "u:正規化名"
+      const key = match
+        ? `m:${match.catIdx}:${match.itemIdx}`
+        : `u:${normalize(p.lineName)}:${p.shrink ? '1' : '0'}`;
+
+      if (!map.has(key)) {
+        map.set(key, {
+          key, lineName: p.lineName, match,
+          shrink: p.shrink,
+          supplierEntries: [], // { supIdx, name, qty, price, isCarton, note }
+          checked: true,
+          selectedPrice: null, // 適用する価格（後で決定）
+          overrideCat: null,
+        });
+      }
+      const g = map.get(key);
+      // 同じ業者から複数ある場合もpush（カートンとBOXが混在するケース）
+      g.supplierEntries.push({ supIdx, supName: sup.name, qty: p.qty, price: p.price, isCarton: p.isCarton, note: p.note });
+      // BOX優先で lineName を上書き（より正確な名前が後に来る場合への対応）
+      if (!p.isCarton) g.lineName = p.lineName;
+    });
+  });
+
+  // 各グループのデフォルト適用価格を最安値BOXに設定
+  map.forEach(g => {
+    const boxEntries = g.supplierEntries.filter(e => !e.isCarton);
+    if (boxEntries.length) {
+      g.selectedPrice = Math.min(...boxEntries.map(e => e.price));
+    } else {
+      g.selectedPrice = Math.min(...g.supplierEntries.map(e => e.price));
+    }
+  });
+
+  return Array.from(map.values());
+}
+
 // ── LINE取込: プレビュー描画 ──────────────────────
-let lineRows = []; // { parsed, match, checked }
-
 function parseAndPreview() {
-  const text = document.getElementById('line-input').value;
-  const parsed = parseLineText(text);
+  const suppliers = getSuppliers();
+  if (!suppliers.length) { showToast('テキストを貼り付けてください', 'error'); return; }
 
-  lineRows = parsed.map(p => ({
-    parsed: p,
-    match: findMatch(p.lineName, p.shrink),
-    checked: true,
-    overrideCat: null
-  }));
+  lineGroups = buildGroups(suppliers);
 
+  const totalEntries = lineGroups.reduce((s, g) => s + g.supplierEntries.length, 0);
+  const matched = lineGroups.filter(g => g.match).length;
   document.getElementById('parse-summary').textContent =
-    `${parsed.length} 件検出 / マッチ: ${lineRows.filter(r => r.match).length} 件`;
+    `${lineGroups.length} 商品 (${totalEntries} エントリ) 検出 / マッチ: ${matched} 件`;
 
-  renderLinePreview();
-  document.getElementById('line-preview-section').style.display = lineRows.length ? 'block' : 'none';
+  renderLinePreview(suppliers);
+  document.getElementById('line-preview-section').style.display = lineGroups.length ? 'block' : 'none';
   updateApplyCount();
 }
 
-function renderLinePreview() {
+function renderLinePreview(suppliers) {
+  suppliers = suppliers || getSuppliers();
+  const supNames = suppliers.map((s, i) => s.name || `業者${i + 1}`);
+
+  // ヘッダー行を再構築（業者数に応じて列追加）
+  const thead = document.getElementById('line-preview-thead');
+  thead.innerHTML = `<tr>
+    <th><input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"></th>
+    <th>LINE商品名</th>
+    <th>マッチ商品</th>
+    <th>カテゴリ</th>
+    ${supNames.map(n => `<th class="supplier-price-cell">${escHtml(n)}</th>`).join('')}
+    <th>適用価格</th>
+    <th>旧価格</th>
+    <th>状態</th>
+  </tr>`;
+
   const tbody = document.getElementById('line-preview-body');
   tbody.innerHTML = '';
 
-  lineRows.forEach((row, idx) => {
-    const { parsed, match } = row;
-    const newPriceStr = formatPrice(parsed.price);
+  lineGroups.forEach((g, idx) => {
+    const { match, lineName, shrink, supplierEntries, checked, selectedPrice, overrideCat } = g;
 
     let matchedName = '', catLabel = '', oldPrice = '', rowClass = 'row-unmatched';
     if (match) {
@@ -912,90 +1043,120 @@ function renderLinePreview() {
       matchedName = item.name || item.nameJp || '';
       catLabel = data[match.catIdx].label;
       oldPrice = item.price || '';
-      rowClass = (oldPrice !== newPriceStr) ? 'row-price-changed' : 'row-matched';
+      rowClass = 'row-price-changed';
     }
 
-    const shrinkLabel = parsed.shrink
+    const shrinkBadge = shrink
       ? '<span class="shrink-badge">シュリあり</span>'
       : '<span class="shrink-badge" style="background:#2a1a1a;color:#f86">シュリなし</span>';
 
-    const priceCell = match
-      ? (oldPrice !== newPriceStr
-          ? `<span class="price-old">${escHtml(oldPrice)}</span><span class="price-new">${escHtml(newPriceStr)}</span>`
-          : `<span class="price-same">${escHtml(newPriceStr)}</span>`)
-      : `<span class="price-new">${escHtml(newPriceStr)}</span>`;
+    // 各業者の価格セル
+    const supCells = supNames.map((sName, sIdx) => {
+      const entries = supplierEntries.filter(e => e.supIdx === sIdx);
+      if (!entries.length) return `<td class="supplier-price-cell"><span class="sp-none">—</span></td>`;
+
+      const best = Math.min(...entries.filter(e => !e.isCarton).map(e => e.price).concat([Infinity]));
+      return `<td class="supplier-price-cell">${entries.map(e => {
+        const isBest = !e.isCarton && e.price === best;
+        return `<div>
+          <span class="sp-price ${!e.isCarton && isBest ? 'sp-best' : ''}">${formatPrice(e.price)}</span>
+          ${e.isCarton ? '<span class="carton-note">カートン</span>' : ''}
+          <br><span class="sp-qty">${e.qty}${e.isCarton ? '個' : 'BOX'}${e.note ? ' ' + e.note : ''}</span>
+        </div>`;
+      }).join('')}</td>`;
+    });
+
+    // 適用価格セレクト（業者ごとのBOX価格を選択肢に）
+    const priceOptions = [...new Map(
+      supplierEntries.filter(e => !e.isCarton).map(e => [e.price, e])
+    ).values()];
+    const priceSelect = priceOptions.length
+      ? `<select class="price-select" onchange="setSelectedPrice(${idx}, +this.value)">
+          ${priceOptions.map(e =>
+            `<option value="${e.price}" ${e.price === selectedPrice ? 'selected' : ''}>${formatPrice(e.price)}（${escHtml(e.supName)}）</option>`
+          ).join('')}
+        </select>`
+      : `<span style="color:#888">—</span>`;
+
+    const oldPriceCell = oldPrice
+      ? (oldPrice !== formatPrice(selectedPrice || 0)
+          ? `<span class="price-old">${escHtml(oldPrice)}</span>`
+          : `<span class="price-same">${escHtml(oldPrice)}</span>`)
+      : '<span style="color:#666">—</span>';
 
     const badge = match
       ? '<span class="match-badge badge-ok">マッチ</span>'
       : '<span class="match-badge badge-new">未マッチ</span>';
 
-    // カテゴリセル: 未マッチ時はセレクト
-    let catCell;
-    if (match) {
-      catCell = `<span class="category-badge">${escHtml(catLabel)}</span>`;
-    } else {
-      const opts = BOX_CATS_ALL.map(c =>
-        `<option value="${escHtml(c)}" ${row.overrideCat === c ? 'selected' : ''}>${escHtml(c)}</option>`
-      ).join('');
-      catCell = `<select class="cat-select-inline" onchange="setOverrideCat(${idx}, this.value)"><option value="">カテゴリ選択</option>${opts}</select>`;
-    }
+    let catCell = match
+      ? `<span class="category-badge">${escHtml(catLabel)}</span>`
+      : `<select class="cat-select-inline" onchange="setOverrideCat(${idx}, this.value)">
+          <option value="">カテゴリ選択</option>
+          ${BOX_CATS_ALL.map(c => `<option value="${escHtml(c)}" ${overrideCat === c ? 'selected' : ''}>${escHtml(c)}</option>`).join('')}
+        </select>`;
 
     const tr = document.createElement('tr');
     tr.className = rowClass;
     tr.innerHTML = `
-      <td><input type="checkbox" ${row.checked ? 'checked' : ''} onchange="setChecked(${idx}, this.checked)"></td>
-      <td>${escHtml(parsed.lineName)}${shrinkLabel}</td>
-      <td style="max-width:260px;font-size:0.8rem">${match ? escHtml(matchedName) : '<span style="color:#666">—</span>'}</td>
+      <td><input type="checkbox" ${checked ? 'checked' : ''} onchange="setChecked(${idx}, this.checked)"></td>
+      <td>${escHtml(lineName)}${shrinkBadge}</td>
+      <td style="max-width:200px;font-size:0.78rem">${match ? escHtml(matchedName) : '<span style="color:#666">—</span>'}</td>
       <td>${catCell}</td>
-      <td style="color:#aaa">${parsed.qty} BOX</td>
-      <td>${priceCell}</td>
+      ${supCells.join('')}
+      <td>${priceSelect}</td>
+      <td>${oldPriceCell}</td>
       <td>${badge}</td>`;
     tbody.appendChild(tr);
   });
 
-  document.getElementById('check-all').checked = lineRows.every(r => r.checked);
+  document.getElementById('check-all').checked = lineGroups.every(g => g.checked);
 }
 
 function setChecked(idx, val) {
-  lineRows[idx].checked = val;
+  lineGroups[idx].checked = val;
   updateApplyCount();
-  document.getElementById('check-all').checked = lineRows.every(r => r.checked);
+  document.getElementById('check-all').checked = lineGroups.every(g => g.checked);
 }
 
 function toggleAllChecks(val) {
-  lineRows.forEach(r => r.checked = val);
+  lineGroups.forEach(g => g.checked = val);
   renderLinePreview();
   updateApplyCount();
 }
 
 function setOverrideCat(idx, catLabel) {
-  lineRows[idx].overrideCat = catLabel || null;
+  lineGroups[idx].overrideCat = catLabel || null;
+}
+
+function setSelectedPrice(idx, price) {
+  lineGroups[idx].selectedPrice = price;
 }
 
 function updateApplyCount() {
-  const n = lineRows.filter(r => r.checked).length;
+  const n = lineGroups.filter(g => g.checked).length;
   document.getElementById('apply-count').textContent = `${n} 件を適用します`;
 }
 
 // ── LINE取込: 一括適用 ────────────────────────────
 async function applyLineImport() {
-  const targets = lineRows.filter(r => r.checked);
+  const targets = lineGroups.filter(g => g.checked);
   if (!targets.length) { showToast('適用する項目がありません', 'error'); return; }
 
   const newData = JSON.parse(JSON.stringify(data));
   let updated = 0;
 
-  for (const row of targets) {
-    const { parsed, match, overrideCat } = row;
-    const newPrice = formatPrice(parsed.price);
+  for (const g of targets) {
+    const { match, overrideCat, selectedPrice, lineName, supplierEntries } = g;
+    if (!selectedPrice) continue;
+    const newPrice = formatPrice(selectedPrice);
 
     if (match) {
       newData[match.catIdx].items[match.itemIdx].price = newPrice;
       updated++;
     } else if (overrideCat) {
-      // 未マッチ・カテゴリ手動指定 → 新規追加
-      const catIdx = newData.findIndex(g => g.label === overrideCat);
-      const newItem = { name: parsed.lineName, price: newPrice, stock: parsed.qty };
+      const catIdx = newData.findIndex(cat => cat.label === overrideCat);
+      const maxQty = Math.max(...supplierEntries.filter(e => !e.isCarton).map(e => e.qty));
+      const newItem = { name: lineName, price: newPrice, stock: isFinite(maxQty) ? maxQty : 0 };
       if (catIdx >= 0) newData[catIdx].items.push(newItem);
       else newData.push({ label: overrideCat, items: [newItem] });
       updated++;
@@ -1004,7 +1165,6 @@ async function applyLineImport() {
 
   if (!updated) { showToast('更新できる項目がありません（未マッチかつカテゴリ未選択）', 'error'); return; }
 
-  // commitData を流用（コミットメッセージだけカスタム）
   const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
   if (!token) { showToast('GitHub Tokenを入力してください', 'error'); return; }
 
@@ -1039,7 +1199,6 @@ async function applyLineImport() {
     renderTable();
     showToast(`${updated} 件をGitHubに保存しました ✓`, 'success');
     document.getElementById('line-preview-section').style.display = 'none';
-    document.getElementById('line-input').value = '';
     document.getElementById('parse-summary').textContent = '';
   } catch(e) {
     showToast('保存失敗: ' + e.message, 'error');
@@ -1052,6 +1211,8 @@ async function applyLineImport() {
 if (sessionStorage.getItem('admin') === '1') {
   showAdmin();
 }
+// LINE取込タブ初期化（ページ読み込み時に業者ブロックを1つ用意）
+addSupplierBlock();
 </script>
 </body>
 </html>
