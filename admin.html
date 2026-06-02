@@ -1027,7 +1027,12 @@ function normalize(str) {
     .replace(/[　\s]/g, '')
     .replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
     .replace(/[－ー]/g, '-')
-    .replace(/[（(][^）)]*[）)]/g, '');
+    .replace(/[（(][^）)]*[）)]/g, '')
+    // 英字↔カタカナ 表記ゆれ吸収
+    .replace(/mega/g, 'メガ')
+    .replace(/mini/g, 'ミニ')
+    .replace(/super/g, 'スーパー')
+    .replace(/ultra/g, 'ウルトラ');
 }
 
 function parseLineText(text) {
