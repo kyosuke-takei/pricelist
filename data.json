@@ -373,12 +373,188 @@
         "priceDate": "2026-06-25",
         "lineStock": 30,
         "nameEn": "Stellar Miracle"
+      },
+      {
+        "name": "FB-10",
+        "price": "¥13,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 3,
+        "nameEn": "FB-10"
       }
     ]
   },
   {
     "label": "ワンピース未開封BOX",
-    "items": []
+    "items": [
+      {
+        "name": "OP-13 受け継がれる意志",
+        "price": "¥24,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "OP-13 Legacy of Will"
+      },
+      {
+        "name": "OP-14　蒼海の七傑",
+        "price": "¥16,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 8,
+        "nameEn": "OP-14 The Seven Warlords of the Sea"
+      },
+      {
+        "name": "OP-16 決戦の刻",
+        "price": "¥16,300",
+        "priceDate": "2026-06-25",
+        "lineStock": 30,
+        "nameEn": "OP-16 Moment of Decisive Battle"
+      },
+      {
+        "name": "EB-03 Heroines Edition",
+        "price": "¥19,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10,
+        "nameEn": "EB-03 Heroines Edition"
+      },
+      {
+        "name": "EB-04 EGGHEAD CRISIS",
+        "price": "¥14,400",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "EB-04 EGGHEAD CRISIS"
+      },
+      {
+        "name": "PRB-02 THE BEST2",
+        "price": "¥11,200",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "PRB-02 THE BEST2"
+      },
+      {
+        "name": "OP-17　世界最強の戦士　 [問]",
+        "price": "¥384,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 45,
+        "nameEn": "OP-17 The Strongest Warrior [Question]"
+      },
+      {
+        "name": "OP-16　決戦の刻 [6/30入荷]",
+        "price": "¥230,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 40,
+        "nameEn": "OP-16 Moment of Decisive Battle [Available on 6/30]"
+      },
+      {
+        "name": "OP-13　受け継がれる意思",
+        "price": "¥24,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "OP-13 Legacy of Will"
+      },
+      {
+        "name": "PRB-02",
+        "price": "¥10,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "PRB-02"
+      },
+      {
+        "name": "OP-12",
+        "price": "¥17,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 5,
+        "nameEn": "OP-12"
+      },
+      {
+        "name": "OP-15",
+        "price": "¥16,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "OP-15"
+      },
+      {
+        "name": "OP-16",
+        "price": "¥16,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 40,
+        "nameEn": "OP-16"
+      },
+      {
+        "name": "EB-02",
+        "price": "¥33,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "EB-02"
+      },
+      {
+        "name": "プレミアムブースター ONE PIECE CARD THE BEST ストレージボックスセット",
+        "price": "¥41,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10,
+        "nameEn": "Premium Booster ONE PIECE CARD THE BEST Storage Box Set"
+      },
+      {
+        "name": "OP-13",
+        "price": "¥24,600",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "OP-13"
+      },
+      {
+        "name": "EB-03",
+        "price": "¥21,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 4,
+        "nameEn": "EB-03"
+      },
+      {
+        "name": "EB-04",
+        "price": "¥13,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1,
+        "nameEn": "EB-04"
+      },
+      {
+        "name": "OP-11",
+        "price": "¥38,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 5,
+        "nameEn": "OP-11"
+      },
+      {
+        "name": "PRB-01",
+        "price": "¥23,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 10,
+        "nameEn": "PRB-01"
+      },
+      {
+        "name": "チョッパーズ",
+        "price": "¥2,300",
+        "priceDate": "2026-06-25",
+        "lineStock": 100,
+        "nameEn": "Chopper's"
+      },
+      {
+        "name": "ワンピースカードゲーム プレミアムカードコレクション「ベストセレクション vol.2」",
+        "price": "¥9,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 6,
+        "nameEn": "ONE PIECE Card Game Premium Card Collection 'Best Selection vol.2'"
+      },
+      {
+        "name": "ワンピースカードゲーム プレミアムカードコレクション -BANDAI CARD GAMES Fest 23-24 Edition-",
+        "price": "¥10,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 5,
+        "nameEn": "ONE PIECE Card Game Premium Card Collection -BANDAI CARD GAMES Fest 23-24 Edition-"
+      },
+      {
+        "name": "ワンピースカードゲーム プレミアムカードコレクション -Live Action Edition-",
+        "price": "¥6,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1,
+        "nameEn": "ONE PIECE Card Game Premium Card Collection -Live Action Edition-"
+      }
+    ]
   },
   {
     "label": "PSA鑑定済",
@@ -436,7 +612,43 @@
   },
   {
     "label": "遊戯王 BOX シュリンクあり",
-    "items": []
+    "items": [
+      {
+        "name": "遊戯王 LIMIT OVER COLLECTION -THE RIVALS-",
+        "price": "¥10,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 20,
+        "nameEn": "Yu-Gi-Oh! LIMIT OVER COLLECTION -THE RIVALS-"
+      },
+      {
+        "name": "遊戯王 REVOLUTION BOOSTER －トゥーン・ウィッチクラフト・破械－",
+        "price": "¥4,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10,
+        "nameEn": "Yu-Gi-Oh! REVOLUTION BOOSTER -Toon Witchcraft -"
+      },
+      {
+        "name": "遊戯王 CHAOS ORIGINS",
+        "price": "¥6,200",
+        "priceDate": "2026-06-25",
+        "lineStock": 10,
+        "nameEn": "Yu-Gi-Oh! CHAOS ORIGINS"
+      },
+      {
+        "name": "遊戯王-THE HEROES-",
+        "price": "¥15,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "Yu-Gi-Oh! -THE HEROES-"
+      },
+      {
+        "name": "遊戯王-THE RIVALS-",
+        "price": "¥8,300",
+        "priceDate": "2026-06-25",
+        "lineStock": 30,
+        "nameEn": "Yu-Gi-Oh! -THE RIVALS-"
+      }
+    ]
   },
   {
     "label": "遊戯王 BOX シュリンクなし",
@@ -460,7 +672,43 @@
   },
   {
     "label": "ヴァイス BOX シュリンクあり",
-    "items": []
+    "items": [
+      {
+        "name": "ヴァイスシュヴァルツ グランブルーファンタジー",
+        "price": "¥63,600",
+        "priceDate": "2026-06-25",
+        "lineStock": 7,
+        "nameEn": "Weiss Schwarz Granblue Fantasy"
+      },
+      {
+        "name": "ヴァイスシュヴァルツ GA文庫",
+        "price": "¥112,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 5,
+        "nameEn": "Weiss Schwarz GA Bunko"
+      },
+      {
+        "name": "ヴァイス Re_ゼロから始める異世界生活Vol.4",
+        "price": "¥66,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "Weiss Schwarz Re:Zero -Starting Life in Another World- Vol.4"
+      },
+      {
+        "name": "ヴァイス 葬送のフリーレンVol.2",
+        "price": "¥80,400",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "Weiss Schwarz Frieren: Beyond Journey's End Vol.2"
+      },
+      {
+        "name": "ヴァイス 推しの子Vol.3",
+        "price": "¥55,200",
+        "priceDate": "2026-06-25",
+        "lineStock": 2,
+        "nameEn": "Weiss Schwarz Oshi no Ko Vol.3"
+      }
+    ]
   },
   {
     "label": "ヴァイス BOX シュリンクなし",
@@ -484,10 +732,40 @@
   },
   {
     "label": "ユニオンアリーナ未開封BOX",
-    "items": []
+    "items": [
+      {
+        "name": "UNION ARENA 陰の実力者になりたくて！ UA52BT",
+        "price": "¥9,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "UNION ARENA I Want to be a Clandestine Power in Another World! UA52BT"
+      },
+      {
+        "name": "UNION ARENA 無職転生 ～異世界行ったら本気だす～ UA54BT",
+        "price": "¥8,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 15,
+        "nameEn": "UNION ARENA Mushoku Tensei: Jobless Reincarnation UA54BT"
+      },
+      {
+        "name": "ユニオンアリーナ 勝利の女神:NIKKE UA18BT",
+        "price": "¥118,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1,
+        "nameEn": "Union Arena Victory Goddess: NIKKE UA18BT"
+      }
+    ]
   },
   {
     "label": "ドラゴンボール未開封BOX",
-    "items": []
+    "items": [
+      {
+        "name": "ドラゴンボール　DUAL EVOLUTION FB09",
+        "price": "¥12,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1,
+        "nameEn": "Dragon Ball DUAL EVOLUTION FB09"
+      }
+    ]
   }
 ]
