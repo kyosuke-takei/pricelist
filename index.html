@@ -51,25 +51,50 @@
   .sort { padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.85rem; cursor: pointer; }
   .count { color: #aaa; font-size: 0.85rem; margin-left: auto; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; padding: 1.5rem 2rem; }
+  /* Grid view */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; padding: 1rem 1.5rem; }
   @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; padding: 0.75rem; } }
 
-  .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a4a; transition: transform 0.2s, border-color 0.2s; cursor: pointer; position: relative; }
-  .card:hover { transform: translateY(-4px); border-color: #e8b84b; }
-  .card.sold-out { opacity: 0.5; cursor: default; }
+  .card { background: #1a1a2e; border-radius: 10px; overflow: hidden; border: 1px solid #2a2a4a; transition: transform 0.15s, border-color 0.15s; cursor: pointer; position: relative; }
+  .card:hover { transform: translateY(-3px); border-color: #e8b84b; }
+  .card.sold-out { opacity: 0.45; cursor: default; }
   .card.sold-out:hover { transform: none; border-color: #2a2a4a; }
   .sold-out-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 10; }
-  .sold-out-label { background: #ff3333; color: #fff; font-weight: bold; font-size: 1rem; padding: 0.4rem 1.2rem; border-radius: 4px; letter-spacing: 2px; transform: rotate(-15deg); }
-  .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #111; }
-  .card-info { padding: 0.75rem; }
-  .card-name { font-size: 0.78rem; color: #ddd; line-height: 1.4; margin-bottom: 0.5rem; min-height: 2.5em; }
-  .card-price { font-size: 1rem; font-weight: bold; color: #e8b84b; }
-  .card-price.soldout { color: #ff3333; font-size: 0.9rem; }
-  .card-price-usd { font-size: 0.75rem; color: #888; margin-top: 2px; }
-  .card-stock { font-size: 0.72rem; margin-top: 2px; }
-  .price-change { font-size: 0.72rem; margin-top: 3px; }
+  .sold-out-label { background: #ff3333; color: #fff; font-weight: bold; font-size: 0.85rem; padding: 0.3rem 1rem; border-radius: 4px; letter-spacing: 2px; transform: rotate(-15deg); }
+  .card-game-bar { height: 4px; width: 100%; }
+  .card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: #111; display: none; }
+  .card-info { padding: 0.6rem; }
+  .card-name { font-size: 0.75rem; color: #ddd; line-height: 1.3; margin-bottom: 0.4rem; min-height: 2.2em; }
+  .card-price { font-size: 0.95rem; font-weight: bold; color: #e8b84b; }
+  .card-price.soldout { color: #ff3333; font-size: 0.85rem; }
+  .card-price-usd { font-size: 0.7rem; color: #888; margin-top: 1px; }
+  .card-stock { font-size: 0.68rem; margin-top: 2px; }
+  .price-change { font-size: 0.68rem; margin-top: 2px; }
   .price-up { color: #ff6060; }
   .price-down { color: #60ff90; }
+
+  /* List view */
+  .grid.list-view { display: flex; flex-direction: column; gap: 0; padding: 0.5rem 1.5rem; }
+  @media (max-width: 600px) { .grid.list-view { padding: 0.3rem 0.5rem; } }
+  .grid.list-view .card { border-radius: 0; border: none; border-bottom: 1px solid #2a2a4a; display: flex; align-items: center; gap: 0; padding: 0; overflow: visible; }
+  .grid.list-view .card:first-child { border-top: 1px solid #2a2a4a; }
+  .grid.list-view .card:hover { transform: none; background: #1e1e38; }
+  .grid.list-view .card-game-bar { width: 4px; height: 100%; min-height: 44px; flex-shrink: 0; border-radius: 0; }
+  .grid.list-view .card img { display: none; }
+  .grid.list-view .sold-out-overlay { display: none; }
+  .grid.list-view .card-info { display: flex; align-items: center; flex: 1; padding: 0.45rem 0.75rem; gap: 0.75rem; min-height: 44px; }
+  .grid.list-view .card-info > .badge { flex-shrink: 0; }
+  .grid.list-view .card-name { font-size: 0.82rem; margin-bottom: 0; min-height: unset; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .grid.list-view .card-price { font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
+  .grid.list-view .card-price.soldout { font-size: 0.8rem; }
+  .grid.list-view .card-price-usd { font-size: 0.68rem; margin-top: 0; text-align: right; }
+  .grid.list-view .card-stock { font-size: 0.68rem; margin-top: 0; white-space: nowrap; flex-shrink: 0; }
+  .grid.list-view .price-change { font-size: 0.65rem; margin-top: 0; white-space: nowrap; }
+  .grid.list-view .card.sold-out { opacity: 0.4; }
+  .list-price-group { text-align: right; flex-shrink: 0; min-width: 90px; }
+  .view-toggle { display: flex; gap: 0.3rem; }
+  .view-btn { background: #1a1a2e; border: 1px solid #333; color: #888; border-radius: 6px; padding: 0.35rem 0.6rem; cursor: pointer; font-size: 0.9rem; transition: all 0.15s; }
+  .view-btn.active { background: #e8b84b; color: #000; border-color: #e8b84b; }
   .badge { display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; font-weight: bold; }
   .badge-ar  { background: #1e3a5f; color: #60aaff; }
   .badge-chr { background: #3a1e5f; color: #c060ff; }
@@ -199,10 +224,14 @@
     </select>
     <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.85rem;color:#e8b84b;"><input type="checkbox" id="in-stock-only" onchange="render()"> <span data-i18n="inStockOnly">In Stock Only</span></label>
     <span class="count" id="count"></span>
+    <div class="view-toggle">
+      <button class="view-btn" id="btn-grid" onclick="setView('grid')" title="Grid view">⊞</button>
+      <button class="view-btn active" id="btn-list" onclick="setView('list')" title="List view">☰</button>
+    </div>
   </div>
 </div>
 
-<div class="grid" id="grid"></div>
+<div class="grid list-view" id="grid"></div>
 
 <!-- カード詳細モーダル -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
@@ -693,6 +722,25 @@ function getPriceHistory(link) {
   })).filter(d => d.price);
 }
 
+let currentView = localStorage.getItem('view_mode') || 'list';
+function setView(v) {
+  currentView = v;
+  localStorage.setItem('view_mode', v);
+  const grid = document.getElementById('grid');
+  grid.classList.toggle('list-view', v === 'list');
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  render();
+}
+
+function getGameColor(item) {
+  const cat = item.category || '';
+  for (const [key, def] of Object.entries(GAME_CATEGORIES)) {
+    if (def.labels && def.labels.includes(cat)) return def.color;
+  }
+  return '#444';
+}
+
 function getBadge(item) {
   const isTrending = (window._trending||[]).find(t => t.url === item.link);
   const hotBadge = isTrending ? '<span class="badge" style="background:#ff2244;color:#fff;">🔥 HOT</span>' : '';
@@ -843,9 +891,29 @@ function render() {
     const stockHtml = lineStockNum !== null
       ? `<div class="card-stock" style="color:${stockColor}">${t('stockCard', lineStockNum)}</div>`
       : '';
+    const gameColor = getGameColor(item);
+    const isListView = document.getElementById('grid').classList.contains('list-view');
+    if (isListView) {
+      return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${globalIdx})`}">
+        <div class="card-game-bar" style="background:${gameColor}"></div>
+        <div class="card-info">
+          ${getBadge(item)}
+          <div class="card-name">${item.nameEn||item.name}</div>
+          <div class="list-price-group">
+            ${isSoldOut
+              ? '<div class="card-price soldout">SOLD OUT</div>'
+              : `<div class="card-price">¥${item._price.toLocaleString()}</div>
+                 <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)}</div>`
+            }
+          </div>
+          ${stockHtml}
+          ${changeHtml}
+        </div>
+      </div>`;
+    }
     return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${globalIdx})`}">
       ${isSoldOut ? '<div class="sold-out-overlay"><div class="sold-out-label">SOLD OUT</div></div>' : ''}
-      <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
+      <div class="card-game-bar" style="background:${gameColor}"></div>
       <div class="card-info">
         ${getBadge(item)}
         <div class="card-name">${item.nameEn||item.name}</div>
@@ -1228,6 +1296,7 @@ async function submitOrder() {
 
 async function init() {
   buildGameButtons();
+  setView(currentView);
   await loadRate();
   await loadHistory();
   try {
