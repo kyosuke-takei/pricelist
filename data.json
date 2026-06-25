@@ -9,7 +9,320 @@
   },
   {
     "label": "ポケカ未開封BOX",
-    "items": []
+    "items": [
+      {
+        "name": "インフェルノX",
+        "price": "¥21,200",
+        "priceDate": "2026-06-25",
+        "lineStock": 50
+      },
+      {
+        "name": "ニンジャスピナー",
+        "price": "¥11,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "テラスタルフェスex",
+        "price": "¥480,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 2
+      },
+      {
+        "name": "ブラックボルトDX",
+        "price": "¥29,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 20
+      },
+      {
+        "name": "ホワイトフレアDX",
+        "price": "¥26,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 40
+      },
+      {
+        "name": "151",
+        "price": "¥67,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 20
+      },
+      {
+        "name": "25th ANNIVERSARY Collection",
+        "price": "¥70,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 6
+      },
+      {
+        "name": "楽園ドラゴーナ",
+        "price": "¥16,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 2
+      },
+      {
+        "name": "熱風のアリ��ナ",
+        "price": "¥21,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 9
+      },
+      {
+        "name": "超電ブレイカー",
+        "price": "¥31,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "シャイニートレジャーex",
+        "price": "¥385,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "黒炎の支配者",
+        "price": "¥20,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "ロストアビス",
+        "price": "¥68,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 25
+      },
+      {
+        "name": "ゴールデンボックス",
+        "price": "¥300,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "プレシャスコレクターボックス",
+        "price": "¥68,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "コレクションファイルリーリエ",
+        "price": "¥158,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "ポケモンカード151",
+        "price": "¥61,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 12
+      },
+      {
+        "name": "スカーレット",
+        "price": "¥14,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "パラダイムトリガー",
+        "price": "¥33,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "白熱のアルカナ",
+        "price": "¥11,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "ポケモンGO",
+        "price": "¥31,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "ダークファンタズマ",
+        "price": "¥32,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 2
+      },
+      {
+        "name": "スペースジャグラー",
+        "price": "¥14,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "バトルリージョン",
+        "price": "¥13,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "漆黒のガイスト",
+        "price": "¥22,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "白銀のランス",
+        "price": "¥20,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "シャイニースターV",
+        "price": "¥22,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "伝説の鼓動",
+        "price": "¥44,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "ナイトユニゾン",
+        "price": "¥98,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "ウルトラサン",
+        "price": "¥80,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "メガゲンガー　スターターデッキ",
+        "price": "¥2,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 4
+      },
+      {
+        "name": "メガドリーム",
+        "price": "¥14,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 50
+      },
+      {
+        "name": "ムニキスゼロ",
+        "price": "¥8,900",
+        "priceDate": "2026-06-25",
+        "lineStock": 40
+      },
+      {
+        "name": "インフェルノ",
+        "price": "¥22,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "ホワイトフレア",
+        "price": "¥23,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "テラスタルフェス",
+        "price": "¥21,200",
+        "priceDate": "2026-06-25",
+        "lineStock": 40
+      },
+      {
+        "name": "ステラミラクル",
+        "price": "¥11,700",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "ナイトワンダラー",
+        "price": "¥11,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 20
+      },
+      {
+        "name": "変幻の仮面",
+        "price": "¥13,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 5
+      },
+      {
+        "name": "サイバージャッジ",
+        "price": "¥11,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 25
+      },
+      {
+        "name": "シャイニートレジャー",
+        "price": "¥435,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "古代の咆哮",
+        "price": "¥147,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 1
+      },
+      {
+        "name": "VSTARユニバース",
+        "price": "¥30,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 15
+      },
+      {
+        "name": "トリプレットビート",
+        "price": "¥19,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "クレイバースト",
+        "price": "¥12,100",
+        "priceDate": "2026-06-25",
+        "lineStock": 25
+      },
+      {
+        "name": "スカーレットex",
+        "price": "¥14,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "バイオレットex",
+        "price": "¥10,600",
+        "priceDate": "2026-06-25",
+        "lineStock": 10
+      },
+      {
+        "name": "トウホク",
+        "price": "¥18,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      },
+      {
+        "name": "フクオカ",
+        "price": "¥20,500",
+        "priceDate": "2026-06-25",
+        "lineStock": 100
+      },
+      {
+        "name": "��園ドラゴーナ",
+        "price": "¥16,800",
+        "priceDate": "2026-06-25",
+        "lineStock": 2
+      },
+      {
+        "name": "熱風のアリーナ",
+        "price": "¥21,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 9
+      },
+      {
+        "name": "ステ���ミラクル",
+        "price": "¥11,700",
+        "priceDate": "2026-06-25",
+        "lineStock": 30
+      }
+    ]
   },
   {
     "label": "ワンピース未開封BOX",
@@ -29,7 +342,26 @@
   },
   {
     "label": "未開封BOX シュリンクなし",
-    "items": []
+    "items": [
+      {
+        "name": "スタートデッキ100 バトルコレクション",
+        "price": "¥90,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 20
+      },
+      {
+        "name": "インフェルノ",
+        "price": "¥20,000",
+        "priceDate": "2026-06-25",
+        "lineStock": 20
+      },
+      {
+        "name": "メガシンフォニア",
+        "price": "¥9,400",
+        "priceDate": "2026-06-25",
+        "lineStock": 13
+      }
+    ]
   },
   {
     "label": "パック",
@@ -56,7 +388,7 @@
     "items": []
   },
   {
-    "label": "遊戯王 パック",
+    "label": "遊戯��� パック",
     "items": []
   },
   {
