@@ -567,6 +567,7 @@
         <button class="btn btn-primary" onclick="parseAndPreview()">🔍 解析・比較する</button>
         <button class="btn" style="background:#7c3aed;color:#fff" onclick="aiParseAndPreview()" id="ai-parse-btn">✨ AI解析</button>
         <button class="btn btn-secondary" onclick="clearAllSuppliers()">クリア</button>
+        <button class="btn" style="background:#0e7a5a;color:#fff" onclick="translateAllNames()" id="translate-all-btn">🌐 英語名を一括翻訳</button>
         <span class="parse-summary" id="parse-summary"></span>
       </div>
       <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap">
@@ -2104,6 +2105,86 @@ function setOverrideCat(idx, catLabel) {
   lineGroups[idx].overrideCat = catLabel || null;
 }
 
+// ── 英語名一括翻訳 → GitHub保存 ────────────────────
+async function translateAllNames() {
+  const btn = document.getElementById('translate-all-btn');
+  btn.disabled = true;
+  btn.textContent = '🌐 取得中...';
+
+  const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
+  if (!token) { showToast('GitHub Tokenを入力してください', 'error'); btn.disabled = false; btn.textContent = '🌐 英語名を一括翻訳'; return; }
+
+  // GitHubから最新データを取得
+  let newData;
+  try {
+    const ghRes = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE_PATH}?_=${Date.now()}`);
+    newData = await ghRes.json();
+  } catch(e) {
+    showToast('GitHubデータ取得失敗: ' + e.message, 'error');
+    btn.disabled = false; btn.textContent = '🌐 英語名を一括翻訳'; return;
+  }
+
+  // nameEnがないアイテムを収集
+  const targets = [];
+  newData.forEach((cat, catIdx) => {
+    cat.items.forEach((item, itemIdx) => {
+      if (!item.nameEn && item.name) {
+        targets.push({ catIdx, itemIdx, id: `${catIdx}_${itemIdx}`, name: item.name });
+      }
+    });
+  });
+
+  if (!targets.length) {
+    showToast('翻訳が必要なアイテムはありません', 'success');
+    btn.disabled = false; btn.textContent = '🌐 英語名を一括翻訳';
+    return;
+  }
+
+  btn.textContent = `🌐 翻訳中... 0/${targets.length}`;
+  showToast(`${targets.length}件を翻訳します`, 'success');
+
+  try {
+    // 50件ずつバッチ処理
+    const BATCH = 50;
+    for (let i = 0; i < targets.length; i += BATCH) {
+      const batch = targets.slice(i, i + BATCH);
+      const res = await fetch('/api/translate-names', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names: batch.map(t => ({ id: t.id, name: t.name })) })
+      });
+      const { results } = await res.json();
+      results?.forEach(r => {
+        const t = batch.find(b => b.id === r.id);
+        if (t && r.nameEn) newData[t.catIdx].items[t.itemIdx].nameEn = r.nameEn;
+      });
+      btn.textContent = `🌐 翻訳中... ${Math.min(i + BATCH, targets.length)}/${targets.length}`;
+    }
+
+    // GitHubに保存
+    showSaving(true);
+    const metaRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    const meta = await metaRes.json();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+    const updateRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `英語名一括翻訳: ${targets.length}件`, content, sha: meta.sha })
+    });
+    if (!updateRes.ok) { const e = await updateRes.json(); throw new Error(e.message); }
+    data = newData;
+    refreshCategoryFilter();
+    renderTable();
+    showToast(`✓ ${targets.length}件の英語名を翻訳・保存しました`, 'success');
+  } catch(e) {
+    showToast('翻訳失敗: ' + e.message, 'error');
+  } finally {
+    showSaving(false);
+    btn.disabled = false; btn.textContent = '🌐 英語名を一括翻訳';
+  }
+}
+
 function setSelectedPrice(idx, price, qty, sup) {
   lineGroups[idx].selectedPrice = price;
   lineGroups[idx].selectedQty = qty ? +qty : 0;
@@ -2147,6 +2228,7 @@ async function applyLineImport() {
     const newPrice = formatPrice(selectedPrice);
     const priceDate = new Date().toISOString().slice(0, 10);
     const lineStock = typeof selectedQty === 'number' && selectedQty > 0 ? selectedQty : 0;
+    const unit = /カートン|ケース|CARTON|CASE|case|carton/i.test(lineName) ? 'CARTON' : 'BOX';
 
     if (match) {
       const oldItem = newData[match.catIdx]?.items[match.itemIdx] || data[match.catIdx].items[match.itemIdx];
@@ -2162,13 +2244,24 @@ async function applyLineImport() {
       newData[match.catIdx].items[match.itemIdx].price = newPrice;
       newData[match.catIdx].items[match.itemIdx].priceDate = priceDate;
       newData[match.catIdx].items[match.itemIdx].lineStock = lineStock;
+      newData[match.catIdx].items[match.itemIdx].unit = unit;
       updated++;
     } else if (overrideCat) {
       const catIdx = newData.findIndex(cat => cat.label === overrideCat);
-      const newItem = { name: lineName, price: newPrice, priceDate, lineStock };
-      const insertIdx = catIdx >= 0 ? newData[catIdx].items.push(newItem) - 1 : 0;
-      if (catIdx >= 0) needTranslate.push({ catIdx, itemIdx: insertIdx, name: lineName });
-      else { newData.push({ label: overrideCat, items: [newItem] }); needTranslate.push({ catIdx: newData.length - 1, itemIdx: 0, name: lineName }); }
+      const newItem = { name: lineName, price: newPrice, priceDate, lineStock, unit };
+      if (catIdx >= 0) {
+        // 同名アイテムが既にあれば上書き、なければ追加
+        const existIdx = newData[catIdx].items.findIndex(i => i.name === lineName);
+        if (existIdx >= 0) {
+          newData[catIdx].items[existIdx] = { ...newData[catIdx].items[existIdx], price: newPrice, priceDate, lineStock, unit };
+        } else {
+          const insertIdx = newData[catIdx].items.push(newItem) - 1;
+          needTranslate.push({ catIdx, itemIdx: insertIdx, name: lineName });
+        }
+      } else {
+        newData.push({ label: overrideCat, items: [newItem] });
+        needTranslate.push({ catIdx: newData.length - 1, itemIdx: 0, name: lineName });
+      }
       updated++;
     }
   }

@@ -744,10 +744,18 @@ function getGameColor(item) {
 function getBadge(item) {
   const isTrending = (window._trending||[]).find(t => t.url === item.link);
   const hotBadge = isTrending ? '<span class="badge" style="background:#ff2244;color:#fff;">🔥 HOT</span>' : '';
-  if (item.category === 'ワンピース未開封BOX') return hotBadge + '<span class="badge badge-op">ONE PIECE</span>';
-  if (item.category === 'ポケカ未開封BOX') return hotBadge + '<span class="badge badge-box">SEALED</span>';
-  if (item.category === '未開封BOX シュリンクあり') return hotBadge + '<span class="badge badge-box">BOX ✅ Shrink</span>';
-  if (item.category === '未開封BOX シュリンクなし') return hotBadge + '<span class="badge badge-box" style="background:#2a1e0a;color:#ffcc60;">BOX No Shrink</span>';
+  const isCarton = item.unit === 'CARTON';
+  const unitBadge = isCarton
+    ? '<span class="badge" style="background:#2a1a4a;color:#dd99ff;margin-left:3px;">📦 CARTON</span>'
+    : '<span class="badge" style="background:#1a2a1a;color:#99dd99;margin-left:3px;">BOX</span>';
+  if (item.category === 'ワンピース未開封BOX') return hotBadge + unitBadge + '<span class="badge badge-op">ONE PIECE</span>';
+  if (item.category === 'ポケカ未開封BOX') return hotBadge + unitBadge + '<span class="badge badge-box">SEALED</span>';
+  if (item.category === '未開封BOX シュリンクあり') return hotBadge + unitBadge + '<span class="badge badge-box">✅ Shrink</span>';
+  if (item.category === '未開封BOX シュリンクなし') return hotBadge + unitBadge + '<span class="badge badge-box" style="background:#2a1e0a;color:#ffcc60;">No Shrink</span>';
+  if (item.category && item.category.startsWith('遊戯王')) return hotBadge + unitBadge + '<span class="badge" style="background:#1e1a3a;color:#cc88ff;">YU-GI-OH</span>';
+  if (item.category && item.category.startsWith('ヴァイス')) return hotBadge + unitBadge + '<span class="badge" style="background:#1a2a3a;color:#88aaff;">WEISS</span>';
+  if (item.category && item.category.startsWith('ユニオンアリーナ')) return hotBadge + unitBadge + '<span class="badge" style="background:#2a1a3a;color:#bb88ff;">UNION ARENA</span>';
+  if (item.category && item.category.startsWith('ドラゴンボール')) return hotBadge + unitBadge + '<span class="badge" style="background:#3a2000;color:#ffaa44;">DRAGON BALL</span>';
   if (item.category === 'パック') return hotBadge + '<span class="badge" style="background:#1e2a3a;color:#60ccff;">PACK</span>';
   if (item.category === 'デッキ') return hotBadge + '<span class="badge" style="background:#2a1e3a;color:#cc88ff;">DECK</span>';
   if (item.category === 'プロモ') return hotBadge + '<span class="badge" style="background:#3a1e1e;color:#ff8888;">PROMO</span>';
