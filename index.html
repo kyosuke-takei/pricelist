@@ -25,9 +25,19 @@
   .controls-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
 
   /* ゲーム選択ボタン */
-  .game-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .game-btn { padding: 0.5rem 1.3rem; border-radius: 10px; border: 2px solid #333; background: transparent; color: #666; cursor: pointer; font-size: 0.88rem; font-weight: bold; transition: all 0.2s; }
-  .game-btn.active { border-color: #e8b84b; background: rgba(232,184,75,0.12); color: #e8b84b; }
+  .game-selector { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .game-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.25rem; padding: 0; width: 100px; height: 64px;
+    border-radius: 10px; border: 2px solid #333; background: #111; color: #666;
+    cursor: pointer; font-size: 0.78rem; font-weight: bold; transition: all 0.2s;
+    overflow: hidden; position: relative;
+  }
+  .game-btn img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.55; border-radius: 8px; }
+  .game-btn .btn-label { position: relative; z-index: 1; text-align: center; line-height: 1.2; padding: 0 4px; text-shadow: 0 1px 4px #000; }
+  .game-btn.all-btn { width: 56px; height: 64px; }
+  .game-btn.active { border-color: var(--game-color, #e8b84b); background: rgba(232,184,75,0.1); color: var(--game-color, #e8b84b); }
+  .game-btn.active img { opacity: 0.75; }
   .game-btn:hover:not(.active) { border-color: #555; color: #aaa; }
 
   /* カテゴリーサブタブ */
@@ -171,12 +181,10 @@
 
 <div class="controls">
   <!-- Row 1: タイトル選択 -->
-  <div class="game-selector">
-    <button class="game-btn active" onclick="setGame('all', this)">All</button>
-    <button class="game-btn" onclick="setGame('pokemon', this)">🎴 Pokémon</button>
-    <button class="game-btn" onclick="setGame('onepiece', this)">⚓ One Piece</button>
-    <button class="game-btn" onclick="setGame('yugioh', this)">👁 Yu-Gi-Oh</button>
-    <button class="game-btn" onclick="setGame('weiss', this)">🃏 Weiss</button>
+  <div class="game-selector" id="game-selector">
+    <button class="game-btn all-btn active" onclick="setGame('all', this)" style="--game-color:#e8b84b">
+      <span class="btn-label">All</span>
+    </button>
   </div>
   <!-- Row 2: カテゴリーサブタブ（JS動的生成） -->
   <div class="sub-tabs" id="category-tabs"></div>
@@ -329,14 +337,18 @@ let currentGame = 'all';
 let currentTab = 'all';
 let currentLang = localStorage.getItem('tcg-lang') || 'en';
 
-// ─── Lazy-load per-game data ───
-const gameDataCache = {};   // game key → array of category objects (populated on demand)
-const GAME_DATA_FILES = {
-  pokemon:  'data_pokemon.json',
-  onepiece: 'data_op.json',
-  yugioh:   'data_yugioh.json',
-  weiss:    'data_weiss.json',
-};
+// ─── Data loading (single data.json for all games) ───
+const gameDataCache = {};
+let _allDataCache = null;
+
+async function _loadAllData() {
+  if (_allDataCache) return _allDataCache;
+  const url = `https://raw.githubusercontent.com/kyosuke-takei/pricelist/main/data.json?_=${Date.now()}`;
+  const cats = await fetch(url).then(r => r.json());
+  applyMultipliers(cats);
+  _allDataCache = cats;
+  return cats;
+}
 
 function applyMultipliers(cats) {
   cats.forEach(cat => {
@@ -352,8 +364,10 @@ function applyMultipliers(cats) {
       else if (isOPSealed)     multiplier = 1.20;
       else if (isShrinkOn || isShrinkOff || isPack) multiplier = 1.0;
       else if (['デッキ','プロモ','その他'].includes(cat.label)) multiplier = 1.0;
-      else if (cat.label.startsWith('遊戯王'))   multiplier = 1.0;
-      else if (cat.label.startsWith('ヴァイス')) multiplier = 1.0;
+      else if (cat.label.startsWith('遊戯王'))          multiplier = 1.0;
+      else if (cat.label.startsWith('ヴァイス'))        multiplier = 1.0;
+      else if (cat.label.startsWith('ユニオンアリーナ')) multiplier = 1.0;
+      else if (cat.label.startsWith('ドラゴンボール'))   multiplier = 1.0;
       item._price = Math.ceil(parseInt(item.price.replace(/[^\d]/g, '')) * multiplier);
     });
   });
@@ -361,18 +375,16 @@ function applyMultipliers(cats) {
 
 async function ensureGameData(game) {
   if (game === 'all') {
-    await Promise.all(Object.keys(GAME_DATA_FILES).map(g => ensureGameData(g)));
+    await Promise.all(Object.keys(GAME_CATEGORIES).map(g => ensureGameData(g)));
     return;
   }
-  if (gameDataCache[game] !== undefined) return;  // already loaded or loading
-  gameDataCache[game] = [];  // prevent concurrent duplicate fetches
-  const file = GAME_DATA_FILES[game];
-  if (!file) return;
+  if (gameDataCache[game] !== undefined) return;
+  gameDataCache[game] = [];
   try {
-    const cats = await fetch(file).then(r => r.json());
-    applyMultipliers(cats);
-    gameDataCache[game] = cats;
-  } catch (e) { console.warn('Failed to load', file, e); }
+    const allCats = await _loadAllData();
+    const labels = (GAME_CATEGORIES[game] || {}).labels || [];
+    gameDataCache[game] = allCats.filter(cat => labels.includes(cat.label));
+  } catch (e) { console.warn('Failed to load data for', game, e); }
 }
 
 function getActiveData() {
@@ -601,50 +613,43 @@ function setLang(lang) {
 
 const GAME_CATEGORIES = {
   pokemon: {
-    display: '🎴 Pokémon',
-    labels: ['AR/CHR','SR/SSR/HR/UR/SAR/MUR/MA','未開封BOX シュリンクあり','未開封BOX シュリンクなし','パック','デッキ','プロモ','その他','PSA鑑定済'],
+    display: 'Pokémon', color: '#e8b84b', img: '',
+    labels: ['ポケカ未開封BOX','未開封BOX シュリンクあり','未開封BOX シュリンクなし'],
     tabs: [
-      { label: 'AR/CHR',                     display: 'AR / CHR' },
-      { label: 'SR/SSR/HR/UR/SAR/MUR/MA',    display: 'SR / SAR / UR+' },
-      { label: '未開封BOX シュリンクあり',    display: 'BOX Shrink ✅' },
-      { label: '未開封BOX シュリンクなし',    display: 'BOX No Shrink' },
-      { label: 'パック',                      display: 'Pack' },
-      { label: 'デッキ',                      display: 'Deck' },
-      { label: 'プロモ',                      display: 'Promo' },
-      { label: 'その他',                      display: 'Etc' },
-      { label: 'PSA鑑定済',                   display: 'PSA Graded' },
+      { label: 'ポケカ未開封BOX',         display: 'Sealed BOX' },
+      { label: '未開封BOX シュリンクあり', display: 'BOX Shrink ✅' },
+      { label: '未開封BOX シュリンクなし', display: 'BOX No Shrink' },
     ]
   },
   onepiece: {
-    display: '⚓ One Piece',
-    labels: ['ワンピース未開封BOX','OP PSA鑑定済'],
-    tabs: [
-      { label: 'ワンピース未開封BOX', display: 'Sealed BOX' },
-      { label: 'OP PSA鑑定済',        display: 'PSA Graded' },
-    ]
+    display: 'One Piece', color: '#e8402a', img: '',
+    labels: ['ワンピース未開封BOX'],
+    tabs: [{ label: 'ワンピース未開封BOX', display: 'Sealed BOX' }]
   },
-  yugioh: {
-    display: '👁 Yu-Gi-Oh',
-    labels: ['遊戯王 BOX シュリンクあり','遊戯王 BOX シュリンクなし','遊戯王 パック','遊戯王 デッキ','遊戯王 プロモ','遊戯王 その他'],
-    tabs: [
-      { label: '遊戯王 BOX シュリンクあり', display: 'BOX Shrink ✅' },
-      { label: '遊戯王 BOX シュリンクなし', display: 'BOX No Shrink' },
-      { label: '遊戯王 パック',             display: 'Pack' },
-      { label: '遊戯王 デッキ',             display: 'Deck' },
-      { label: '遊戯王 プロモ',             display: 'Promo' },
-      { label: '遊戯王 その他',             display: 'Etc' },
-    ]
+  unionarena: {
+    display: 'Union Arena', color: '#aa44ff', img: '',
+    labels: ['ユニオンアリーナ未開封BOX'],
+    tabs: [{ label: 'ユニオンアリーナ未開封BOX', display: 'Sealed BOX' }]
   },
   weiss: {
-    display: '🃏 Weiss',
-    labels: ['ヴァイス BOX シュリンクあり','ヴァイス BOX シュリンクなし','ヴァイス パック','ヴァイス デッキ','ヴァイス プロモ','ヴァイス その他'],
+    display: 'Weiss', color: '#4499ff', img: '',
+    labels: ['ヴァイス BOX シュリンクあり','ヴァイス BOX シュリンクなし'],
     tabs: [
       { label: 'ヴァイス BOX シュリンクあり', display: 'BOX Shrink ✅' },
       { label: 'ヴァイス BOX シュリンクなし', display: 'BOX No Shrink' },
-      { label: 'ヴァイス パック',             display: 'Pack' },
-      { label: 'ヴァイス デッキ',             display: 'Deck' },
-      { label: 'ヴァイス プロモ',             display: 'Promo' },
-      { label: 'ヴァイス その他',             display: 'Etc' },
+    ]
+  },
+  dragonball: {
+    display: 'Dragon Ball', color: '#ff8800', img: '',
+    labels: ['ドラゴンボール未開封BOX'],
+    tabs: [{ label: 'ドラゴンボール未開封BOX', display: 'Sealed BOX' }]
+  },
+  yugioh: {
+    display: 'Yu-Gi-Oh', color: '#cc88ff', img: '',
+    labels: ['遊戯王 BOX シュリンクあり','遊戯王 BOX シュリンクなし'],
+    tabs: [
+      { label: '遊戯王 BOX シュリンクあり', display: 'BOX Shrink ✅' },
+      { label: '遊戯王 BOX シュリンクなし', display: 'BOX No Shrink' },
     ]
   },
 };
@@ -724,22 +729,51 @@ function goPage(p) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+function buildGameButtons() {
+  const sel = document.getElementById('game-selector');
+  const allBtn = sel.querySelector('.all-btn');
+  sel.innerHTML = '';
+  sel.appendChild(allBtn);
+  Object.entries(GAME_CATEGORIES).forEach(([key, def]) => {
+    const btn = document.createElement('button');
+    btn.className = 'game-btn';
+    btn.style.setProperty('--game-color', def.color);
+    btn.onclick = () => setGame(key, btn);
+    btn.innerHTML = def.img
+      ? `<img src="${def.img}" alt="${def.display}"><span class="btn-label">${def.display}</span>`
+      : `<span class="btn-label" style="font-size:0.82rem">${def.display}</span>`;
+    sel.appendChild(btn);
+  });
+}
+
 async function setGame(game, el) {
   currentGame = game;
   currentTab = 'all';
   currentPage = 1;
   document.querySelectorAll('.game-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
+  el.style.setProperty('--game-color', game === 'all' ? '#e8b84b' : (GAME_CATEGORIES[game]?.color || '#e8b84b'));
   const container = document.getElementById('category-tabs');
   const gameDef = GAME_CATEGORIES[game];
   if (!gameDef || gameDef.tabs.length === 0) {
     container.innerHTML = '';
     container.classList.remove('visible');
   } else {
-    container.innerHTML =
-      `<button class="tab active" onclick="setTab('all',this)">All</button>` +
-      gameDef.tabs.map(t => `<button class="tab" onclick="setTab('${t.label}',this)">${t.display}</button>`).join('');
-    container.classList.add('visible');
+    await ensureGameData(game);
+    const activeData = gameDataCache[game] || [];
+    const visibleTabs = gameDef.tabs.filter(t => {
+      const cat = activeData.find(c => c.label === t.label);
+      return cat && cat.items.some(item => item._price > 0);
+    });
+    if (visibleTabs.length <= 1) {
+      container.innerHTML = '';
+      container.classList.remove('visible');
+    } else {
+      container.innerHTML =
+        `<button class="tab active" onclick="setTab('all',this)">All</button>` +
+        visibleTabs.map(t => `<button class="tab" onclick="setTab('${t.label}',this)">${t.display}</button>`).join('');
+      container.classList.add('visible');
+    }
   }
   await ensureGameData(game);
   render();
@@ -771,7 +805,9 @@ function render() {
   } else {
     getActiveData().forEach(cat => cat.items.forEach(item => items.push({ ...item, category: cat.label })));
   }
-  if (document.getElementById("in-stock-only")?.checked) items = items.filter(i => (typeof i.stock === "number" ? i.stock : 99) > 0);
+  // 価格がない商品は非表示
+  items = items.filter(i => i._price > 0);
+  if (document.getElementById("in-stock-only")?.checked) items = items.filter(i => typeof i.lineStock !== 'number' || i.lineStock > 0);
   if (query) items = items.filter(i =>
     (i.nameEn||i.name).toLowerCase().includes(query) || i.name.toLowerCase().includes(query)
   );
@@ -800,10 +836,13 @@ function render() {
   grid.innerHTML = pageItems.map((item, i) => {
     const change = getPriceChange(item);
     const changeHtml = change ? `<div class="price-change ${change>0?'price-up':'price-down'}">${change>0?'▲':'▼'} ¥${Math.abs(change).toLocaleString()}</div>` : '';
-    const stockNum = typeof item.stock === 'number' ? item.stock : 99;
-    const isSoldOut = stockNum === 0 || !item._price || isNaN(item._price);
-    const stockColor = stockNum <= 3 && !isSoldOut ? '#ff6060' : stockNum <= 10 && !isSoldOut ? '#ffaa60' : '#666';
+    const lineStockNum = typeof item.lineStock === 'number' ? item.lineStock : null;
+    const isSoldOut = lineStockNum === 0 || !item._price || isNaN(item._price);
+    const stockColor = lineStockNum !== null && lineStockNum <= 3 ? '#ff6060' : lineStockNum !== null && lineStockNum <= 10 ? '#ffaa60' : '#60aa80';
     const globalIdx = start + i;
+    const stockHtml = lineStockNum !== null
+      ? `<div class="card-stock" style="color:${stockColor}">${t('stockCard', lineStockNum)}</div>`
+      : '';
     return `<div class="card${isSoldOut ? ' sold-out' : ''}" onclick="${isSoldOut ? '' : `openModal(${globalIdx})`}">
       ${isSoldOut ? '<div class="sold-out-overlay"><div class="sold-out-label">SOLD OUT</div></div>' : ''}
       <img src="${item.img}" alt="${item.nameEn||item.name}" loading="lazy">
@@ -815,7 +854,7 @@ function render() {
           : `<div class="card-price">¥${item._price.toLocaleString()}</div>
              <div class="card-price-usd">≈ $${(item._price/usdRate).toFixed(2)} USD</div>`
         }
-        <div class="card-stock" style="color:${stockColor}">${t('stockCard', stockNum)}</div>
+        ${stockHtml}
         ${changeHtml}
       </div>
     </div>`;
@@ -836,18 +875,19 @@ function render() {
 function openModal(idx) {
   window._currentModalIdx = idx;
   const item = window._renderedItems[idx];
-  const stockNum = typeof item.stock === 'number' ? item.stock : 99;
+  const stockNum = typeof item.lineStock === 'number' ? item.lineStock : null;
   if (stockNum === 0) return;
   const hist = getPriceHistory(item.link);
   const inCart = cart.find(c => c.link === item.link);
   const cartQty = inCart ? inCart.qty : 0;
-  const remaining = stockNum - cartQty;
+  const remaining = stockNum !== null ? stockNum - cartQty : Infinity;
   document.getElementById('m-img').src = item.img;
   document.getElementById('m-name').textContent = item.nameEn||item.name;
   document.getElementById('m-jpname').textContent = item.nameJp || item.name;
   document.getElementById('m-price').textContent = `¥${item._price.toLocaleString()}`;
   document.getElementById('m-usd').textContent = `≈ $${(item._price/usdRate).toFixed(2)} USD`;
-  document.getElementById('m-stock').textContent = t('stockInfo', stockNum, remaining);
+  const stockEl = document.getElementById('m-stock');
+  stockEl.textContent = stockNum !== null ? t('stockInfo', stockNum, Math.max(0, remaining)) : '';
   const btn = document.getElementById('btn-add-cart');
   if (remaining <= 0) {
     btn.disabled = true;
@@ -903,7 +943,7 @@ function closeCart(e) {
 function addToCart(idx) {
   const item = window._renderedItems[idx];
   const existing = cart.find(c => c.link === item.link);
-  const maxStock = typeof item.stock === 'number' ? item.stock : 99;
+  const maxStock = typeof item.lineStock === 'number' ? item.lineStock : Infinity;
   if (existing) {
     if (existing.qty >= maxStock) { alert(t('onlyN', maxStock)); return; }
     existing.qty++;
@@ -917,7 +957,7 @@ function changeQty(link, delta) {
   const item = cart.find(c => c.link === link);
   if (!item) return;
   const newQty = item.qty + delta;
-  const maxStock = typeof item.stock === 'number' ? item.stock : 99;
+  const maxStock = typeof item.lineStock === 'number' ? item.lineStock : Infinity;
   if (newQty <= 0) {
     cart = cart.filter(c => c.link !== link);
   } else if (newQty > maxStock) {
@@ -949,7 +989,7 @@ function renderCart() {
   el.innerHTML = cart.map(item => `
     <div class="cart-item">
       <img src="${item.img}" alt="${item.nameEn||item.name}">
-      <div class="cart-item-name">${item.nameEn||item.name}<br><small style="color:#555">${t('stockCard', item.stock)}</small></div>
+      <div class="cart-item-name">${item.nameEn||item.name}${typeof item.lineStock === 'number' ? `<br><small style="color:#555">${t('stockCard', item.lineStock)}</small>` : ''}</div>
       <div class="cart-item-qty">
         <button class="qty-btn" onclick="changeQty('${item.link}', -1)">−</button>
         <span>${item.qty}</span>
@@ -1187,6 +1227,7 @@ async function submitOrder() {
 }
 
 async function init() {
+  buildGameButtons();
   await loadRate();
   await loadHistory();
   try {

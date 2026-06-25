@@ -186,17 +186,182 @@
 
   /* ── Tab bar ── */
   .tab-bar {
-    display: flex; gap: 0; border-bottom: 2px solid #333;
+    display: flex; gap: 0; border-bottom: 2px solid #2a2d3e;
     margin-bottom: 1.5rem;
   }
   .tab-btn {
     padding: 0.65rem 1.6rem; border: none; cursor: pointer;
-    background: transparent; color: #888; font-size: 0.95rem;
-    font-weight: bold; border-bottom: 3px solid transparent;
-    margin-bottom: -2px; transition: color 0.2s, border-color 0.2s;
+    background: transparent; color: #6b7280; font-size: 0.95rem;
+    font-weight: 600; border-bottom: 3px solid transparent;
+    margin-bottom: -2px; transition: all 0.2s; letter-spacing: 0.02em;
   }
   .tab-btn.active { color: #e8b84b; border-bottom-color: #e8b84b; }
-  .tab-btn:hover:not(.active) { color: #ccc; }
+  .tab-btn:hover:not(.active) { color: #d1d5db; }
+
+  /* ── Messenger redesign ── */
+  .ms-layout {
+    display: flex; height: calc(100vh - 180px); margin-top: 0.5rem;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    border: 1px solid #2a2d3e;
+  }
+  .ms-sidebar {
+    width: 280px; min-width: 280px;
+    background: #1e2235;
+    display: flex; flex-direction: column;
+  }
+  .ms-sidebar-header {
+    padding: 1rem; border-bottom: 1px solid #2a2d3e;
+    display: flex; gap: 0.5rem; align-items: center;
+    background: #252840;
+  }
+  .ms-search-input {
+    flex: 1; padding: 0.45rem 0.8rem; border-radius: 20px;
+    border: 1px solid #3a3d52; background: #1a1d2e;
+    color: #e2e8f0; font-size: 0.85rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .ms-search-input:focus { border-color: #7c6af7; }
+  .ms-add-btn {
+    width: 32px; height: 32px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #e8b84b, #f59e0b);
+    color: #000; font-size: 1.1rem; font-weight: bold;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: transform 0.2s, opacity 0.2s;
+  }
+  .ms-add-btn:hover { transform: scale(1.1); }
+  .ms-customer-list { overflow-y: auto; flex: 1; }
+  .ms-customer-item {
+    padding: 0.75rem 1rem; cursor: pointer;
+    display: flex; align-items: center; gap: 0.75rem;
+    border-bottom: 1px solid #252840; transition: background 0.15s;
+    position: relative;
+  }
+  .ms-customer-item:hover { background: #252840; }
+  .ms-customer-item.active { background: #2d3158; }
+  .ms-avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1rem; color: #fff;
+  }
+  .ms-avatar.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); }
+  .ms-avatar.discord { background: linear-gradient(135deg, #5865f2, #3f51b5); }
+  .ms-avatar.instagram { background: linear-gradient(135deg, #e1306c, #833ab4); }
+  .ms-avatar.default { background: linear-gradient(135deg, #6b7280, #4b5563); }
+  .ms-customer-info { flex: 1; min-width: 0; }
+  .ms-customer-name {
+    font-weight: 600; font-size: 0.9rem; color: #e2e8f0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .ms-customer-platform { font-size: 0.75rem; color: #6b7280; margin-top: 0.1rem; }
+  .ms-unread-badge {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff; border-radius: 12px; padding: 0.15rem 0.5rem;
+    font-size: 0.72rem; font-weight: bold; flex-shrink: 0;
+  }
+  .ms-chat-area {
+    flex: 1; display: flex; flex-direction: column;
+    background: #161929;
+  }
+  .ms-chat-header {
+    padding: 0.9rem 1.4rem; border-bottom: 1px solid #2a2d3e;
+    background: #1e2235;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .ms-chat-header-name {
+    font-weight: 700; font-size: 1.05rem; color: #f1f5f9; flex: 1;
+  }
+  .ms-chat-header-platform {
+    font-size: 0.78rem; color: #7c6af7;
+    background: rgba(124,106,247,0.15); padding: 0.2rem 0.6rem;
+    border-radius: 10px;
+  }
+  .ms-tag-input {
+    padding: 0.35rem 0.7rem; border-radius: 8px; font-size: 0.8rem;
+    border: 1px solid #3a3d52; background: #1a1d2e; color: #e2e8f0;
+    width: 160px; outline: none; transition: border-color 0.2s;
+  }
+  .ms-tag-input:focus { border-color: #7c6af7; }
+  .ms-save-btn {
+    padding: 0.3rem 0.8rem; border-radius: 8px; font-size: 0.8rem;
+    border: none; background: #3a3d52; color: #e2e8f0; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .ms-save-btn:hover { background: #4a4d62; }
+  .ms-messages { flex: 1; overflow-y: auto; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .ms-msg {
+    max-width: 70%; display: flex; flex-direction: column; gap: 0.25rem;
+  }
+  .ms-msg.from-me { align-self: flex-end; align-items: flex-end; }
+  .ms-msg.from-customer { align-self: flex-start; align-items: flex-start; }
+  .ms-bubble {
+    padding: 0.65rem 1rem; border-radius: 16px; font-size: 0.9rem;
+    line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+  }
+  .ms-msg.from-me .ms-bubble {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff; border-bottom-right-radius: 4px;
+  }
+  .ms-msg.from-customer .ms-bubble {
+    background: #252840; color: #e2e8f0; border-bottom-left-radius: 4px;
+    border: 1px solid #2a2d3e;
+  }
+  .ms-translation {
+    font-size: 0.75rem; color: #6b7280; padding: 0 0.2rem;
+  }
+  .ms-timestamp { font-size: 0.7rem; color: #4b5563; }
+  .ms-suggestions-bar {
+    padding: 0.6rem 1rem; border-top: 1px solid #2a2d3e;
+    display: none; flex-wrap: wrap; gap: 0.5rem;
+    background: #1e2235;
+  }
+  .ms-suggestion-btn {
+    padding: 0.4rem 0.9rem; border-radius: 20px; border: none; cursor: pointer;
+    font-size: 0.82rem; font-weight: 500; transition: all 0.2s;
+    text-align: left; max-width: 100%;
+  }
+  .ms-suggestion-btn:nth-child(3n+1) { background: rgba(79,70,229,0.2); color: #a5b4fc; border: 1px solid rgba(79,70,229,0.4); }
+  .ms-suggestion-btn:nth-child(3n+2) { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4); }
+  .ms-suggestion-btn:nth-child(3n+3) { background: rgba(232,184,75,0.2); color: #fde68a; border: 1px solid rgba(232,184,75,0.4); }
+  .ms-suggestion-btn:hover { filter: brightness(1.3); transform: translateY(-1px); }
+  .ms-input-area {
+    padding: 0.8rem 1rem; border-top: 1px solid #2a2d3e;
+    display: flex; gap: 0.6rem; align-items: flex-end;
+    background: #1e2235;
+  }
+  .ms-reply-textarea {
+    flex: 1; padding: 0.65rem 1rem; border-radius: 12px;
+    border: 1px solid #3a3d52; background: #252840;
+    color: #e2e8f0; font-size: 0.9rem; resize: none;
+    font-family: inherit; outline: none; transition: border-color 0.2s;
+    line-height: 1.4;
+  }
+  .ms-reply-textarea:focus { border-color: #7c6af7; }
+  .ms-ai-btn {
+    padding: 0.5rem 0.8rem; border-radius: 10px; border: 1px solid rgba(124,106,247,0.4);
+    background: rgba(124,106,247,0.15); color: #a5b4fc;
+    cursor: pointer; font-size: 0.82rem; font-weight: 500; transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .ms-ai-btn:hover { background: rgba(124,106,247,0.3); }
+  .ms-send-btn {
+    padding: 0.6rem 1.2rem; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff; cursor: pointer; font-size: 0.9rem;
+    font-weight: 600; transition: all 0.2s; white-space: nowrap;
+  }
+  .ms-send-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .ms-note-area {
+    padding: 0.5rem 1rem; border-top: 1px solid #2a2d3e;
+    display: flex; gap: 0.5rem; background: #1a1d2e;
+  }
+  .ms-note-input {
+    flex: 1; padding: 0.35rem 0.7rem; border-radius: 8px;
+    border: 1px solid #2a2d3e; background: transparent;
+    color: #6b7280; font-size: 0.8rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .ms-note-input:focus { border-color: #4a4d62; color: #9ca3af; }
 
   /* ── LINE取込 UI ── */
   #tab-line { display: none; }
@@ -211,28 +376,64 @@
   .line-controls { display: flex; gap: 0.75rem; align-items: center; margin: 0.75rem 0 1.5rem; }
   .parse-summary { color: #aaa; font-size: 0.85rem; }
 
-  /* preview table */
-  .line-preview-wrap { overflow-x: auto; }
-  #line-preview-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-  #line-preview-table th {
-    background: #16213e; color: #e8b84b; padding: 0.65rem 0.8rem;
-    text-align: left; border-bottom: 1px solid #333; white-space: nowrap;
+  /* preview cards */
+  .line-preview-cards { display: flex; flex-direction: column; gap: 0.6rem; }
+  .lp-card {
+    background: #111827; border: 1px solid #2a2a4a; border-radius: 12px;
+    padding: 0.9rem 1rem; display: grid;
+    grid-template-columns: auto 1fr auto; gap: 0.75rem; align-items: start;
+    transition: border-color 0.15s;
   }
-  #line-preview-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #1a1a2e; vertical-align: middle; }
-  #line-preview-table tr.row-matched td { }
-  #line-preview-table tr.row-price-changed td { background: rgba(232,184,75,0.06); }
-  #line-preview-table tr.row-unmatched td { background: rgba(255,68,68,0.07); }
-  .match-badge { display: inline-block; padding: 0.18rem 0.55rem; border-radius: 10px; font-size: 0.75rem; font-weight: bold; }
+  .lp-card.is-matched { border-color: #1a3a2a; }
+  .lp-card.is-unmatched { border-color: #3a1a1a; }
+  .lp-card.is-checked { border-color: #4f46e5; background: #111827; }
+  .lp-card-check { padding-top: 0.15rem; }
+  .lp-card-check input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; }
+  .lp-card-body { min-width: 0; }
+  .lp-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; min-width: 160px; }
+
+  /* 商品名行 */
+  .lp-name { font-size: 0.92rem; font-weight: bold; color: #fff; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .lp-match-name { font-size: 0.76rem; color: #888; margin-top: 0.15rem; line-height: 1.4; }
+  .shrink-badge { font-size: 0.68rem; padding: 0.1rem 0.45rem; border-radius: 8px; background: #1a2a3a; color: #6ab; }
+  .shrink-badge.no-shrink { background: #2a1a1a; color: #f86; }
+
+  /* カテゴリ・ステータス行 */
+  .lp-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; flex-wrap: wrap; }
+  .match-badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 10px; font-size: 0.72rem; font-weight: bold; }
   .badge-ok { background: #0d3d1f; color: #00cc66; }
   .badge-new { background: #3d2a0d; color: #ffa040; }
   .badge-skip { background: #2a2a2a; color: #666; }
-  .price-old { color: #888; text-decoration: line-through; margin-right: 0.4rem; }
-  .price-new { color: #e8b84b; font-weight: bold; }
-  .price-same { color: #888; }
-  .shrink-badge { font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 8px; background: #1a2a3a; color: #6ab; margin-left: 0.3rem; }
-  .cat-select-inline { padding: 0.25rem 0.5rem; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.78rem; max-width: 220px; }
+  .category-badge { font-size: 0.72rem; padding: 0.15rem 0.55rem; border-radius: 10px; background: #1a1a3a; color: #aaa; }
+  .cat-select-inline { padding: 0.25rem 0.5rem; border-radius: 6px; border: 1px solid #333; background: #0f0f1a; color: #fff; font-size: 0.78rem; max-width: 200px; }
+
+  /* 価格変化表示 */
+  .lp-price-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .price-old { color: #666; text-decoration: line-through; font-size: 0.82rem; }
+  .price-arrow { color: #555; font-size: 0.8rem; }
+  .price-new { color: #e8b84b; font-weight: bold; font-size: 1rem; }
+  .price-same { color: #888; font-size: 0.9rem; }
+  .price-qty { font-size: 0.75rem; color: #a78bfa; margin-left: 0.2rem; }
+
+  /* 業者価格ピル */
+  .sup-prices { display: flex; flex-direction: column; gap: 0.35rem; width: 100%; }
+  .sup-pill {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.35rem 0.65rem; border-radius: 8px; border: 1px solid #2a2a4a;
+    background: #0f0f1a; cursor: pointer; transition: all 0.15s; gap: 0.5rem;
+    font-size: 0.82rem;
+  }
+  .sup-pill:hover { border-color: #4f46e5; }
+  .sup-pill.selected { border-color: #e8b84b; background: rgba(232,184,75,0.08); }
+  .sup-pill-name { color: #888; font-size: 0.72rem; flex-shrink: 0; }
+  .sup-pill-price { color: #e8b84b; font-weight: bold; }
+  .sup-pill.selected .sup-pill-price { color: #fff; }
+  .sup-pill-qty { color: #a78bfa; font-size: 0.72rem; flex-shrink: 0; }
+  .sup-pill-carton { color: #fa0; font-size: 0.68rem; background: #2a1f00; padding: 0.1rem 0.35rem; border-radius: 6px; }
+
   .line-apply-bar { display: flex; gap: 1rem; align-items: center; margin-top: 1.2rem; flex-wrap: wrap; }
   .apply-count { color: #aaa; font-size: 0.85rem; }
+  .price-select { display: none; } /* 旧セレクト非表示 */
 
   /* 一括貼り付けボックス */
   .autosplit-box {
@@ -302,6 +503,8 @@
       <button class="tab-btn active" id="tabBtn-items" onclick="switchTab('items')">📋 商品一覧</button>
       <button class="tab-btn" id="tabBtn-line" onclick="switchTab('line')">📲 LINE取込</button>
       <button class="tab-btn" id="tabBtn-shipping" onclick="switchTab('shipping')">🚢 送料計算</button>
+      <button class="tab-btn" id="tabBtn-messenger" onclick="switchTab('messenger')">💬 顧客対応 <span id="messenger-badge" style="display:none;background:#ff4444;color:#fff;border-radius:10px;padding:0 6px;font-size:0.75rem;margin-left:4px">0</span></button>
+      <button class="tab-btn" id="tabBtn-preview" onclick="switchTab('preview')">👁 一般ページ</button>
     </div>
 
     <!-- 商品一覧タブ -->
@@ -362,28 +565,25 @@
 
       <div class="line-controls">
         <button class="btn btn-primary" onclick="parseAndPreview()">🔍 解析・比較する</button>
+        <button class="btn" style="background:#7c3aed;color:#fff" onclick="aiParseAndPreview()" id="ai-parse-btn">✨ AI解析</button>
         <button class="btn btn-secondary" onclick="clearAllSuppliers()">クリア</button>
         <span class="parse-summary" id="parse-summary"></span>
       </div>
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:0.4rem;color:#888;font-size:0.82rem;cursor:pointer">
+          <input type="checkbox" id="discord-notify-enable" onchange="localStorage.setItem('discord_notify_enable', this.checked)">
+          🔔 Discord #price-updates に自動通知
+        </label>
+      </div>
 
       <div id="line-preview-section" style="display:none">
-        <div class="line-preview-wrap">
-          <table id="line-preview-table">
-            <thead id="line-preview-thead">
-              <tr>
-                <th><input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"></th>
-                <th>LINE商品名</th>
-                <th>マッチ商品</th>
-                <th>カテゴリ</th>
-                <!-- 業者列はJS側で動的追加 -->
-                <th>適用価格</th>
-                <th>旧価格</th>
-                <th>状態</th>
-              </tr>
-            </thead>
-            <tbody id="line-preview-body"></tbody>
-          </table>
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:0.5rem;color:#aaa;font-size:0.85rem;cursor:pointer">
+            <input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"> 全選択
+          </label>
+          <span class="parse-summary" id="parse-summary-inline" style="color:#aaa;font-size:0.85rem"></span>
         </div>
+        <div class="line-preview-cards" id="line-preview-body"></div>
         <div class="line-apply-bar">
           <button class="btn btn-primary" onclick="applyLineImport()">✅ 選択した項目をGitHubに保存</button>
           <span class="apply-count" id="apply-count"></span>
@@ -526,6 +726,69 @@
   </div>
 </div>
 
+<!-- 顧客対応タブ -->
+<div id="tab-messenger" style="display:none">
+  <div class="ms-layout">
+    <!-- 左：顧客リスト -->
+    <div class="ms-sidebar">
+      <div class="ms-sidebar-header">
+        <input id="ms-search" type="text" class="ms-search-input" placeholder="🔍 顧客名で検索..." oninput="msFilterCustomers()">
+        <button class="ms-add-btn" onclick="msOpenAddCustomer()" title="顧客を追加">＋</button>
+      </div>
+      <div id="ms-customer-list" class="ms-customer-list"></div>
+    </div>
+    <!-- 右：会話エリア -->
+    <div class="ms-chat-area">
+      <div id="ms-header" class="ms-chat-header">
+        <span id="ms-header-name" class="ms-chat-header-name">顧客を選択してください</span>
+        <span id="ms-header-platform" class="ms-chat-header-platform" style="display:none"></span>
+        <input id="ms-tag-input" type="text" class="ms-tag-input" placeholder="タグ (カンマ区切り)">
+        <button class="ms-save-btn" onclick="msSaveTags()">保存</button>
+      </div>
+      <div id="ms-messages" class="ms-messages"></div>
+      <div id="ms-suggestions" class="ms-suggestions-bar"></div>
+      <div class="ms-input-area">
+        <textarea id="ms-reply-input" class="ms-reply-textarea" placeholder="返信を入力... (Ctrl+Enterで送信)" rows="2"></textarea>
+        <button class="ms-ai-btn" onclick="msGetSuggestions()">💡 AI案</button>
+        <button class="ms-send-btn" onclick="msSendReply()">送信 ↑</button>
+      </div>
+      <div id="ms-note-area" class="ms-note-area">
+        <input id="ms-note-input" type="text" class="ms-note-input" placeholder="📝 メモ（内部用）">
+        <button class="ms-save-btn" onclick="msSaveNote()">メモ保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 一般ページプレビュータブ -->
+<div id="tab-preview" style="display:none;height:calc(100vh - 120px)">
+  <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem 1.5rem;background:#16213e;border-bottom:1px solid #333">
+    <span style="color:#e8b84b;font-weight:bold">👁 一般ページプレビュー</span>
+    <button class="btn btn-secondary" style="font-size:0.8rem;padding:0.3rem 0.8rem" onclick="document.getElementById('preview-iframe').src=document.getElementById('preview-iframe').src">🔄 更新</button>
+    <a href="http://localhost:3210/" target="_blank" style="color:#888;font-size:0.8rem">別タブで開く ↗</a>
+  </div>
+  <iframe id="preview-iframe" src="http://localhost:3210/" style="width:100%;height:100%;border:none;background:#0f0f1a"></iframe>
+</div>
+
+<!-- 顧客追加モーダル -->
+<div id="ms-add-modal" class="modal-overlay" style="display:none">
+  <div class="confirm-box" style="max-width:360px">
+    <h2 style="color:#e8b84b;margin-bottom:1rem">顧客を追加</h2>
+    <input id="ms-add-name" type="text" placeholder="名前" style="width:100%;padding:0.6rem;border-radius:6px;border:1px solid #333;background:#0f0f1a;color:#fff;margin-bottom:0.6rem">
+    <select id="ms-add-platform" style="width:100%;padding:0.6rem;border-radius:6px;border:1px solid #333;background:#0f0f1a;color:#fff;margin-bottom:0.6rem">
+      <option value="whatsapp">WhatsApp</option>
+      <option value="instagram">Instagram</option>
+      <option value="facebook">Facebook</option>
+      <option value="discord">Discord</option>
+    </select>
+    <input id="ms-add-note" type="text" placeholder="メモ（任意）" style="width:100%;padding:0.6rem;border-radius:6px;border:1px solid #333;background:#0f0f1a;color:#fff;margin-bottom:1rem">
+    <div style="display:flex;gap:0.5rem;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="document.getElementById('ms-add-modal').style.display='none'">キャンセル</button>
+      <button class="btn btn-primary" onclick="msAddCustomer()">追加</button>
+    </div>
+  </div>
+</div>
+
 <!-- Saving overlay -->
 <div class="saving-overlay" id="saving-overlay">
   <div class="saving-box">💾 GitHubに保存中...</div>
@@ -534,7 +797,7 @@
 <div id="toast"></div>
 
 <script>
-const PASS_HASH = 'fab853b51a79a680720749e5ca5b7c86fa0fa8fde87595a80ae014d2739a80b5';
+const PASS_HASH = 'b39740eeb5031933ad3b11d95303512c86fe8291c24a7d51e4ea9670d66c94a5';
 const REPO = 'kyosuke-takei/pricelist';
 const FILE_PATH = 'data.json';
 
@@ -593,6 +856,9 @@ async function showAdmin() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('admin-screen').style.display = 'block';
   loadToken();
+  const savedEnable = localStorage.getItem('discord_notify_enable') === 'true';
+  const enEl = document.getElementById('discord-notify-enable');
+  if (enEl) enEl.checked = savedEnable;
   await loadData();
   // 燃油サーチャージ読み込み
   try { const r = await fetch('fuel_cache.json'); const d = await r.json(); window._scFuelRate = d.rate / 100; } catch { window._scFuelRate = 0.48; }
@@ -693,7 +959,10 @@ function renderTable() {
         <small>${escHtml(item.nameEn || '')}</small>
       </td>
       <td><span class="category-badge">${escHtml(group.label)}</span></td>
-      <td class="td-price">${escHtml(item.price || '')}</td>
+      <td class="td-price">
+        ${escHtml(item.price || '')}
+        ${item.priceDate ? `<div style="font-size:0.7rem;color:#888;margin-top:2px">${item.priceDate}</div>` : ''}
+      </td>
       <td class="td-stock">${item.stock ?? '-'}</td>
       <td class="td-actions">
         <button class="btn btn-secondary btn-sm" onclick="openEditModal(${catIdx},${itemIdx})">編集</button>
@@ -937,18 +1206,284 @@ function escHtml(str) {
 
 // ── Tab ──────────────────────────────────────────
 function switchTab(tab) {
-  ['items', 'line', 'shipping'].forEach(t => {
-    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
-    document.getElementById('tabBtn-' + t).classList.toggle('active', t === tab);
+  ['items', 'line', 'shipping', 'messenger', 'preview'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (el) el.style.display = t === tab ? (t === 'preview' ? 'flex' : 'block') : 'none';
+    const btn = document.getElementById('tabBtn-' + t);
+    if (btn) btn.classList.toggle('active', t === tab);
   });
-  // 送料タブを初めて開いたときBOX換算に行がなければ1行追加
   if (tab === 'shipping' && document.querySelectorAll('#sc-box-rows .sc-box-row').length === 0) {
     scAddBoxRow();
   }
+  if (tab === 'messenger') {
+    msInit();
+  }
+  if (tab === 'preview') {
+    document.getElementById('tab-preview').style.flexDirection = 'column';
+  }
+  localStorage.setItem('activeTab', tab);
 }
 
+// ページ読み込み時に前回のタブを復元
+(function() {
+  const saved = localStorage.getItem('activeTab');
+  if (saved && saved !== 'items') {
+    document.addEventListener('DOMContentLoaded', () => switchTab(saved));
+  }
+})();
+
+// ── メッセンジャー ─────────────────────────────────
+const MS_API = 'http://localhost:3210/api';
+let msCustomers = [];
+let msCurrentCustomer = null;
+let msWs = null;
+let msInited = false;
+
+const platformIcon = { discord: '🎮', whatsapp: '💬', messenger: '💬', instagram: '📸', facebook: '👤', manual: '📝' };
+
+function msInit() {
+  if (msInited) return;
+  msInited = true;
+  msLoadCustomers();
+  msConnectWs();
+  if (Notification.permission === 'default') Notification.requestPermission();
+}
+
+function msNotify(customerName, text) {
+  if (Notification.permission !== 'granted') return;
+  const n = new Notification(`💬 ${customerName}`, { body: text, icon: '/favicon.ico' });
+  n.onclick = () => { window.focus(); n.close(); };
+  setTimeout(() => n.close(), 6000);
+}
+
+function msConnectWs() {
+  try {
+    msWs = new WebSocket('ws://localhost:3210');
+    msWs.onmessage = (e) => {
+      const { event, payload } = JSON.parse(e.data);
+      if (event === 'new_message') {
+        const { customerId, customer, message, suggestions } = payload;
+        if (customer) {
+          const idx = msCustomers.findIndex(c => c.id === customerId);
+          if (idx >= 0) msCustomers[idx] = customer;
+          else msCustomers.unshift(customer);
+        }
+        if (msCurrentCustomer?.id === customerId) {
+          msAppendMessage(message);
+          if (suggestions?.length) msShowSuggestions(suggestions);
+          fetch(`${MS_API}/customers/${customerId}/read`, { method: 'POST' });
+        } else {
+          const c = msCustomers.find(c => c.id === customerId);
+          if (c) c.unread = (c.unread || 0) + 1;
+          msUpdateBadge();
+          const name = customer?.name || customerId;
+          msNotify(name, message.text.slice(0, 80));
+        }
+        msRenderCustomerList();
+      } else if (event === 'customer_added') {
+        msCustomers.unshift(payload);
+        msRenderCustomerList();
+      }
+    };
+    msWs.onclose = () => setTimeout(msConnectWs, 3000);
+  } catch {}
+}
+
+async function msLoadCustomers() {
+  try {
+    const r = await fetch(`${MS_API}/customers`);
+    msCustomers = await r.json();
+    msRenderCustomerList();
+    msUpdateBadge();
+  } catch {
+    document.getElementById('ms-customer-list').innerHTML =
+      '<div style="padding:1rem;color:#ff6060;font-size:0.85rem">⚠️ サーバー未起動<br><code>node messenger-server.js</code><br>を実行してください</div>';
+  }
+}
+
+function msRenderCustomerList() {
+  const q = document.getElementById('ms-search')?.value.toLowerCase() || '';
+  const list = msCustomers.filter(c => c.name.toLowerCase().includes(q));
+  const el = document.getElementById('ms-customer-list');
+  const platClass = { discord: 'discord', whatsapp: 'whatsapp', instagram: 'instagram' };
+  el.innerHTML = list.map(c => `
+    <div onclick="msSelectCustomer('${c.id}')" class="ms-customer-item${msCurrentCustomer?.id === c.id ? ' active' : ''}">
+      <div class="ms-avatar ${platClass[c.platform] || 'default'}">${c.name.charAt(0).toUpperCase()}</div>
+      <div class="ms-customer-info">
+        <div class="ms-customer-name">${escHtml(c.name)}</div>
+        <div class="ms-customer-platform">${platformIcon[c.platform] || '💬'} ${c.platform}${c.tags?.length ? ' · ' + c.tags.join(', ') : ''}</div>
+      </div>
+      ${c.unread > 0 ? `<span class="ms-unread-badge">${c.unread}</span>` : ''}
+    </div>
+  `).join('') || '<div style="padding:1.5rem;color:#6b7280;font-size:0.85rem;text-align:center">顧客がいません</div>';
+}
+
+function msUpdateBadge() {
+  const total = msCustomers.reduce((s, c) => s + (c.unread || 0), 0);
+  const badge = document.getElementById('messenger-badge');
+  badge.style.display = total > 0 ? 'inline' : 'none';
+  badge.textContent = total;
+}
+
+async function msSelectCustomer(id) {
+  msCurrentCustomer = msCustomers.find(c => c.id === id);
+  if (!msCurrentCustomer) return;
+
+  // ヘッダー更新
+  document.getElementById('ms-header-name').textContent = msCurrentCustomer.name;
+  const pEl = document.getElementById('ms-header-platform');
+  pEl.textContent = platformIcon[msCurrentCustomer.platform] + ' ' + msCurrentCustomer.platform;
+  pEl.style.display = 'inline-block';
+  document.getElementById('ms-tag-input').value = (msCurrentCustomer.tags || []).join(', ');
+  document.getElementById('ms-note-input').value = msCurrentCustomer.note || '';
+
+  // メッセージ読み込み
+  const r = await fetch(`${MS_API}/messages/${id}`);
+  const msgs = await r.json();
+  const el = document.getElementById('ms-messages');
+  el.innerHTML = '';
+  msgs.forEach(m => msAppendMessage(m));
+  el.scrollTop = el.scrollHeight;
+
+  // 既読
+  fetch(`${MS_API}/customers/${id}/read`, { method: 'POST' });
+  msCurrentCustomer.unread = 0;
+  msUpdateBadge();
+  msRenderCustomerList();
+}
+
+function msAppendMessage(msg) {
+  const el = document.getElementById('ms-messages');
+  const isMe = msg.from === 'me';
+  const div = document.createElement('div');
+  div.className = `ms-msg ${isMe ? 'from-me' : 'from-customer'}`;
+  div.innerHTML = `
+    <div class="ms-bubble">${escHtml(msg.text)}</div>
+    ${!isMe && msg.translation ? `<div class="ms-translation">🇯🇵 ${escHtml(msg.translation)}</div>` : ''}
+    <div class="ms-timestamp">${new Date(msg.timestamp).toLocaleString('ja-JP')}</div>
+  `;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
+}
+
+async function msGetSuggestions() {
+  if (!msCurrentCustomer) { showToast('顧客を選択してください', 'error'); return; }
+  const btn = document.querySelector('.ms-ai-btn');
+  if (btn) { btn.textContent = '⏳...'; btn.disabled = true; }
+  try {
+    const r = await fetch(`${MS_API}/suggest/${msCurrentCustomer.id}`, { method: 'POST' });
+    if (!r.ok) { showToast('AIエラー: ' + r.status, 'error'); return; }
+    const { suggestions } = await r.json();
+    if (!suggestions?.length) { showToast('返信案を生成できませんでした', 'error'); return; }
+    msShowSuggestions(suggestions);
+  } catch(e) {
+    showToast('AI案エラー: ' + e.message, 'error');
+  } finally {
+    if (btn) { btn.textContent = '💡 AI案'; btn.disabled = false; }
+  }
+}
+
+function msShowSuggestions(suggestions) {
+  const el = document.getElementById('ms-suggestions');
+  if (!suggestions?.length) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  el.style.flexWrap = 'wrap';
+  el.innerHTML = suggestions.map(s => {
+    const text = (typeof s === 'string' ? s : s.en) || '';
+    const ja = (typeof s === 'object' ? s.ja : '') || '';
+    if (!text) return '';
+    return `
+    <button onclick="document.getElementById('ms-reply-input').value=this.dataset.text" data-text="${text.replace(/"/g, '&quot;')}" class="ms-suggestion-btn">
+      <div>${escHtml(text)}</div>
+      ${ja ? `<div style="opacity:0.7;font-size:0.75rem;margin-top:2px">🇯🇵 ${escHtml(ja)}</div>` : ''}
+    </button>`;
+  }).join('');
+}
+
+async function msSendReply() {
+  const text = document.getElementById('ms-reply-input').value.trim();
+  if (!text || !msCurrentCustomer) return;
+
+  if (msCurrentCustomer.platform === 'discord' && msCurrentCustomer.id.startsWith('discord_')) {
+    // Discord返信
+    const lastMsg = (await (await fetch(`${MS_API}/messages/${msCurrentCustomer.id}`)).json()).filter(m => m.channelId).pop();
+    if (!lastMsg?.channelId) { alert('チャンネルIDが不明です'); return; }
+    await fetch(`${MS_API}/reply/discord`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channelId: lastMsg.channelId, text, customerId: msCurrentCustomer.id })
+    });
+  } else if (msCurrentCustomer.platform === 'whatsapp') {
+    // WhatsApp返信
+    const waId = msCurrentCustomer.id.replace('whatsapp_', '');
+    await fetch(`${MS_API}/reply/whatsapp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ waId, text, customerId: msCurrentCustomer.id })
+    });
+  } else if (msCurrentCustomer.platform === 'messenger') {
+    // Messenger返信
+    const senderId = msCurrentCustomer.id.replace('messenger_', '');
+    await fetch(`${MS_API}/reply/messenger`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ senderId, text, customerId: msCurrentCustomer.id })
+    });
+  } else {
+    // 手動記録
+    await fetch(`${MS_API}/messages/${msCurrentCustomer.id}/manual`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, from: 'me', platform: msCurrentCustomer.platform })
+    });
+  }
+  document.getElementById('ms-reply-input').value = '';
+}
+
+async function msSaveTags() {
+  if (!msCurrentCustomer) return;
+  const tags = document.getElementById('ms-tag-input').value.split(',').map(t => t.trim()).filter(Boolean);
+  await fetch(`${MS_API}/customers/${msCurrentCustomer.id}/update`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tags })
+  });
+  msCurrentCustomer.tags = tags;
+  msRenderCustomerList();
+}
+
+async function msSaveNote() {
+  if (!msCurrentCustomer) return;
+  const note = document.getElementById('ms-note-input').value;
+  await fetch(`${MS_API}/customers/${msCurrentCustomer.id}/update`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ note })
+  });
+}
+
+function msFilterCustomers() { msRenderCustomerList(); }
+
+function msOpenAddCustomer() { document.getElementById('ms-add-modal').style.display = 'flex'; }
+
+async function msAddCustomer() {
+  const name = document.getElementById('ms-add-name').value.trim();
+  const platform = document.getElementById('ms-add-platform').value;
+  const note = document.getElementById('ms-add-note').value.trim();
+  if (!name) return;
+  await fetch(`${MS_API}/customers`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, platform, note })
+  });
+  document.getElementById('ms-add-modal').style.display = 'none';
+  document.getElementById('ms-add-name').value = '';
+  msLoadCustomers();
+}
+
+document.getElementById('ms-reply-input')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) msSendReply();
+});
+
 // ── LINE取込: 定数 ────────────────────────────────
-const BOX_CATS_SHRINK   = ['ポケカ未開封BOX', 'ワンピース未開封BOX', '未開封BOX シュリンクあり', '遊戯王 BOX シュリンクあり', 'ヴァイス BOX シュリンクあり'];
+const BOX_CATS_SHRINK   = ['ポケカ未開封BOX', 'ワンピース未開封BOX', 'ユニオンアリーナ未開封BOX', 'ドラゴンボール未開封BOX', '未開封BOX シュリンクあり', '遊戯王 BOX シュリンクあり', 'ヴァイス BOX シュリンクあり'];
 const BOX_CATS_NOSHRINK = ['未開封BOX シュリンクなし', '遊戯王 BOX シュリンクなし', 'ヴァイス BOX シュリンクなし'];
 const BOX_CATS_ALL      = [...BOX_CATS_SHRINK, ...BOX_CATS_NOSHRINK];
 
@@ -1004,7 +1539,7 @@ function autoSplitText(fullText) {
   // 送信者行: テキスト — (昨日/今日/HH:MM)
   const senderRe = /^(.+?)\s+[—–]\s+(昨日|今日|\d{1,2}:\d{2})/;
   const lines = fullText.split('\n');
-  const segments = [];
+  const segments = []; // 時系列順（古い→新しい）
   let curName = null, curLines = [];
 
   for (const line of lines) {
@@ -1022,7 +1557,31 @@ function autoSplitText(fullText) {
   if (curName !== null && curLines.join('\n').trim()) {
     segments.push({ name: cleanSenderName(curName), text: curLines.join('\n') });
   }
-  return segments;
+
+  // 同じ送信者が複数回投稿している場合、最新（最後）の投稿を使う
+  // ただし〆・売り切れのみの投稿は価格情報がないのでスキップ
+  const isSoldOutOnly = (text) => {
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    return lines.every(l => /^(〆|締|完売|売り切れ|SOLD OUT|sold out|完売中|在庫なし)/i.test(l) || l.length < 5);
+  };
+
+  const latestMap = new Map(); // name → index in segments
+  segments.forEach((seg, idx) => {
+    if (!isSoldOutOnly(seg.text)) {
+      latestMap.set(seg.name, idx);
+    }
+  });
+
+  // latestMapに含まれるindexのセグメントのみ、重複なく返す（順序は最初の登場順）
+  const seen = new Set();
+  const result = [];
+  for (const [name, latestIdx] of latestMap) {
+    if (!seen.has(name)) {
+      seen.add(name);
+      result.push(segments[latestIdx]);
+    }
+  }
+  return result;
 }
 
 function cleanSenderName(raw) {
@@ -1197,21 +1756,45 @@ function parseLineText(text) {
 
 // ── LINE取込: マッチング ──────────────────────────
 function findMatch(lineName, shrink) {
-  const needle = normalize(lineName);
+  // スラッシュ区切りの場合は最初のトークンを使う（例: "MEGAドリームex / メガドリーム"）
+  const primaryName = lineName.split(/[\/／]/).map(s => s.trim())[0];
+  const needle = normalize(primaryName);
   const targetCats = shrink ? BOX_CATS_SHRINK : BOX_CATS_NOSHRINK;
+
+  if (!needle || needle.length < 2) return null;
 
   let best = null;
   let bestScore = 0;
 
   const score = (item, catLabel) => {
-    const fields = [item.name, item.nameJp, item.nameEn].filter(Boolean).map(normalize);
+    const fields = [item.name, item.nameJp, item.nameEn, item.nameShort].filter(Boolean).map(normalize);
     let s = 0;
     for (const f of fields) {
-      if (f.includes(needle) || needle.includes(f)) {
-        const overlap = Math.min(needle.length, f.length) / Math.max(needle.length, f.length);
-        s = Math.max(s, overlap * (f.includes(needle) ? 1.2 : 1.0));
+      if (!f) continue;
+
+      // 完全一致
+      if (f === needle) { s = Math.max(s, 2.0); continue; }
+
+      // needle が f に含まれる（商品名がより長い場合）
+      if (f.includes(needle)) {
+        const overlap = needle.length / f.length;
+        // 数字のみ（「151」など）は単語境界チェック
+        if (/^\d+$/.test(needle)) {
+          const wordMatch = new RegExp(`(?<![\\d])${needle}(?![\\d])`).test(f);
+          if (wordMatch) s = Math.max(s, 0.8);
+        } else {
+          const penalty = needle.length <= 3 ? 0.6 : 1.0;
+          s = Math.max(s, overlap * 1.2 * penalty);
+        }
+      }
+
+      // f が needle に含まれる（商品名が省略形の場合）
+      if (needle.includes(f) && f.length >= 4) {
+        const overlap = f.length / needle.length;
+        s = Math.max(s, overlap * 1.0);
       }
     }
+
     if (targetCats.includes(catLabel)) s += 0.1;
     if (BOX_CATS_ALL.includes(catLabel)) s += 0.05;
     return s;
@@ -1225,7 +1808,7 @@ function findMatch(lineName, shrink) {
     });
   });
 
-  return bestScore >= 0.25 ? best : null;
+  return bestScore >= 0.3 ? best : null;
 }
 
 function formatPrice(yen) {
@@ -1269,14 +1852,118 @@ function buildGroups(suppliers) {
   // 各グループのデフォルト適用価格を最安値BOXに設定
   map.forEach(g => {
     const boxEntries = g.supplierEntries.filter(e => !e.isCarton);
-    if (boxEntries.length) {
-      g.selectedPrice = Math.min(...boxEntries.map(e => e.price));
-    } else {
-      g.selectedPrice = Math.min(...g.supplierEntries.map(e => e.price));
-    }
+    const pool = boxEntries.length ? boxEntries : g.supplierEntries;
+    const best = pool.reduce((a, b) => b.price > a.price ? b : a, pool[0]);
+    g.selectedPrice = best ? best.price : 0;
+    g.selectedQty = best ? best.qty : 0;
+    g.selectedSupName = best ? best.supName : '';
   });
 
   return Array.from(map.values());
+}
+
+// ── LINE取込: AIパース ────────────────────────────
+async function aiParseAndPreview() {
+  const suppliers = getSuppliers();
+  if (!suppliers.length) { showToast('テキストを貼り付けてください', 'error'); return; }
+
+  const btn = document.getElementById('ai-parse-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ AI解析中...';
+
+  try {
+    // 各業者テキストをAIでパース
+    const parsedSuppliers = await Promise.all(suppliers.map(async (sup) => {
+      const res = await fetch('/api/parse-line', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: sup.text })
+      });
+      const json = await res.json();
+      return { sup, items: json.items || [] };
+    }));
+
+    // buildGroups と同じ構造でグループを作成（AI結果を使用）
+    const map = new Map();
+    parsedSuppliers.forEach(({ sup, items }, supIdx) => {
+      items.forEach(p => {
+        const shrink = p.shrink !== undefined ? p.shrink : true;
+        const match = findMatch(p.name, shrink);
+        const key = match
+          ? `m:${match.catIdx}:${match.itemIdx}`
+          : `u:${normalize(p.name)}:${shrink ? '1' : '0'}`;
+
+        if (!map.has(key)) {
+          map.set(key, {
+            key, lineName: p.name, match,
+            shrink,
+            supplierEntries: [],
+            checked: true,
+            selectedPrice: null,
+            overrideCat: null,
+          });
+        }
+        const g = map.get(key);
+        g.supplierEntries.push({
+          supIdx, supName: sup.name,
+          qty: p.qty || 1,
+          price: p.price,
+          isCarton: p.isCarton || false,
+          note: ''
+        });
+        if (!p.isCarton) g.lineName = p.name;
+      });
+    });
+
+    map.forEach(g => {
+      const boxEntries = g.supplierEntries.filter(e => !e.isCarton);
+      const pool = boxEntries.length ? boxEntries : g.supplierEntries;
+      const best = pool.reduce((a, b) => b.price > a.price ? b : a, pool[0]);
+      g.selectedPrice = best ? best.price : 0;
+      g.selectedQty = best ? best.qty : 0;
+      g.selectedSupName = best ? best.supName : '';
+    });
+
+    lineGroups = Array.from(map.values());
+    autoDetectCategories();
+
+    const totalEntries = lineGroups.reduce((s, g) => s + g.supplierEntries.length, 0);
+    const matched = lineGroups.filter(g => g.match).length;
+    document.getElementById('parse-summary').textContent =
+      `✨ AI解析: ${lineGroups.length} 商品 (${totalEntries} エントリ) / マッチ: ${matched} 件`;
+
+    renderLinePreview();
+    document.getElementById('line-preview-section').style.display = lineGroups.length ? 'block' : 'none';
+    updateApplyCount();
+    showToast(`AI解析完了: ${lineGroups.length}商品を検出`, 'success');
+  } catch (e) {
+    showToast('AI解析エラー: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ AI解析';
+  }
+}
+
+// ── LINE取込: 未マッチアイテムのカテゴリ自動推測 ──
+function autoDetectCategories() {
+  const OP_RE  = /^(OP|EB|PRB|ST|RP)-?\d/i;
+  const YGO_RE = /遊戯王|yu.?gi|ユギオ/i;
+  const WS_RE  = /ヴァイス|weiss|\bWS\b/i;
+  const UA_RE  = /ユニオンアリーナ|union.?arena|\bUA\b/i;
+  const DB_RE  = /ドラゴンボール|dragon.?ball|fusion.?world|\bDB\b/i;
+
+  lineGroups.forEach(g => {
+    if (g.match || g.overrideCat) return;
+    const name = g.lineName || '';
+    let cat = null;
+    if (OP_RE.test(name))       cat = 'ワンピース未開封BOX';
+    else if (UA_RE.test(name))  cat = 'ユニオンアリーナ未開封BOX';
+    else if (DB_RE.test(name))  cat = 'ドラゴンボール未開封BOX';
+    else if (YGO_RE.test(name)) cat = g.shrink === false ? '遊戯王 BOX シュリンクなし' : '遊戯王 BOX シュリンクあり';
+    else if (WS_RE.test(name))  cat = g.shrink === false ? 'ヴァイス BOX シュリンクなし' : 'ヴァイス BOX シュリンクあり';
+    else                        cat = g.shrink === false ? '未開封BOX シュリンクなし' : 'ポケカ未開封BOX';
+    if (cat) g.overrideCat = cat;
+  });
 }
 
 // ── LINE取込: プレビュー描画 ──────────────────────
@@ -1285,119 +1972,126 @@ function parseAndPreview() {
   if (!suppliers.length) { showToast('テキストを貼り付けてください', 'error'); return; }
 
   lineGroups = buildGroups(suppliers);
+  autoDetectCategories();
 
   const totalEntries = lineGroups.reduce((s, g) => s + g.supplierEntries.length, 0);
   const matched = lineGroups.filter(g => g.match).length;
-  document.getElementById('parse-summary').textContent =
-    `${lineGroups.length} 商品 (${totalEntries} エントリ) 検出 / マッチ: ${matched} 件`;
+  const summary = `${lineGroups.length} 商品検出 / マッチ: ${matched} 件 / 未マッチ: ${lineGroups.length - matched} 件`;
+  document.getElementById('parse-summary').textContent = summary;
+  const inl = document.getElementById('parse-summary-inline');
+  if (inl) inl.textContent = summary;
 
-  renderLinePreview(suppliers);
+  renderLinePreview();
   document.getElementById('line-preview-section').style.display = lineGroups.length ? 'block' : 'none';
   updateApplyCount();
 }
 
-function renderLinePreview(suppliers) {
-  suppliers = suppliers || getSuppliers();
-  const supNames = suppliers.map((s, i) => s.name || `業者${i + 1}`);
-
-  // ヘッダー行を再構築（業者数に応じて列追加）
-  const thead = document.getElementById('line-preview-thead');
-  thead.innerHTML = `<tr>
-    <th><input type="checkbox" id="check-all" onchange="toggleAllChecks(this.checked)"></th>
-    <th>LINE商品名</th>
-    <th>マッチ商品</th>
-    <th>カテゴリ</th>
-    ${supNames.map(n => `<th class="supplier-price-cell">${escHtml(n)}</th>`).join('')}
-    <th>適用価格</th>
-    <th>旧価格</th>
-    <th>状態</th>
-  </tr>`;
-
-  const tbody = document.getElementById('line-preview-body');
-  tbody.innerHTML = '';
+function renderLinePreview() {
+  const container = document.getElementById('line-preview-body');
+  container.innerHTML = '';
 
   lineGroups.forEach((g, idx) => {
-    const { match, lineName, shrink, supplierEntries, checked, selectedPrice, overrideCat } = g;
+    const { match, lineName, shrink, supplierEntries, checked, selectedPrice, selectedQty, selectedSupName, overrideCat } = g;
 
-    let matchedName = '', catLabel = '', oldPrice = '', rowClass = 'row-unmatched';
+    let matchedName = '', catLabel = '', oldPrice = '';
     if (match) {
       const item = data[match.catIdx].items[match.itemIdx];
       matchedName = item.name || item.nameJp || '';
       catLabel = data[match.catIdx].label;
       oldPrice = item.price || '';
-      rowClass = 'row-price-changed';
+    }
+
+    // 業者BOX価格ピル（価格降順）
+    const boxEntries = supplierEntries.filter(e => !e.isCarton);
+    const priceOptions = [...new Map(boxEntries.map(e => [e.price, e])).values()]
+      .sort((a, b) => b.price - a.price);
+    const cartonEntries = supplierEntries.filter(e => e.isCarton);
+
+    const pillsHtml = priceOptions.map(e => {
+      const isSel = e.price === selectedPrice;
+      return `<div class="sup-pill ${isSel ? 'selected' : ''}" onclick="setSelectedPrice(${idx}, ${e.price}, ${e.qty}, '${escHtml(e.supName)}')">
+        <span class="sup-pill-name">${escHtml(e.supName)}</span>
+        <span class="sup-pill-price">${formatPrice(e.price)}</span>
+        <span class="sup-pill-qty">${e.qty}BOX</span>
+      </div>`;
+    }).join('');
+
+    const cartonHtml = cartonEntries.length
+      ? `<div style="font-size:0.72rem;color:#fa0;margin-top:0.2rem">
+          📦 カートン: ${cartonEntries.map(e => `${formatPrice(e.price)}×${e.qty}個（${escHtml(e.supName)}）`).join(' / ')}
+        </div>` : '';
+
+    // 価格変化表示
+    let priceChangeHtml = '';
+    if (selectedPrice) {
+      const newFmt = formatPrice(selectedPrice);
+      if (oldPrice && oldPrice !== newFmt) {
+        priceChangeHtml = `<div class="lp-price-row">
+          <span class="price-old">${escHtml(oldPrice)}</span>
+          <span class="price-arrow">→</span>
+          <span class="price-new">${newFmt}</span>
+          ${selectedQty ? `<span class="price-qty">${selectedQty}BOX</span>` : ''}
+        </div>`;
+      } else if (!oldPrice) {
+        priceChangeHtml = `<div class="lp-price-row">
+          <span class="price-new">${newFmt}</span>
+          ${selectedQty ? `<span class="price-qty">${selectedQty}BOX</span>` : ''}
+        </div>`;
+      } else {
+        priceChangeHtml = `<div class="lp-price-row"><span class="price-same">${escHtml(oldPrice)} (変化なし)</span></div>`;
+      }
+    } else {
+      priceChangeHtml = `<div class="lp-price-row"><span style="color:#555;font-size:0.82rem">価格未選択</span></div>`;
     }
 
     const shrinkBadge = shrink
-      ? '<span class="shrink-badge">シュリあり</span>'
-      : '<span class="shrink-badge" style="background:#2a1a1a;color:#f86">シュリなし</span>';
-
-    // 各業者の価格セル
-    const supCells = supNames.map((sName, sIdx) => {
-      const entries = supplierEntries.filter(e => e.supIdx === sIdx);
-      if (!entries.length) return `<td class="supplier-price-cell"><span class="sp-none">—</span></td>`;
-
-      const best = Math.min(...entries.filter(e => !e.isCarton).map(e => e.price).concat([Infinity]));
-      return `<td class="supplier-price-cell">${entries.map(e => {
-        const isBest = !e.isCarton && e.price === best;
-        return `<div>
-          <span class="sp-price ${!e.isCarton && isBest ? 'sp-best' : ''}">${formatPrice(e.price)}</span>
-          ${e.isCarton ? '<span class="carton-note">カートン</span>' : ''}
-          <br><span class="sp-qty">${e.qty}${e.isCarton ? '個' : 'BOX'}${e.note ? ' ' + e.note : ''}</span>
-        </div>`;
-      }).join('')}</td>`;
-    });
-
-    // 適用価格セレクト（業者ごとのBOX価格を選択肢に）
-    const priceOptions = [...new Map(
-      supplierEntries.filter(e => !e.isCarton).map(e => [e.price, e])
-    ).values()];
-    const priceSelect = priceOptions.length
-      ? `<select class="price-select" onchange="setSelectedPrice(${idx}, +this.value)">
-          ${priceOptions.map(e =>
-            `<option value="${e.price}" ${e.price === selectedPrice ? 'selected' : ''}>${formatPrice(e.price)}（${escHtml(e.supName)}）</option>`
-          ).join('')}
-        </select>`
-      : `<span style="color:#888">—</span>`;
-
-    const oldPriceCell = oldPrice
-      ? (oldPrice !== formatPrice(selectedPrice || 0)
-          ? `<span class="price-old">${escHtml(oldPrice)}</span>`
-          : `<span class="price-same">${escHtml(oldPrice)}</span>`)
-      : '<span style="color:#666">—</span>';
+      ? `<span class="shrink-badge">シュリあり</span>`
+      : `<span class="shrink-badge no-shrink">シュリなし</span>`;
 
     const badge = match
-      ? '<span class="match-badge badge-ok">マッチ</span>'
-      : '<span class="match-badge badge-new">未マッチ</span>';
+      ? `<span class="match-badge badge-ok">✓ マッチ</span>`
+      : `<span class="match-badge badge-new">未マッチ</span>`;
 
-    let catCell = match
+    const catHtml = match
       ? `<span class="category-badge">${escHtml(catLabel)}</span>`
       : `<select class="cat-select-inline" onchange="setOverrideCat(${idx}, this.value)">
-          <option value="">カテゴリ選択</option>
+          <option value="">カテゴリ選択...</option>
           ${BOX_CATS_ALL.map(c => `<option value="${escHtml(c)}" ${overrideCat === c ? 'selected' : ''}>${escHtml(c)}</option>`).join('')}
         </select>`;
 
-    const tr = document.createElement('tr');
-    tr.className = rowClass;
-    tr.innerHTML = `
-      <td><input type="checkbox" ${checked ? 'checked' : ''} onchange="setChecked(${idx}, this.checked)"></td>
-      <td>${escHtml(lineName)}${shrinkBadge}</td>
-      <td style="max-width:200px;font-size:0.78rem">${match ? escHtml(matchedName) : '<span style="color:#666">—</span>'}</td>
-      <td>${catCell}</td>
-      ${supCells.join('')}
-      <td>${priceSelect}</td>
-      <td>${oldPriceCell}</td>
-      <td>${badge}</td>`;
-    tbody.appendChild(tr);
+    const card = document.createElement('div');
+    card.className = `lp-card ${match ? 'is-matched' : 'is-unmatched'} ${checked ? 'is-checked' : ''}`;
+    card.innerHTML = `
+      <div class="lp-card-check">
+        <input type="checkbox" ${checked ? 'checked' : ''} onchange="setChecked(${idx}, this.checked)">
+      </div>
+      <div class="lp-card-body">
+        <div class="lp-name">
+          ${escHtml(lineName)}${shrinkBadge}
+        </div>
+        ${matchedName ? `<div class="lp-match-name">${escHtml(matchedName)}</div>` : ''}
+        <div class="lp-meta">${badge}${catHtml}</div>
+        ${priceChangeHtml}
+        ${cartonHtml}
+      </div>
+      <div class="lp-card-right">
+        <div class="sup-prices">${pillsHtml || '<span style="color:#555;font-size:0.8rem">価格なし</span>'}</div>
+      </div>`;
+    container.appendChild(card);
   });
 
-  document.getElementById('check-all').checked = lineGroups.every(g => g.checked);
+  const checkAll = document.getElementById('check-all');
+  if (checkAll) checkAll.checked = lineGroups.every(g => g.checked);
 }
 
 function setChecked(idx, val) {
   lineGroups[idx].checked = val;
   updateApplyCount();
-  document.getElementById('check-all').checked = lineGroups.every(g => g.checked);
+  const checkAll = document.getElementById('check-all');
+  if (checkAll) checkAll.checked = lineGroups.every(g => g.checked);
+  // カードのハイライト更新
+  const cards = document.querySelectorAll('#line-preview-body .lp-card');
+  if (cards[idx]) cards[idx].classList.toggle('is-checked', val);
 }
 
 function toggleAllChecks(val) {
@@ -1410,8 +2104,11 @@ function setOverrideCat(idx, catLabel) {
   lineGroups[idx].overrideCat = catLabel || null;
 }
 
-function setSelectedPrice(idx, price) {
+function setSelectedPrice(idx, price, qty, sup) {
   lineGroups[idx].selectedPrice = price;
+  lineGroups[idx].selectedQty = qty ? +qty : 0;
+  lineGroups[idx].selectedSupName = sup || '';
+  renderLinePreview();
 }
 
 function updateApplyCount() {
@@ -1424,31 +2121,74 @@ async function applyLineImport() {
   const targets = lineGroups.filter(g => g.checked);
   if (!targets.length) { showToast('適用する項目がありません', 'error'); return; }
 
-  const newData = JSON.parse(JSON.stringify(data));
+  const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
+  if (!token) { showToast('GitHub Tokenを入力してください', 'error'); return; }
+
+  showSaving(true);
+  // GitHubから最新データを取得してベースにする（他の取込で追加したlineStockを保持するため）
+  let newData;
+  try {
+    const ghRes = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${FILE_PATH}?_=${Date.now()}`);
+    if (!ghRes.ok) throw new Error('GitHub fetch failed');
+    newData = await ghRes.json();
+  } catch(e) {
+    showToast('GitHubから最新データ取得失敗、ローカルデータを使用します', 'error');
+    newData = JSON.parse(JSON.stringify(data));
+  }
+  showSaving(false);
+
   let updated = 0;
+  const priceChanges = [];   // Discord通知用
+  const needTranslate = [];  // 英語名翻訳が必要な新規アイテム
 
   for (const g of targets) {
-    const { match, overrideCat, selectedPrice, lineName, supplierEntries } = g;
+    const { match, overrideCat, selectedPrice, selectedQty, lineName } = g;
     if (!selectedPrice) continue;
     const newPrice = formatPrice(selectedPrice);
+    const priceDate = new Date().toISOString().slice(0, 10);
+    const lineStock = typeof selectedQty === 'number' && selectedQty > 0 ? selectedQty : 0;
 
     if (match) {
+      const oldItem = newData[match.catIdx]?.items[match.itemIdx] || data[match.catIdx].items[match.itemIdx];
+      const oldPriceNum = parseInt(String(oldItem.price || '').replace(/[^0-9]/g, '')) || 0;
+      // 変動追跡
+      if (oldPriceNum > 0 && (oldPriceNum !== selectedPrice || (oldItem.lineStock ?? -1) !== lineStock)) {
+        priceChanges.push({
+          name: oldItem.name, nameEn: oldItem.nameEn || '',
+          oldPrice: oldPriceNum, newPrice: selectedPrice,
+          oldStock: oldItem.lineStock ?? null, newStock: lineStock,
+        });
+      }
       newData[match.catIdx].items[match.itemIdx].price = newPrice;
+      newData[match.catIdx].items[match.itemIdx].priceDate = priceDate;
+      newData[match.catIdx].items[match.itemIdx].lineStock = lineStock;
       updated++;
     } else if (overrideCat) {
       const catIdx = newData.findIndex(cat => cat.label === overrideCat);
-      const maxQty = Math.max(...supplierEntries.filter(e => !e.isCarton).map(e => e.qty));
-      const newItem = { name: lineName, price: newPrice, stock: isFinite(maxQty) ? maxQty : 0 };
-      if (catIdx >= 0) newData[catIdx].items.push(newItem);
-      else newData.push({ label: overrideCat, items: [newItem] });
+      const newItem = { name: lineName, price: newPrice, priceDate, lineStock };
+      const insertIdx = catIdx >= 0 ? newData[catIdx].items.push(newItem) - 1 : 0;
+      if (catIdx >= 0) needTranslate.push({ catIdx, itemIdx: insertIdx, name: lineName });
+      else { newData.push({ label: overrideCat, items: [newItem] }); needTranslate.push({ catIdx: newData.length - 1, itemIdx: 0, name: lineName }); }
       updated++;
     }
   }
 
   if (!updated) { showToast('更新できる項目がありません（未マッチかつカテゴリ未選択）', 'error'); return; }
 
-  const token = (document.getElementById('gh-token').value || localStorage.getItem('gh_token') || '').trim();
-  if (!token) { showToast('GitHub Tokenを入力してください', 'error'); return; }
+  // 新規アイテムの英語名をAI翻訳
+  if (needTranslate.length) {
+    try {
+      const res = await fetch('/api/translate-names', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ names: needTranslate.map((t, i) => ({ id: String(i), name: t.name })) })
+      });
+      const { results } = await res.json();
+      results?.forEach(r => {
+        const t = needTranslate[parseInt(r.id)];
+        if (t && r.nameEn) newData[t.catIdx].items[t.itemIdx].nameEn = r.nameEn;
+      });
+    } catch(e) { console.warn('翻訳失敗:', e.message); }
+  }
 
   showSaving(true);
   try {
@@ -1461,27 +2201,29 @@ async function applyLineImport() {
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
     const updateRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
       method: 'PUT',
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: `LINE取込: ${updated}件更新 - ${new Date().toLocaleString('ja-JP')}`,
-        content,
-        sha: meta.sha
-      })
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `LINE取込: ${updated}件更新 - ${new Date().toLocaleString('ja-JP')}`, content, sha: meta.sha })
     });
-    if (!updateRes.ok) {
-      const err = await updateRes.json();
-      throw new Error(err.message || updateRes.status);
-    }
+    if (!updateRes.ok) { const err = await updateRes.json(); throw new Error(err.message || updateRes.status); }
+
     data = newData;
     refreshCategoryFilter();
     renderTable();
     showToast(`${updated} 件をGitHubに保存しました ✓`, 'success');
     document.getElementById('line-preview-section').style.display = 'none';
     document.getElementById('parse-summary').textContent = '';
+
+    // Discord通知
+    const notifyEnabled = localStorage.getItem('discord_notify_enable') === 'true';
+    if (notifyEnabled && priceChanges.length) {
+      fetch('/api/notify-price-changes', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ changes: priceChanges })
+      }).then(r => r.json()).then(r => {
+        if (r.ok) showToast(`📣 Discord通知: ${r.sent}件`, 'success');
+        else showToast('Discord通知失敗: ' + r.error, 'error');
+      }).catch(() => {});
+    }
   } catch(e) {
     showToast('保存失敗: ' + e.message, 'error');
   } finally {
