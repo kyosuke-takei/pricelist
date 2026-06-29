@@ -516,6 +516,7 @@
         </select>
         <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="debounceRender()" style="min-width:200px">
         <span class="item-count" id="item-count"></span>
+        <button class="btn" style="background:#0e7a5a;color:#fff" onclick="downloadInventoryCsv()">📥 CSV出力</button>
         <button class="btn" style="background:#7c3aed;color:#fff;margin-left:auto" onclick="openVipModal()">👑 VIP通知</button>
       </div>
 
@@ -1035,6 +1036,59 @@ function renderPagination(totalPages) {
 }
 
 // ── Add / Edit Modal ──────────────────────────────
+// ── CSV出力 ────────────────────────────────────────────
+function downloadInventoryCsv() {
+  if (!data || !data.length) { showToast('データがありません', 'error'); return; }
+
+  // 重複チェック: 同名アイテムが複数カテゴリにある場合
+  const nameCount = {};
+  data.forEach(cat => cat.items.forEach(item => {
+    const key = item.name.trim();
+    nameCount[key] = (nameCount[key] || 0) + 1;
+  }));
+
+  const rows = [
+    ['重複', 'カテゴリ', '商品名(日本語)', '商品名(英語)', '価格', 'VIP価格(10%オフ)', '在庫', 'ユニット', '更新日']
+  ];
+
+  data.forEach(cat => {
+    cat.items.forEach(item => {
+      const price = parseInt(String(item.price || '').replace(/[^\d]/g, '')) || 0;
+      const vip = price ? Math.ceil(price * 0.9) : '';
+      const isDup = (nameCount[item.name.trim()] || 0) > 1;
+      rows.push([
+        isDup ? '⚠️重複' : '',
+        cat.label,
+        item.name,
+        item.nameEn || '',
+        price || '',
+        vip,
+        typeof item.lineStock === 'number' ? item.lineStock : '',
+        item.unit || 'BOX',
+        item.priceDate || '',
+      ]);
+    });
+  });
+
+  // 重複行を上に
+  const header = rows[0];
+  const body = rows.slice(1).sort((a, b) => (b[0] ? 1 : 0) - (a[0] ? 1 : 0));
+
+  const csv = [header, ...body].map(row =>
+    row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
+  ).join('\r\n');
+
+  const bom = '﻿'; // Excel UTF-8 BOM
+  const blob = new Blob([bom + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `inventory_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`📥 CSV出力: ${body.length}件`, 'success');
+}
+
 // ── VIP通知 ────────────────────────────────────────────
 function openVipModal() {
   const modal = document.getElementById('vip-modal');
