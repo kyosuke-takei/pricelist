@@ -509,13 +509,39 @@ app.post('/api/notify-price-changes', async (req, res) => {
   }
   lines.push('', `🔗 [View Price List](${PRICELIST_URL})`);
 
+  // Discord limit: 2000 chars. Split into chunks if needed.
+  const footer = `\n\n🔗 ${PRICELIST_URL}`;
+  const fullText = lines.join('\n');
+  const chunks = [];
+  if (fullText.length + footer.length <= 1900) {
+    chunks.push(fullText + footer);
+  } else {
+    // Split by section (double newline)
+    let current = '';
+    for (const line of lines) {
+      if ((current + '\n' + line).length > 1900) {
+        chunks.push(current);
+        current = line;
+      } else {
+        current = current ? current + '\n' + line : line;
+      }
+    }
+    if (current) chunks.push(current);
+    chunks[chunks.length - 1] += footer;
+  }
+
   try {
-    const r = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: lines.join('\n') })
-    });
-    if (!r.ok) throw new Error(`Webhook error: ${r.status}`);
+    for (const chunk of chunks) {
+      const r = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: chunk })
+      });
+      if (!r.ok) {
+        const errText = await r.text();
+        throw new Error(`Webhook error: ${r.status} - ${errText}`);
+      }
+    }
     res.json({ ok: true, sent: changes.length });
   } catch (e) {
     console.error('Discord通知エラー:', e.message);
