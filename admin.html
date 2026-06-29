@@ -1057,7 +1057,7 @@ function downloadInventoryCsv() {
       const vip = price ? Math.ceil(price * 0.9) : '';
       const isDup = (nameCount[item.name.trim()] || 0) > 1;
       rows.push([
-        isDup ? '⚠️重複' : '',
+        isDup ? '★重複' : '',
         cat.label,
         item.name,
         item.nameEn || '',

@@ -67,13 +67,6 @@
         "nameEn": "Paradise Dragona"
       },
       {
-        "name": "熱風のアリ��ナ",
-        "price": "¥21,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 9,
-        "nameEn": "Heatwave Arena"
-      },
-      {
         "name": "超電ブレイカー",
         "price": "¥31,500",
         "priceDate": "2026-06-25",
@@ -354,25 +347,11 @@
         "nameEn": "Fukuoka"
       },
       {
-        "name": "��園ドラゴーナ",
-        "price": "¥16,800",
-        "priceDate": "2026-06-25",
-        "lineStock": 2,
-        "nameEn": "Garden Dragona"
-      },
-      {
         "name": "熱風のアリーナ",
         "price": "¥21,000",
         "priceDate": "2026-06-25",
         "lineStock": 9,
         "nameEn": "Arena of Heat"
-      },
-      {
-        "name": "ステ���ミラクル",
-        "price": "¥11,700",
-        "priceDate": "2026-06-25",
-        "lineStock": 30,
-        "nameEn": "Stellar Miracle"
       },
       {
         "name": "FB-10",
