@@ -516,6 +516,7 @@
         </select>
         <input type="text" id="filter-search" placeholder="商品名で検索..." oninput="debounceRender()" style="min-width:200px">
         <span class="item-count" id="item-count"></span>
+        <button class="btn" style="background:#7c3aed;color:#fff;margin-left:auto" onclick="openVipModal()">👑 VIP通知</button>
       </div>
 
       <div class="table-wrap">
@@ -661,6 +662,29 @@
         <!-- 結果エリア -->
         <div id="sc-result" class="sc-result-box" style="display:none"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIP通知モーダル -->
+<div class="modal modal-overlay" id="vip-modal" onclick="if(event.target===this)closeVipModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;">
+  <div class="modal-box" style="max-width:700px;width:100%;background:#1a1a2e;border-radius:16px;border:1px solid #7c3aed;padding:1.5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <h2 style="color:#c084fc;font-size:1.1rem">👑 VIP通知 — 送信アイテム選択</h2>
+      <button onclick="closeVipModal()" style="background:none;border:none;color:#888;font-size:1.4rem;cursor:pointer">×</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
+      <label style="font-size:0.85rem;color:#aaa">割引率:
+        <input type="number" id="vip-discount" value="10" min="1" max="50" style="width:60px;padding:0.3rem;border-radius:6px;border:1px solid #444;background:#0f0f1a;color:#fff;text-align:center"> %オフ
+      </label>
+      <button onclick="vipSelectAll(true)" style="padding:0.3rem 0.8rem;border-radius:6px;border:1px solid #555;background:#222;color:#aaa;cursor:pointer;font-size:0.8rem">全選択</button>
+      <button onclick="vipSelectAll(false)" style="padding:0.3rem 0.8rem;border-radius:6px;border:1px solid #555;background:#222;color:#aaa;cursor:pointer;font-size:0.8rem">全解除</button>
+      <span id="vip-selected-count" style="color:#c084fc;font-size:0.85rem;margin-left:auto"></span>
+    </div>
+    <div style="max-height:55vh;overflow-y:auto;border:1px solid #2a2a4a;border-radius:8px" id="vip-item-list"></div>
+    <div style="margin-top:1rem;display:flex;gap:0.75rem;justify-content:flex-end">
+      <button onclick="closeVipModal()" style="padding:0.6rem 1.5rem;border-radius:20px;border:1px solid #555;background:transparent;color:#aaa;cursor:pointer">キャンセル</button>
+      <button onclick="sendVipNotification()" id="vip-send-btn" style="padding:0.6rem 1.5rem;border-radius:20px;border:none;background:#7c3aed;color:#fff;font-weight:bold;cursor:pointer">📣 VIP通知を送信</button>
     </div>
   </div>
 </div>
@@ -1011,6 +1035,103 @@ function renderPagination(totalPages) {
 }
 
 // ── Add / Edit Modal ──────────────────────────────
+// ── VIP通知 ────────────────────────────────────────────
+function openVipModal() {
+  const modal = document.getElementById('vip-modal');
+  modal.style.display = 'flex';
+  renderVipList();
+}
+
+function closeVipModal() {
+  document.getElementById('vip-modal').style.display = 'none';
+}
+
+function renderVipList() {
+  const discount = parseInt(document.getElementById('vip-discount').value) / 100;
+  const fmt = n => `¥${Math.round(n).toLocaleString('ja-JP')}`;
+  const list = document.getElementById('vip-item-list');
+
+  // Collect all priced items from data
+  const items = [];
+  (data || []).forEach(cat => {
+    (cat.items || []).forEach(item => {
+      const price = parseInt(String(item.price || '').replace(/[^\d]/g, ''));
+      if (price > 0) items.push({ ...item, _catLabel: cat.label, _price: price });
+    });
+  });
+
+  if (!items.length) { list.innerHTML = '<div style="padding:2rem;text-align:center;color:#555">データがありません</div>'; return; }
+
+  list.innerHTML = items.map((item, i) => {
+    const vip = Math.ceil(item._price * (1 - discount));
+    const saving = item._price - vip;
+    const stockNum = typeof item.lineStock === 'number' ? item.lineStock : null;
+    const stockBadge = stockNum !== null
+      ? `<span style="font-size:0.7rem;color:${stockNum<=3?'#ff6060':stockNum<=10?'#ffaa60':'#60aa80'}">在庫${stockNum}</span>`
+      : '';
+    const unitBadge = item.unit === 'CARTON'
+      ? '<span style="font-size:0.68rem;background:#2a1a4a;color:#dd99ff;padding:1px 5px;border-radius:3px;margin-left:3px">📦Carton</span>'
+      : '<span style="font-size:0.68rem;background:#1a2a1a;color:#99dd99;padding:1px 5px;border-radius:3px;margin-left:3px">BOX</span>';
+    return `<label style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0.75rem;border-bottom:1px solid #1e1e38;cursor:pointer;transition:background 0.1s" onmouseover="this.style.background='#1e1e38'" onmouseout="this.style.background=''" onclick="updateVipCount()">
+      <input type="checkbox" class="vip-check" data-idx="${i}" checked style="width:16px;height:16px;accent-color:#7c3aed;flex-shrink:0">
+      <span style="flex:1;font-size:0.82rem;color:#ddd;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.nameEn||item.name}</span>
+      ${unitBadge}${stockBadge}
+      <span style="flex-shrink:0;font-size:0.75rem;color:#888;text-decoration:line-through">${fmt(item._price)}</span>
+      <span style="flex-shrink:0;font-size:0.88rem;font-weight:bold;color:#c084fc">${fmt(vip)}</span>
+      <span style="flex-shrink:0;font-size:0.7rem;color:#60aa80">-${fmt(saving)}</span>
+    </label>`;
+  }).join('');
+
+  // Store items for later reference
+  list._items = items;
+  updateVipCount();
+
+  // Re-render when discount changes
+  document.getElementById('vip-discount').oninput = () => renderVipList();
+}
+
+function updateVipCount() {
+  const checked = document.querySelectorAll('.vip-check:checked').length;
+  const total = document.querySelectorAll('.vip-check').length;
+  document.getElementById('vip-selected-count').textContent = `${checked} / ${total} 件選択中`;
+}
+
+function vipSelectAll(state) {
+  document.querySelectorAll('.vip-check').forEach(cb => cb.checked = state);
+  updateVipCount();
+}
+
+async function sendVipNotification() {
+  const list = document.getElementById('vip-item-list');
+  const items = list._items || [];
+  const discount = parseInt(document.getElementById('vip-discount').value) / 100;
+  const checked = [...document.querySelectorAll('.vip-check:checked')].map(cb => parseInt(cb.dataset.idx));
+  if (!checked.length) { showToast('アイテムを選択してください', 'error'); return; }
+
+  const selected = checked.map(i => ({ ...items[i], price: items[i]._price }));
+  const btn = document.getElementById('vip-send-btn');
+  btn.disabled = true; btn.textContent = '送信中...';
+
+  try {
+    const r = await fetch('/api/notify-vip', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: selected, discount })
+    });
+    const result = await r.json();
+    if (result.ok) {
+      showToast(`👑 VIP通知送信完了: ${result.sent}件`, 'success');
+      closeVipModal();
+    } else {
+      showToast('送信失敗: ' + result.error, 'error');
+    }
+  } catch(e) {
+    showToast('送信エラー: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = '📣 VIP通知を送信';
+  }
+}
+
 function openAddModal() {
   editTarget = null;
   document.getElementById('modal-title').textContent = '商品追加';

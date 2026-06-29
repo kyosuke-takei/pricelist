@@ -549,6 +549,77 @@ app.post('/api/notify-price-changes', async (req, res) => {
   }
 });
 
+// ── VIP Discord通知 (10%オフ・選択式) ───────────────────
+app.post('/api/notify-vip', async (req, res) => {
+  const { items, discount = 0.10 } = req.body;
+  if (!items?.length) return res.json({ ok: true, sent: 0 });
+
+  const webhookUrl = process.env.DISCORD_VIP_WEBHOOK;
+  if (!webhookUrl) return res.status(400).json({ error: 'DISCORD_VIP_WEBHOOK未設定' });
+
+  const PRICELIST_URL = 'https://kyosuke-takei.github.io/pricelist/';
+  const fmt = n => `¥${Math.round(n).toLocaleString('ja-JP')}`;
+  const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+
+  const lines = [
+    `👑 **VIP Price List** ${today}`,
+    `*Special pricing for VIP members — ${Math.round(discount*100)}% off market price*`,
+    ''
+  ];
+
+  items.forEach(item => {
+    const name = item.nameEn || item.name || '';
+    const market = item.price;
+    const vip = Math.ceil(market * (1 - discount));
+    const saving = market - vip;
+    let line = `• **${name}**: ~~${fmt(market)}~~ → **${fmt(vip)}** (-${fmt(saving)})`;
+    if (item.unit === 'CARTON') line += ' 📦 Carton';
+    if (typeof item.lineStock === 'number' && item.lineStock > 0) {
+      const stockColor = item.lineStock <= 3 ? '🔴' : item.lineStock <= 10 ? '🟡' : '🟢';
+      line += ` ${stockColor} Stock: ${item.lineStock}`;
+    }
+    lines.push(line);
+  });
+
+  lines.push('', `🔗 ${PRICELIST_URL}`);
+
+  const footer = `\n\n🔗 ${PRICELIST_URL}`;
+  const fullText = lines.join('\n');
+  const chunks = [];
+  if (fullText.length <= 1900) {
+    chunks.push(fullText);
+  } else {
+    let current = '';
+    for (const line of lines) {
+      if ((current + '\n' + line).length > 1900) {
+        chunks.push(current);
+        current = line;
+      } else {
+        current = current ? current + '\n' + line : line;
+      }
+    }
+    if (current) chunks.push(current);
+  }
+
+  try {
+    for (const chunk of chunks) {
+      const r = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: chunk })
+      });
+      if (!r.ok) {
+        const errText = await r.text();
+        throw new Error(`Webhook error: ${r.status} - ${errText}`);
+      }
+    }
+    res.json({ ok: true, sent: items.length });
+  } catch (e) {
+    console.error('VIP通知エラー:', e.message);
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
 // ── 商品名 日→英 AI翻訳 ─────────────────────────────
 app.post('/api/translate-names', async (req, res) => {
   const { names } = req.body; // [{ id, name }]
