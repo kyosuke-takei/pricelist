@@ -396,30 +396,32 @@ app.post('/api/parse-line', async (req, res) => {
       messages: [
         {
           role: 'system',
-          content: `あなたはトレーディングカードショップの仕入れ担当者です。業者からのLINE/Discordメッセージを解析し、商品ごとの仕入れ情報をJSON形式で抽出してください。
+          content: `あなたはトレーディングカードショップの仕入れ担当者です。業者からのLINE/Discordメッセージを解析し、未開封BOX・カートン（ケース）商品のみをJSON形式で抽出してください。
 
 出力形式（JSONオブジェクト）:
 {
   "items": [
     {
-      "name": "商品名（ポケモンカードゲーム〇〇 拡張パックなど正式名に近い形で）",
-      "price": 数値（1BOXあたりの単価、円）,
-      "qty": 数値（数量）,
-      "unit": "BOX" または "カートン" または "case",
-      "shrink": true または false または null（シュリンクあり=true、なし=false、不明=null）,
-      "isCarton": true または false（カートン・caseならtrue）
+      "name": "商品名（略称OK。例: OP-13、インフェルノX、熱風のアリーナ）",
+      "price": 数値（1BOXまたは1カートンあたりの単価、円）,
+      "qty": 数値（数量、BOX数またはカートン数）,
+      "shrink": true または false または null（シュリなし・シュリンクなし・白箱=false、不明=null）,
+      "isCarton": true または false（カートン・ケース・CASEならtrue、BOX・箱・ボックスならfalse）
     }
   ]
 }
 
-ルール:
-- カートン・caseは1カートンあたりの総額を入力し isCarton:true にする
-- シュリなし・シュリンクなし・白箱はshrink:false
+【必ず守るルール】
+- BOX・箱・ボックス = isCarton:false（個別箱単位）
+- カートン・ケース・CASE・CARTON = isCarton:true（複数箱入りの大箱）
+- ★パック（バラパック・未サーチパック等）は絶対に含めない（BOXではない）
+- ★シングルカード・PSA・プロモ・枚数単位の商品は絶対に含めない
+- ★送料・注意書き・発送情報は無視
+- ダメージ品（状態A-、状態B、傷あり等）はスキップ
+- 完売・売切れはスキップ
+- 同じ商品でシュリンクあり/なし両方ある場合は別itemとして出力
 - 数量が書かれていない場合はqty:1
-- ダメージ品・訳あり品・送料・注意書きはスキップ
-- 同じ商品で複数の数量・価格がある場合は別itemとして出力
-- 商品名は略称（例:「蒼空」「ミラクル」）でも構わない
-- 価格が100円未満のものはスキップ`
+- 価格が1000円未満のものはスキップ（パック・シングル排除）`
         },
         { role: 'user', content: text }
       ]
@@ -561,19 +563,13 @@ app.post('/api/notify-vip', async (req, res) => {
   const fmt = n => `¥${Math.round(n).toLocaleString('ja-JP')}`;
   const today = new Date().toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
 
-  const lines = [
-    `👑 **VIP Price List** ${today}`,
-    `*Special pricing for VIP members — ${Math.round(discount*100)}% off market price*`,
-    ''
-  ];
+  const lines = [`👑 **VIP Price List** ${today}`, ''];
 
   items.forEach(item => {
     const name = item.nameEn || item.name || '';
-    const market = item.price;
-    const vip = Math.ceil(market * (1 - discount));
-    const saving = market - vip;
-    let line = `• **${name}**: ~~${fmt(market)}~~ → **${fmt(vip)}** (-${fmt(saving)})`;
-    if (item.unit === 'CARTON') line += ' 📦 Carton';
+    const vip = Math.ceil(item.price * (1 - discount));
+    let line = `• **${name}** — VIP Price: **${fmt(vip)}**`;
+    if (item.unit === 'CARTON') line += ' 📦';
     if (typeof item.lineStock === 'number' && item.lineStock > 0) {
       const stockColor = item.lineStock <= 3 ? '🔴' : item.lineStock <= 10 ? '🟡' : '🟢';
       line += ` ${stockColor} Stock: ${item.lineStock}`;
