@@ -1,13 +1,5 @@
 [
   {
-    "label": "AR/CHR",
-    "items": []
-  },
-  {
-    "label": "SR/SSR/HR/UR/SAR/MUR/MA",
-    "items": []
-  },
-  {
     "label": "ポケカ未開封BOX",
     "items": [
       {
@@ -529,14 +521,6 @@
     ]
   },
   {
-    "label": "PSA鑑定済",
-    "items": []
-  },
-  {
-    "label": "OP PSA鑑定済",
-    "items": []
-  },
-  {
     "label": "未開封BOX シュリンクあり",
     "items": []
   },
@@ -565,22 +549,6 @@
         "nameEn": "Mega Symphonia"
       }
     ]
-  },
-  {
-    "label": "パック",
-    "items": []
-  },
-  {
-    "label": "デッキ",
-    "items": []
-  },
-  {
-    "label": "プロモ",
-    "items": []
-  },
-  {
-    "label": "その他",
-    "items": []
   },
   {
     "label": "遊戯王 BOX シュリンクあり",
@@ -627,22 +595,6 @@
     "items": []
   },
   {
-    "label": "遊戯��� パック",
-    "items": []
-  },
-  {
-    "label": "遊戯王 デッキ",
-    "items": []
-  },
-  {
-    "label": "遊戯王 プロモ",
-    "items": []
-  },
-  {
-    "label": "遊戯王 その他",
-    "items": []
-  },
-  {
     "label": "ヴァイス BOX シュリンクあり",
     "items": [
       {
@@ -684,22 +636,6 @@
   },
   {
     "label": "ヴァイス BOX シュリンクなし",
-    "items": []
-  },
-  {
-    "label": "ヴァイス パック",
-    "items": []
-  },
-  {
-    "label": "ヴァイス デッキ",
-    "items": []
-  },
-  {
-    "label": "ヴァイス プロモ",
-    "items": []
-  },
-  {
-    "label": "ヴァイス その他",
     "items": []
   },
   {
