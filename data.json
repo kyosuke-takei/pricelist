@@ -28,17 +28,17 @@
       },
       {
         "name": "ブラックボルトDX",
-        "price": "¥22,500",
-        "priceDate": "2026-07-03",
-        "lineStock": 3,
+        "price": "¥29,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 20,
         "nameEn": "Black Bolt DX",
         "unit": "BOX"
       },
       {
         "name": "ホワイトフレアDX",
-        "price": "¥24,500",
-        "priceDate": "2026-07-03",
-        "lineStock": 12,
+        "price": "¥26,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 40,
         "nameEn": "White Flare DX",
         "unit": "BOX"
       },
@@ -60,9 +60,9 @@
       },
       {
         "name": "楽園ドラゴーナ",
-        "price": "¥450,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 2,
+        "price": "¥31,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 30,
         "nameEn": "Paradise Dragona",
         "unit": "BOX"
       },
@@ -76,17 +76,17 @@
       },
       {
         "name": "シャイニートレジャーex",
-        "price": "¥19,900",
-        "priceDate": "2026-07-03",
-        "lineStock": 3,
+        "price": "¥20,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 20,
         "nameEn": "Shiny Treasure ex",
         "unit": "BOX"
       },
       {
         "name": "黒炎の支配者",
-        "price": "¥20,500",
-        "priceDate": "2026-06-25",
-        "lineStock": 10,
+        "price": "¥54,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 25,
         "nameEn": "Lord of Black Flames",
         "unit": "BOX"
       },
@@ -116,11 +116,11 @@
       },
       {
         "name": "コレクションファイルリーリエ",
-        "price": "¥158,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 1,
+        "price": "¥65,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 20,
         "nameEn": "Collection File Lillie",
-        "unit": "CARTON"
+        "unit": "BOX"
       },
       {
         "name": "ポケモンカード151",
@@ -132,16 +132,16 @@
       },
       {
         "name": "スカーレット",
-        "price": "¥14,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 1,
+        "price": "¥25,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 30,
         "nameEn": "Scarlet",
         "unit": "BOX"
       },
       {
         "name": "パラダイムトリガー",
-        "price": "¥33,000",
-        "priceDate": "2026-06-25",
+        "price": "¥11,300",
+        "priceDate": "2026-07-04",
         "lineStock": 30,
         "nameEn": "Paradigm Trigger",
         "unit": "BOX"
@@ -236,8 +236,8 @@
       },
       {
         "name": "メガゲンガー　スターターデッキ",
-        "price": "¥14,500",
-        "priceDate": "2026-07-03",
+        "price": "¥14,800",
+        "priceDate": "2026-07-04",
         "lineStock": 100,
         "nameEn": "Mega Gengar Starter Deck",
         "unit": "BOX"
@@ -252,17 +252,17 @@
       },
       {
         "name": "ムニキスゼロ",
-        "price": "¥22,200",
-        "priceDate": "2026-07-03",
-        "lineStock": 3,
+        "price": "¥23,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 30,
         "nameEn": "Munikis Zero",
         "unit": "BOX"
       },
       {
         "name": "インフェルノ",
-        "price": "¥22,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 30,
+        "price": "¥21,700",
+        "priceDate": "2026-07-04",
+        "lineStock": 40,
         "nameEn": "Inferno",
         "unit": "BOX"
       },
@@ -300,17 +300,17 @@
       },
       {
         "name": "変幻の仮面",
-        "price": "¥13,800",
-        "priceDate": "2026-06-25",
-        "lineStock": 5,
+        "price": "¥435,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 1,
         "nameEn": "Transforming Mask",
         "unit": "BOX"
       },
       {
         "name": "サイバージャッジ",
-        "price": "¥11,800",
-        "priceDate": "2026-07-03",
-        "lineStock": 4,
+        "price": "¥147,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 1,
         "nameEn": "Cyber Judge",
         "unit": "BOX"
       },
@@ -333,8 +333,8 @@
       {
         "name": "VSTARユニバース",
         "price": "¥12,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 5,
+        "priceDate": "2026-07-04",
+        "lineStock": 35,
         "nameEn": "VSTAR Universe",
         "unit": "BOX"
       },
@@ -380,9 +380,9 @@
       },
       {
         "name": "フクオカ",
-        "price": "¥254,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 1,
+        "price": "¥19,300",
+        "priceDate": "2026-07-04",
+        "lineStock": 25,
         "nameEn": "Fukuoka",
         "unit": "BOX"
       },
@@ -415,6 +415,20 @@
         "priceDate": "2026-07-03",
         "lineStock": 2,
         "unit": "BOX"
+      },
+      {
+        "name": "メガブレイブ",
+        "price": "¥12,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 30,
+        "unit": "BOX"
+      },
+      {
+        "name": "ロケット団の栄光",
+        "price": "¥26,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 20,
+        "unit": "BOX"
       }
     ]
   },
@@ -423,17 +437,17 @@
     "items": [
       {
         "name": "OP-13 受け継がれる意志",
-        "price": "¥24,500",
-        "priceDate": "2026-07-03",
-        "lineStock": 50,
+        "price": "¥26,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 15,
         "nameEn": "OP-13 Legacy of Will",
         "unit": "BOX"
       },
       {
         "name": "OP-14　蒼海の七傑",
-        "price": "¥195,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 1,
+        "price": "¥15,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 20,
         "nameEn": "OP-14 The Seven Warlords of the Sea",
         "unit": "BOX"
       },
@@ -495,9 +509,9 @@
       },
       {
         "name": "OP-12",
-        "price": "¥7,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 100,
+        "price": "¥16,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 50,
         "nameEn": "OP-12",
         "unit": "BOX"
       },
@@ -511,9 +525,9 @@
       },
       {
         "name": "OP-16",
-        "price": "¥16,500",
-        "priceDate": "2026-06-25",
-        "lineStock": 40,
+        "price": "¥455,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 2,
         "nameEn": "OP-16",
         "unit": "BOX"
       },
@@ -551,17 +565,17 @@
       },
       {
         "name": "EB-04",
-        "price": "¥13,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 1,
+        "price": "¥2,300",
+        "priceDate": "2026-07-04",
+        "lineStock": 80,
         "nameEn": "EB-04",
         "unit": "BOX"
       },
       {
         "name": "OP-11",
-        "price": "¥38,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 5,
+        "price": "¥8,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 6,
         "nameEn": "OP-11",
         "unit": "BOX"
       },
@@ -575,9 +589,9 @@
       },
       {
         "name": "チョッパーズ",
-        "price": "¥2,300",
-        "priceDate": "2026-06-25",
-        "lineStock": 100,
+        "price": "¥5,500",
+        "priceDate": "2026-07-04",
+        "lineStock": 1,
         "nameEn": "Chopper's",
         "unit": "BOX"
       },
@@ -614,9 +628,9 @@
       },
       {
         "name": "OP-08",
-        "price": "¥168,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 5,
+        "price": "¥13,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 10,
         "unit": "BOX"
       },
       {
@@ -628,9 +642,9 @@
       },
       {
         "name": "OP-10",
-        "price": "¥173,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 5,
+        "price": "¥14,300",
+        "priceDate": "2026-07-04",
+        "lineStock": 15,
         "unit": "BOX"
       }
     ]
@@ -652,9 +666,9 @@
       },
       {
         "name": "インフェルノ",
-        "price": "¥20,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 20,
+        "price": "¥21,000",
+        "priceDate": "2026-07-04",
+        "lineStock": 30,
         "nameEn": "Inferno",
         "unit": "BOX"
       },
@@ -698,7 +712,7 @@
       {
         "name": "遊戯王-THE HEROES-",
         "price": "¥15,000",
-        "priceDate": "2026-06-25",
+        "priceDate": "2026-07-04",
         "lineStock": 15,
         "nameEn": "Yu-Gi-Oh! -THE HEROES-",
         "unit": "BOX"
@@ -706,7 +720,7 @@
       {
         "name": "遊戯王-THE RIVALS-",
         "price": "¥8,300",
-        "priceDate": "2026-06-25",
+        "priceDate": "2026-07-04",
         "lineStock": 30,
         "nameEn": "Yu-Gi-Oh! -THE RIVALS-",
         "unit": "BOX"
