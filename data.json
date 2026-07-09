@@ -5,8 +5,8 @@
       {
         "name": "インフェルノX",
         "price": "¥21,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 20,
+        "priceDate": "2026-07-09",
+        "lineStock": 16,
         "nameEn": "Inferno X",
         "unit": "BOX"
       },
@@ -412,6 +412,13 @@
         "priceDate": "2026-07-03",
         "lineStock": 2,
         "unit": "BOX"
+      },
+      {
+        "name": "ストームエメラルダ",
+        "price": "¥28,500",
+        "priceDate": "2026-07-09",
+        "lineStock": 50,
+        "unit": "BOX"
       }
     ]
   },
@@ -500,9 +507,9 @@
       },
       {
         "name": "OP-15",
-        "price": "¥230,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 1,
+        "price": "¥225,000",
+        "priceDate": "2026-07-09",
+        "lineStock": 2,
         "nameEn": "OP-15",
         "unit": "BOX"
       },
@@ -629,6 +636,13 @@
         "priceDate": "2026-07-03",
         "lineStock": 5,
         "unit": "BOX"
+      },
+      {
+        "name": "受け継がれる意志 OP-13",
+        "price": "¥24,500",
+        "priceDate": "2026-07-09",
+        "lineStock": 3,
+        "unit": "BOX"
       }
     ]
   },
@@ -641,9 +655,9 @@
     "items": [
       {
         "name": "スタートデッキ100 バトルコレクション",
-        "price": "¥90,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 20,
+        "price": "¥79,000",
+        "priceDate": "2026-07-09",
+        "lineStock": 16,
         "nameEn": "Start Deck 100 Battle Collection",
         "unit": "BOX"
       },
