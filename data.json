@@ -21,7 +21,7 @@
       {
         "name": "テラスタルフェスex",
         "price": "¥480,000",
-        "priceDate": "2026-07-03",
+        "priceDate": "2026-07-10",
         "lineStock": 2,
         "nameEn": "Tera Festival ex",
         "unit": "BOX"
@@ -60,9 +60,9 @@
       },
       {
         "name": "楽園ドラゴーナ",
-        "price": "¥450,000",
-        "priceDate": "2026-07-03",
-        "lineStock": 2,
+        "price": "¥216,000",
+        "priceDate": "2026-07-10",
+        "lineStock": 1,
         "nameEn": "Paradise Dragona",
         "unit": "BOX"
       },
@@ -84,9 +84,9 @@
       },
       {
         "name": "黒炎の支配者",
-        "price": "¥20,500",
-        "priceDate": "2026-06-25",
-        "lineStock": 10,
+        "price": "¥260,000",
+        "priceDate": "2026-07-10",
+        "lineStock": 2,
         "nameEn": "Lord of Black Flames",
         "unit": "BOX"
       },
@@ -109,7 +109,7 @@
       {
         "name": "プレシャスコレクターボックス",
         "price": "¥158,000",
-        "priceDate": "2026-07-03",
+        "priceDate": "2026-07-10",
         "lineStock": 1,
         "nameEn": "Precious Collector Box",
         "unit": "BOX"
@@ -385,9 +385,9 @@
       },
       {
         "name": "熱風のアリーナ",
-        "price": "¥21,000",
-        "priceDate": "2026-06-25",
-        "lineStock": 9,
+        "price": "¥254,000",
+        "priceDate": "2026-07-10",
+        "lineStock": 1,
         "nameEn": "Arena of Heat",
         "unit": "BOX"
       },
@@ -416,8 +416,8 @@
       {
         "name": "ストームエメラルダ",
         "price": "¥28,000",
-        "priceDate": "2026-07-09",
-        "lineStock": 50,
+        "priceDate": "2026-07-10",
+        "lineStock": 1,
         "unit": "BOX"
       },
       {
@@ -431,6 +431,13 @@
         "name": "受け継がれる意志 OP-13",
         "price": "¥24,500",
         "priceDate": "2026-07-09",
+        "lineStock": 3,
+        "unit": "BOX"
+      },
+      {
+        "name": "イーブイヒーローズ",
+        "price": "¥158,000",
+        "priceDate": "2026-07-10",
         "lineStock": 3,
         "unit": "BOX"
       }
@@ -771,11 +778,11 @@
       },
       {
         "name": "ヴァイス 葬送のフリーレンVol.2",
-        "price": "¥80,400",
-        "priceDate": "2026-06-25",
+        "price": "¥79,800",
+        "priceDate": "2026-07-10",
         "lineStock": 2,
         "nameEn": "Weiss Schwarz Frieren: Beyond Journey's End Vol.2",
-        "unit": "CARTON"
+        "unit": "BOX"
       },
       {
         "name": "ヴァイス 推しの子Vol.3",
