@@ -3,132 +3,6 @@
     "label": "ポケカ未開封BOX",
     "items": [
       {
-        "name": "ポケモンカード　30th CELEBRATION[問]",
-        "price": "¥45,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 977,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット キモリ・アチャモ・ミズゴロウ",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 288,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット サルノリ・ヒバニー・メッソン",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 268,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット ツタージャ・ポカブ・ミジュマル",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 288,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット ナエトル・ヒコザル・ポッチャマ",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 288,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット ハリマロン・フォッコ・ケロマツ",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 288,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット モクロー・ニャビー・アシマリ",
-        "price": "¥13,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 288,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット チコリータ・ヒノアラシ・ワニノコ",
-        "price": "¥14,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 268,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット ニャオハ・ホゲータ・クワッス",
-        "price": "¥14,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 268,
-        "unit": "BOX"
-      },
-      {
-        "name": "カードセット フシギダネ・ヒトカゲ・ゼニガメ",
-        "price": "¥15,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 268,
-        "unit": "BOX"
-      },
-      {
-        "name": "MEGA 30th CELEBRATION プレミアムデッキセット エーフィ・ブラッキー[問]",
-        "price": "¥75,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 91,
-        "unit": "BOX"
-      },
-      {
-        "name": "ストームエメラルダ[問]",
-        "price": "¥33,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 48,
-        "unit": "BOX"
-      },
-      {
-        "name": "MEGA スターターセットex イーブイex",
-        "price": "¥8,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 99,
-        "unit": "BOX"
-      },
-      {
-        "name": "MEGA スターターセットex ゾロア＆ゾロアークex",
-        "price": "¥6,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 100,
-        "unit": "BOX"
-      },
-      {
-        "name": "MEGA スターターセットex ニャオハ＆マスカーニャex",
-        "price": "¥6,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 100,
-        "unit": "BOX"
-      },
-      {
-        "name": "ガンダムカードゲーム ブースターパック Freedom Ascension GD05",
-        "price": "¥125,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
-        "unit": "BOX"
-      },
-      {
-        "name": "ディズニー・ロルカナ・TCG 日本語版 ブースターパック ヴァインズ・アタック!",
-        "price": "¥10,200",
-        "priceDate": "2026-07-13",
-        "lineStock": 4,
-        "unit": "BOX"
-      },
-      {
-        "name": "STORY BOOSTER 01 [ST01]",
-        "price": "¥480,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
-        "unit": "BOX"
-      },
-      {
         "name": "アビスアイ",
         "price": "¥11,700",
         "priceDate": "2026-07-13",
@@ -136,19 +10,10 @@
         "unit": "BOX"
       },
       {
-        "name": "メガドリーム",
-        "price": "¥16,500",
+        "name": "バトルパートナーズ",
+        "price": "¥11,200",
         "priceDate": "2026-07-13",
-        "lineStock": 30,
-        "nameEn": "Mega Dream",
-        "unit": "BOX"
-      },
-      {
-        "name": "テラスタルフェスex",
-        "price": "¥500,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 2,
-        "nameEn": "Tera Festival ex",
+        "lineStock": 10,
         "unit": "BOX"
       },
       {
@@ -160,14 +25,6 @@
         "unit": "BOX"
       },
       {
-        "name": "インフェルノX",
-        "price": "¥26,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
-        "nameEn": "Inferno X",
-        "unit": "BOX"
-      },
-      {
         "name": "ロケット団の栄光",
         "price": "¥30,000",
         "priceDate": "2026-07-13",
@@ -175,92 +32,11 @@
         "unit": "BOX"
       },
       {
-        "name": "楽園ドラゴーナ",
-        "price": "¥228,000",
+        "name": "メガドリーム",
+        "price": "¥16,500",
         "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "unit": "BOX"
-      },
-      {
-        "name": "熱風のアリーナ",
-        "price": "¥264,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "unit": "BOX"
-      },
-      {
-        "name": "超電ブレイカー",
-        "price": "¥35,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 15,
-        "nameEn": "Super Electric Breaker",
-        "unit": "BOX"
-      },
-      {
-        "name": "シャイニートレジャーex",
-        "price": "¥20,500",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
-        "nameEn": "Shiny Treasure ex",
-        "unit": "BOX"
-      },
-      {
-        "name": "黒炎の支配者",
-        "price": "¥260,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 2,
-        "unit": "BOX"
-      },
-      {
-        "name": "ワイルドフォース",
-        "price": "¥14,700",
-        "priceDate": "2026-07-13",
-        "lineStock": 5,
-        "unit": "BOX"
-      },
-      {
-        "name": "イーブイヒーローズ",
-        "price": "¥168,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 3,
-        "unit": "BOX"
-      },
-      {
-        "name": "プレシャスコレクターボックス",
-        "price": "¥75,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
-        "nameEn": "Precious Collector Box",
-        "unit": "BOX"
-      },
-      {
-        "name": "コレクションファイルリーリエ",
-        "price": "¥158,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "nameEn": "Collection File Lillie",
-        "unit": "BOX"
-      },
-      {
-        "name": "ヒロシマ",
-        "nameEn": "Pokemon Center Hiroshima",
-        "price": "¥22,600",
-        "priceDate": "2026-07-13",
-        "unit": "BOX",
-        "lineStock": 25
-      },
-      {
-        "name": "yu nagaba イーブイプロモパック",
-        "price": "¥15,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 21,
-        "unit": "BOX"
-      },
-      {
-        "name": "バトルパートナーズ",
-        "price": "¥11,200",
-        "priceDate": "2026-07-13",
-        "lineStock": 10,
+        "lineStock": 300,
+        "nameEn": "Mega Dream",
         "unit": "BOX"
       },
       {
@@ -360,11 +136,26 @@
         "unit": "BOX"
       },
       {
+        "name": "ナツコミ 夏コミ ルフィ",
+        "price": "¥5,500",
+        "priceDate": "2026-07-13",
+        "lineStock": 300,
+        "unit": "BOX"
+      },
+      {
         "name": "ホワイトフレアDX",
         "price": "¥24,500",
         "priceDate": "2026-07-13",
         "lineStock": 50,
         "nameEn": "White Flare DX",
+        "unit": "BOX"
+      },
+      {
+        "name": "超電ブレイカー",
+        "price": "¥35,000",
+        "priceDate": "2026-07-13",
+        "lineStock": 15,
+        "nameEn": "Super Electric Breaker",
         "unit": "BOX"
       },
       {
@@ -416,6 +207,14 @@
         "unit": "BOX"
       },
       {
+        "name": "ヒロシマ",
+        "nameEn": "Pokemon Center Hiroshima",
+        "price": "¥22,600",
+        "priceDate": "2026-07-13",
+        "unit": "BOX",
+        "lineStock": 25
+      },
+      {
         "name": "PSA10 ARバルク被りあり",
         "price": "¥6,000",
         "priceDate": "2026-07-13",
@@ -427,66 +226,6 @@
   {
     "label": "ワンピース未開封BOX",
     "items": [
-      {
-        "name": "OP-17　世界最強の戦士　 [問]",
-        "price": "¥400,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 39,
-        "nameEn": "OP-17 The Strongest Warrior [Question]",
-        "unit": "BOX"
-      },
-      {
-        "name": "OP-16　決戦の刻 [6/30入荷]",
-        "price": "¥215,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 5,
-        "nameEn": "OP-16 Moment of Decisive Battle [Available on 6/30]",
-        "unit": "BOX"
-      },
-      {
-        "name": "OP-14　蒼海の七傑",
-        "price": "¥15,500",
-        "priceDate": "2026-07-13",
-        "lineStock": 8,
-        "nameEn": "OP-14 The Seven Warlords of the Sea",
-        "unit": "BOX"
-      },
-      {
-        "name": "OP-13　受け継がれる意思",
-        "price": "¥25,500",
-        "priceDate": "2026-07-13",
-        "lineStock": 2,
-        "unit": "BOX"
-      },
-      {
-        "name": "OP-10",
-        "price": "¥186,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "unit": "BOX"
-      },
-      {
-        "name": "OP-15",
-        "price": "¥225,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "unit": "BOX"
-      },
-      {
-        "name": "EB-04",
-        "price": "¥13,900",
-        "priceDate": "2026-07-13",
-        "lineStock": 60,
-        "nameEn": "EB-04",
-        "unit": "BOX"
-      },
-      {
-        "name": "プレミアムブースター ONE PIECE CARD THE BEST ストレージボックスセット",
-        "price": "¥450,000",
-        "priceDate": "2026-07-13",
-        "lineStock": 1,
-        "unit": "BOX"
-      },
       {
         "name": "OP-13 受け継がれる意志",
         "price": "¥25,900",
@@ -504,13 +243,6 @@
         "unit": "BOX"
       },
       {
-        "name": "ナツコミ 夏コミ ルフィ",
-        "price": "¥5,500",
-        "priceDate": "2026-07-13",
-        "lineStock": 300,
-        "unit": "BOX"
-      },
-      {
         "name": "OP-09",
         "price": "¥23,700",
         "priceDate": "2026-07-13",
@@ -522,6 +254,14 @@
         "price": "¥460,000",
         "priceDate": "2026-07-13",
         "lineStock": 2,
+        "unit": "BOX"
+      },
+      {
+        "name": "EB-04",
+        "price": "¥13,900",
+        "priceDate": "2026-07-13",
+        "lineStock": 60,
+        "nameEn": "EB-04",
         "unit": "BOX"
       },
       {
@@ -578,6 +318,14 @@
         "priceDate": "2026-07-13",
         "lineStock": 5,
         "nameEn": "Mega Symphonia",
+        "unit": "BOX"
+      },
+      {
+        "name": "スタートデッキ100 バトルコレクション",
+        "price": "¥2,100",
+        "priceDate": "2026-07-13",
+        "lineStock": 8,
+        "nameEn": "Start Deck 100 Battle Collection",
         "unit": "BOX"
       }
     ]
